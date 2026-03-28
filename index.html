@@ -3,15 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solfeo Pro NSP 2026</title>
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f7b6c">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Solfeo NSP">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <title>Solfeo Pro Bolivia</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -427,8 +419,8 @@
             width: 100%;
             max-width: 100%;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
-            border: 4px solid #c8a96e;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            border: 3px solid #c8a96e;
         }
         
         /* Fullscreen Mejorado */
@@ -926,12 +918,9 @@
             <div class="logo-icon">🎵</div>
             <div class="logo-text">
                 <h1>Solfeo Pro NSP 2026</h1>
-                <div class="subtitle">Colegio Nuestra Señora del Pilar</div>
+                <div class="subtitle">Colegio Nuestra Señora del Pilar — Fe y Alegría</div>
             </div>
         </div>
-        <button onclick="testAudio()" style="background:rgba(255,159,67,.2);border:2px solid #ff9f43;color:#ff9f43;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:700;font-size:.8rem;font-family:inherit;">
-            🔊 Probar Audio
-        </button>
     </div>
 </nav>
 
@@ -952,7 +941,7 @@
         <div class="grid-2">
             <div class="input-group">
                 <label class="input-label">🏫 Curso</label>
-                <select id="selCurso" onchange="APP.cargarEstudiantes()">
+                <select id="selCurso" onchange="cargarEstudiantes()">
                     <option value="">— Selecciona curso —</option>
                     <option value="1A">1ro "A"</option><option value="1B">1ro "B"</option><option value="1C">1ro "C"</option>
                     <option value="2A">2do "A"</option><option value="2B">2do "B"</option><option value="2C">2do "C"</option>
@@ -964,12 +953,12 @@
             </div>
             <div class="input-group">
                 <label class="input-label">👤 Estudiante</label>
-                <select id="selAlumno">
+                <select id="inpAlumno">
                     <option value="">— Selecciona curso primero —</option>
                 </select>
             </div>
             <div class="input-group">
-                <label class="input-label">📊 Nivel</label>
+                <label class="input-label">📊 Nivel de Dificultad</label>
                 <select id="selNivel">
                     <option value="principiante">🟢 Principiante (5 notas)</option>
                     <option value="intermedio" selected>🟡 Intermedio (10 notas)</option>
@@ -985,8 +974,9 @@
                 </select>
             </div>
         </div>
+        <!-- Destacados -->
         <div id="destacadosBox" style="display:none;margin-top:10px;padding:10px;background:rgba(255,159,67,.08);border:1px solid rgba(255,159,67,.3);border-radius:8px;">
-            <div style="font-size:.8rem;color:#ff9f43;font-weight:700;margin-bottom:6px;">⭐ DESTACADOS EN PARTICIPACIÓN</div>
+            <div style="font-size:.8rem;color:#ff9f43;font-weight:700;margin-bottom:6px;">⭐ MÁS PARTICIPATIVOS</div>
             <div id="destacadosList" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
         </div>
     </div>
@@ -1065,17 +1055,6 @@
     <div class="card">
         <canvas id="pizarra" width="900" height="280"></canvas>
     </div>
-    
-    <!-- Piano Visual -->
-    <div class="card" style="padding:12px;">
-        <div class="card-header" style="margin-bottom:8px;">
-            <div class="card-icon">🎹</div>
-            <div class="card-title">Piano — toca para escuchar las notas</div>
-        </div>
-        <div id="pianoContainer" style="position:relative;height:100px;display:flex;justify-content:center;gap:2px;overflow:visible;">
-        </div>
-        <div style="text-align:center;margin-top:6px;font-size:.75rem;color:#999;">Toca las teclas para que el estudiante escuche la nota</div>
-    </div>
 
     <!-- Botones de Control Principal -->
     <div class="btn-grid">
@@ -1096,28 +1075,23 @@
         </button>
     </div>
     
-    <!-- Detección de Pitch por Micrófono -->
+    <!-- Micrófono y Auto-evaluación -->
     <div class="card" style="background:rgba(46,204,113,.05);border-color:rgba(46,204,113,.3);">
         <div class="card-header">
             <div class="card-icon">🎤</div>
-            <div class="card-title">Detección de Voz/Afinación</div>
+            <div class="card-title">Detección de Voz — Auto-evaluación</div>
         </div>
-        <div style="display:flex;align-items:center;gap:15px;flex-wrap:wrap;">
-            <button id="btnPitch" class="btn btn-secondary" onclick="iniciarPitch()" style="flex-shrink:0;">
-                🎤 Activar Micrófono
-            </button>
-            <button id="btnModoAuto" class="btn btn-outline" onclick="toggleModoAuto()" style="flex-shrink:0;border-color:#2ecc71;color:#2ecc71;">
-                🤖 Auto: OFF
-            </button>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <button id="btnPitch" class="btn btn-secondary" onclick="togglePitch()">🎤 Activar Mic</button>
+            <button id="btnAuto" class="btn btn-outline" onclick="toggleAuto()" style="border-color:#2ecc71;color:#2ecc71;">🤖 Auto: OFF</button>
             <div style="flex:1;text-align:center;">
-                <div style="font-size:.75rem;color:#999;margin-bottom:4px;">NOTA DETECTADA</div>
-                <div id="pitchDisplay" style="font-size:2rem;font-weight:800;color:#2ecc71;font-family:serif;">—</div>
-                <div id="feedbackAuto" style="font-size:1.2rem;font-weight:800;margin-top:4px;transition:opacity .4s;opacity:0;">—</div>
+                <div style="font-size:.7rem;color:#999;margin-bottom:3px;">NOTA DETECTADA</div>
+                <div id="pitchDisplay" style="font-size:1.8rem;font-weight:800;color:#2ecc71;font-family:serif;min-height:2rem;">—</div>
+                <div id="pitchFeedback" style="font-size:1rem;font-weight:700;min-height:1.5rem;transition:opacity .3s;"></div>
             </div>
         </div>
-        <div style="margin-top:8px;padding:8px;background:rgba(255,255,255,.05);border-radius:6px;font-size:.75rem;color:#999;">
-            💡 <strong style="color:#2ecc71">Modo Auto ON</strong>: el sistema detecta lo que canta el estudiante y marca ✅/❌ automáticamente. 
-            <strong style="color:#ff9f43">Modo Auto OFF</strong>: tú marcas manualmente.
+        <div style="margin-top:8px;font-size:.72rem;color:#888;">
+            💡 <b style="color:#2ecc71">Auto ON</b>: canta la nota y el sistema marca ✅/❌ automáticamente &nbsp;|&nbsp; <b style="color:#ff9f43">Auto OFF</b>: tú marcas con los botones
         </div>
     </div>
 
@@ -1165,7 +1139,6 @@
                 <thead>
                     <tr>
                         <th>📅 Fecha</th>
-                        <th>🏫 Curso</th>
                         <th>👤 Estudiante</th>
                         <th>⏱️ Tiempo</th>
                         <th>📊 Nivel</th>
@@ -1183,6 +1156,8 @@
 
 <!-- Modo Pantalla Completa -->
 <div id="fullscreenContainer" class="fullscreen-container">
+
+    <!-- FILA SUPERIOR -->
     <div class="fs-stats">
         <div class="fs-stat-box">
             <div class="fs-stat-value" id="fsAciertos">0</div>
@@ -1192,143 +1167,78 @@
             <div class="fs-stat-value error" id="fsErrores">0</div>
             <div class="fs-stat-label">✗ Errores</div>
         </div>
-        <!-- Pitch display en fullscreen -->
-        <div class="fs-stat-box" style="min-width:160px;">
-            <div id="fsPitchDisplay" style="font-size:1.6rem;font-weight:800;color:#2ecc71;font-family:serif;">—</div>
+        <div class="fs-stat-box" style="min-width:220px;">
+            <select id="fsSelCurso" onchange="fsCambiarCurso()" style="background:#1a1a2e;color:#fff;border:1px solid #444;border-radius:6px;padding:4px 8px;font-size:.75rem;width:100%;margin-bottom:4px;">
+                <option value="">— Curso —</option>
+                <option value="1A">1ro A</option><option value="1B">1ro B</option><option value="1C">1ro C</option>
+                <option value="2A">2do A</option><option value="2B">2do B</option><option value="2C">2do C</option>
+                <option value="3A">3ro A</option><option value="3B">3ro B</option><option value="3C">3ro C</option>
+                <option value="4A">4to A</option><option value="4B">4to B</option><option value="4C">4to C</option>
+                <option value="5A">5to A</option><option value="5B">5to B</option><option value="5C">5to C</option>
+                <option value="6A">6to A</option><option value="6B">6to B</option><option value="6C">6to C</option>
+            </select>
+            <select id="fsSelAlumno" style="background:#1a1a2e;color:#fff;border:1px solid #444;border-radius:6px;padding:4px 8px;font-size:.75rem;width:100%;">
+                <option value="">— Estudiante —</option>
+            </select>
+        </div>
+        <div class="fs-stat-box" style="min-width:150px;text-align:center;">
+            <div id="fsPitchVal" style="font-size:2rem;font-weight:900;font-family:serif;color:#2ecc71;min-height:2.2rem;">—</div>
             <div class="fs-stat-label">🎤 Nota detectada</div>
         </div>
-        <div class="fs-stat-box" style="min-width:120px;">
-            <div id="fsFeedback" style="font-size:1.3rem;font-weight:800;transition:opacity .4s;opacity:0;">—</div>
-            <div class="fs-stat-label">Resultado</div>
-        </div>
     </div>
-    
+
+    <!-- FEEDBACK GRANDE -->
+    <div id="fsFeedbackGrande" style="position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);font-size:6rem;font-weight:900;opacity:0;transition:opacity .15s;pointer-events:none;text-shadow:0 4px 24px rgba(0,0,0,.9);z-index:10;white-space:nowrap;"></div>
+
     <div class="fs-timer" id="fsCronometro">00:00</div>
-    
+
     <canvas id="pizarraFullscreen" width="1600" height="500" class="fullscreen-canvas"></canvas>
-    
-    <!-- Botón para mostrar/ocultar controles -->
+
     <div class="toggle-controls controls-visible" id="toggleControls" onclick="APP.toggleFsControls()">
         <span id="toggleIcon">▼</span>
     </div>
-    
+
     <div class="fullscreen-controls" id="fsControls">
-        <button class="fs-btn" onclick="APP.fsNuevoEjercicio()" title="Nuevo Ejercicio">🔄</button>
+        <button class="fs-btn" onclick="APP.fsNuevoEjercicio()" title="Nuevo">🔄</button>
         <button class="fs-btn" onclick="APP.fsReproducir()" title="Reproducir">▶️</button>
         <button class="fs-btn" onclick="APP.fsReproducirLento()" title="Lento">🐢</button>
         <button class="fs-btn" onclick="APP.fsAyuda()" title="Respuestas">👁️</button>
-        <button class="fs-btn" onclick="iniciarPitch()" title="Micrófono" id="fsBtnPitch">🎤</button>
-        <button class="fs-btn" onclick="toggleModoAuto()" title="Auto eval" id="fsBtnAuto" style="font-size:14px;">🤖OFF</button>
+        <button id="fsBtnMic" class="fs-btn" onclick="togglePitch()" title="Micrófono">🎤</button>
+        <button id="fsBtnAuto" class="fs-btn" onclick="toggleAuto()" title="Auto-eval" style="font-size:12px;">🤖OFF</button>
+        <button id="fsBtnModo" class="fs-btn" onclick="toggleModo()" title="Modo" style="font-size:11px;background:#8e44ad;">🎵UNO</button>
         <button class="fs-btn success" onclick="APP.fsAcierto()" title="Acierto">✓</button>
         <button class="fs-btn danger" onclick="APP.fsError()" title="Error">✗</button>
+        <button class="fs-btn" onclick="fsGuardar()" title="Guardar" style="background:#2e75b6;font-size:12px;">💾</button>
         <button class="fs-btn danger" onclick="APP.toggleFullscreen()" title="Salir">✕</button>
     </div>
 </div>
 
-<!-- Firebase SDK -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, get, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyDY38P6IayArQ_ebMsmCweoDXwyBZ7hbRY",
-  authDomain: "disciplina-nsp-2026.firebaseapp.com",
-  databaseURL: "https://disciplina-nsp-2026-default-rtdb.firebaseio.com",
-  projectId: "disciplina-nsp-2026",
-  storageBucket: "disciplina-nsp-2026.firebasestorage.app",
-  messagingSenderId: "774148664161",
-  appId: "1:774148664161:web:30d243b2656f0a0d693320"
-};
-const _app = initializeApp(firebaseConfig);
-const _db = getDatabase(_app);
-window._FBS = {db:_db, ref, push, get, onValue};
-</script>
-
 <script>
-// ── ESTUDIANTES POR CURSO ─────────────────────────────────────────
-const ESTUDIANTES = {"1A":["ACHACOLLO AGUILAR, YABEL","AGUILAR QUISPE, KAEL","ALCON AZURDUY, SEBASTIAN","ANDRADE CONDORI, MAXIMILIANO","ARIAS ALVAREZ, ALEXANDRA","CALANI MARCA, HELEN","CANDIA MAITA, NELSON","CANQUI COLQUE, ISABELLA","CHAOCA MOLLE, SAMANTHA","CHAVARRIA ARISPE, MICHEL","CHOQUE TERRAZAS, NICOLAS","CONDORI FERNANDEZ, ILSEN","CRUZ CALIZAYA, LEANDRO","GUARACHI VILLA, RODRIGO","GUTIERREZ CANAVIRI, AYLIN","ICHUTA RODRIGUEZ, AYHELEN","JUYARI TUMIRI, RODRIGO","MEDINA JULIAN, ALEJANDRA","MELENDRES MONTAÑO, MATIAS","MENDOZA CONDORI, ALEXIA","MERIDA MORALES, SAUL","MIRANDA TINTAYA, DARLA","MITA AGUAYO, JANETH","MOLINA MAMANI, REBECA","PONCE AGUILAR, KEVIN","POQUECHOQUE HUAYTARI, DEYMAR","QUIRA MARTINEZ, JHONNY","QUISPE CONDORI, SEBASTIAN","QUISPE ESCALERA, ALINA","ROMERO CANEDO, RAFAELA","ROMERO JAUREGUI, CARLOS","SOLIZ CORIA, DREYKO","TOLA SOLANO, SELENA","VARGAS QUINTANILLA, ESTEFANY","VASQUEZ MALDONADO, ANDY","ZEBALLOS LOPEZ, LUCAS"],"1B":["AGUILAR MORALES, NICOL","AGUILAR MOYA, JHONATAN","ARISPE FERNANDEZ, THIAGO","ATAHUICHI COCA, MARIA","AVAROMA SOMOZA, AMANDA","BAUTISTA CONDORI, BRAYAN","CALLISAYA VASQUEZ, KEILA","CHUNGARA BALDIVIEZO, DAVID","CHUQUICHAMBI APAZA, YULY","CLAROS MAMANI, DAYANA","COLQUE MAMANI, REBECA","CRUZ COPALI, LUZ","FLORES ILLANES, FRANZ","GARCIA CUARASI, ROSZELIN","GARCIA VARGAS, STEFAN","GOMEZ SOSA, JHOAN","GONZALES ROCHA, ERICK","GUZMAN GARCIA, JAMES","JALDIN VILLARROEL, DARY","LOPEZ ARCE, ITAM","LUNA ARIAS, DEYVID","MORALES FLORES, DIANA","PEREZ LUGARANI, JAEL","QUIROZ CHOQUE, HEIDY","QUISPE ALBORTA, NATALIA","QUISPE RODRIGUEZ, JHULIANA","ROCHA CHECO, ALESKA","SANDOVAL BAZOALTO, JARED","TERAN IRAIPI, MARIA","TINTAYA ALVAREZ, JADEN","TORRICO CRESPO, JADE","TORRICO CRESPO, MATIAS","UNZUETA CAERO, RAFAELA","VILLAMOR LORAS, JORGE","ZEBALLOS ROCHA, LUIS"],"1C":["ALVAREZ CASTELLON, DAVID","APAZA DELGADILLO, JOSE","BARRIOS MIRANDA, WILLIAM","BOLIVAR MENDEZ, LUCIANA","CALLISAYA TICONA, CRISTIAN","CAMARGO ARISPE, ALEXA","CHUQUIMIA CORDERO, ELIZABETH","CLAURE MELGAREJO, NEYMAR","COLQUE QUISPE, DARLIN","CORDOVA AYRA, STEFANO","FIGUEROA ZULETA, MARIA","FLORES CALIZAYA, ALEXIA","GANDARILLAS MOLINA, PHEYTON","GARCIA JIMENEZ, JESUS","GARCIA JOANIQUINA, GABRIEL","GUTIERREZ CACERES, CAMILA","HERBAS POMA, CAMILA","JAILLITA REVOLLO, LUCIANA","LAZO CUBA, ADRIANA","MAIRE YUJRA, PEDRO","MAMANI HUAYGUA, SEBASTIAN","MAMANI TITO, YARITA","MANCILLA QUISPE, SHEYLA","MOLINA MAMANI, ANABEL","NOGALES ORELLANA, JUAN","PACARI MAMANI, SCARLETH","PARDO ALA, LINDSAY","PIEDRA CLAROS, CRISTOFER","SANCHEZ VELA, FABRICIO","VASQUEZ RAMOS, MATIAS","VELASQUEZ RIOS, VALERIA","VIDOVIC PAREDES, MILAGROS","YAVE ROLLANO, MARIOLY","ZAMBRANA ZAMBRANA, JHORDY","ZAPATA NOGALES, JHAMIL"],"2A":["ALBARES MENDOZA, ALEXIS","CABALLERO RAMALLO, MAITE","CALDERON GARCIA, WILLIAM","CALLE CRUZ, NICOLAS","CALLER IBAGUARI, EDITH","CARRILLO MEJIA, ITZEL","CASTRO PEÑAFIEL, NICOL","CHOCONI VENTURA, NEYMAR","CLAROS CARI, NICOLAS","CLAROS MAMANI, SOFIA","COPA MAMANI, THIAGO","DELGADILLO COLQUE, RYAN","GONZALES CHAMBI, NICOLAS","HUANCA MAMANI, TREYSI","JAILLITA QUISPE, BRYAN","LLAMPA FERNANDEZ, ELIOTH","MAMANI ZUÑIGA, FERNANDA","ORTUSTE ORELLANA, LUCIANA","PAREDES QUISBERT, ALEXIA","PARRA GARRON, ALBA","PARRADO BUSTAMANTE, SANTIAGO","PEREYRA HOSSE, GHI","PINTO ROJAS, ANDRES","PRADA POMA, ABIGAIL","PUÑA VALENCIA, ANTONIO","QUISPE MARIÑO, JHACK","RIERA GOYTIA, MEGAN","ROJAS BUSTAMANTE, CAMILA","ROMERO CANEDO, LEANDRO","ROMERO RAMOS, LUIS","ROMERO SALAZAR, SAUL","VEIZAGA SOLIS, AINHOA"],"2B":["AGNE CUIZA, ADRIAN","AGUILAR MORALES, SARA","ALBA ALVESTEGUI, JHOANA","ARAMAYO CHINCHILLA, SANTIAGO","ARGANA SOLIZ, LUCAS","AYALA CRESPO, SANTIAGO","CASTELLON MAMANI, TAMAYA","CLAURE GARCIA, WANNER","CLEMENTE MARTINES, JHOSELYN","CONTRERAS GONZALES, IAN","DURAN COLQUE, JOSE","FERNANDEZ FLORES, DANIEL","GONZALES CORIA, EMILY","GUTIERREZ ALEGRE, FAVIO","GUTIERREZ GONZALO, LIZ","LAZARTE CAMACHO, JHON","LOAIZA VELASCO, JHOJAN","LOPEZ ARISPE, DANIEL","MAMANI SEJAS, TATIANA","MERILES TOLA, MICHELLE","MIRANDA PONCE, FERNANDO","PACHECO VELASCO, ALEX","PEREIRA LOZA, JOSE","POZO ROJAS, JUAN","RAMIREZ CASTRO, SKAYLOR","RAMIREZ QUISBERT, MIKEYLA","RICALDEZ SANDOVAL, BRISSA","SILES QUISPE, CAMILA","TORRICO CRESPO, SEBASTIAN","VARGAS QUINTANA, SWAMI","VILLARROEL CAMAQUE, THAIS","ZURITA FERRUFINO, JOSE"],"2C":["GASPAR, SAMUEL","ALBAN MONZON, GERALDINE","ALBARES ZURITA, RODRIGO","CHALLA MENDOZA, ADRIANA","CONDORI BERBETTY, JAZMIN","CUBA OLMEDO, ALEXIS","CUSI VEISAGA, JOSUE","EQUISE CORDOVA, HAROLD","FERNANDEZ MARPARTIDA, PABLO","FLORES ALANES, DIEGO","FLORES PACO, SNAYDER","FRANCO VEGA, THIAGO","GUARACHI FERNANDEZ, HAZIEL","GUTIERREZ CANAVIRI, AMILKAR","LUIZAGA AVILA, BENJAMIN","MAMANI MORALES, FABIOLA","MAMANI SILVA, DOUGLAS","MEJIA VALENCIA, BENJAMIN","PACARI MAMANI, ANDRE","QUISPE CONDORI, LIOMA","QUISPE MARIÑO, NYCK","RAMIREZ ARZE, NATANAEL","RICALDEZ PAREDES, JHAKELIN","RODRIGUEZ GUTIERREZ, SAMUEL","ROMERO FLORES, JUAN","SANCHEZ MARZANA, SHEYLA","SOLIS CUARASI, SHADOL","SOLIZ YAVE, ERIKA","TICONA SURUMI, FERNANDA","TORDOYA QUIROGA, KARIM","URIBE VILLANUEVA, ENRIQUE","YUCRA TICONA, ZARLET"],"3A":["ALBARES ZURITA, JUAN","CAERO DELGADO, MATIAS","CESPEDES GUARENA, JOSE","CHILE ALVAREZ, DYLAN","CHOQUE GALVEZ, JIMENA","CLAURE ARANIBAR, MAYARA","COCA LOZA, KEATHON","CONDORI CEPEDA, AARON","CORIA JIMENEZ, ROSARIO","DELGADILLO COLQUE, ADEMAR","FERNANDEZ FLORES, MATIAS","GONZALES TORRICO, JHOSELIN","JAMES MAREÑO, SEBASTIAN","LEDEZMA MIRANDA, ARABEL","LIMACHI CANAVIRI, JACI","LUNA ARIAS, SAMUEL","MAMANI SOLIZ, DEYMAR","MELENDRES MONTAÑO, ANGELA","MORALES TABOADA, SELENA","PADILLA ROJAS, MIKEYLA","PATIÑO CHAVEZ, DIEGO","PATIÑO COSSIO, VALENTINA","PEREYRA HOSSE, JUAN","POMA VILLARPANDO, JAIR","POQUECHOQUE HUAYTARI, ANDRE","RAMIREZ CLAURE, LESLIE","RIVERO ACERO, EDGAR","RODRIGUEZ MAMANI, KEVIN","ROJAS BUSTAMANTE, ROSARIO","ROMERO RAMOS, MELISA","ROMERO TABORGA, ALAN","RUEDA RODRIGUEZ, LILIAN","UGARTE CHOQUE, JESSICA","VALDA ALVAREZ, JOSE","VILLCA BERNABEL, EVER"],"3B":["CANAVIRI, ANGEL","AGUILAR COLQUE, LUZ","AGUILAR MOYA, CAMILA","ALMANZA HUANCA, EMERSON","ANDIA APAZA, JHEREMY","AYALA CRESPO, ANDRES","BARROSO ROMERO, LUCAS","CAMACHO MAMANI, ANGIE","CANAVIRI VARGAS, SHARON","CARBALLO BUSTAMANTE, JHOSELYN","CHOQUE TITO, NEYMAR","FRANCO VEGA, ALEXANDRA","GARCIA GOMEZ, DILAN","GONZALES ESTRADA, IVANA","GUZMAN ZEPITA, ANDRUW","HERBAS ATAHUICHI, ERICK","HERRERA VIDAURRE, ROBERTO","ICHUTA FERNANDEZ, REINER","LIZARAZU MAMANI, ULISES","LOPEZ MAMANI, DIANA","LUIZAGA VEGA, LEONARDO","MAMANI SILVA, BRISA","MENDOZA PIZAYA, ABDIAZ","MENDOZA CONDORI, PAOLA","PADILLA MARCA, JHENIFER","PEREZ BARRIENTOS, ELIAS","RAMOS CEPEDA, IAN","REYNOSO HERBAS, CAMILA","RIERA GOYTIA, BRIZEIDA","SALINAS CHARUPA, IVONNE","SOLIZ QUIROGA, MATEO","VARGAS VASQUEZ, ANDREA","VEIZAGA GUZMAN, KENDRICK","VELA RIVERA, BRIHANA","YAVE ROLLANO, CHARLE"],"3C":["ANGULO MAMANI, JHON","ANGULO CEREZO, DAILIN","ARAUCO SARDAN, DARLIN","BARRENECHEA SALAZAR, LUIS","CANAVIRI ASTETE, NICOLAS","CESPEDES OLIVERA, LISANDRO","CHAVEZ CONDORI, AYELEN","CHOQUE CABRERA, VICTOR","CHOQUE CONDORI, ALISON","CHOQUE GUTIERREZ, XIOMARA","CORPUS HIDALGO, ALEJANDRA","GALLARDO MENDOZA, CAMILA","HERBAS POMA, DARLIN","JALDIN VILLARROEL, EIDEN","MAMANI REYES, DARLIN","MARCE YAVE, CARLA","MORALES CARICARI, SARAHI","MORALES FLORES, RAFAEL","ORELLANA SANTILLAN, VALERIA","PAREDES COSSIO, ALEJANDRO","PEREDO ORIHUELA, ANDREA","POQUECHOQUE HUAYTARI, ANDERSON","QUIROGA SEJAS, MARCO","RAMOS FIQUE, ALEX","SANCHEZ ROMERO, ANAHI","SILES QUISPE, MATEO","SOLIZ QUIROGA, SAI","SOSA PINTO, ALEJANDRO","TOROYA YAVE, NEYMAR","VASQUEZ SANCHEZ, AXCEL","VELARDE FERNANDEZ, MIGUELANGEL","ZULETA LOPEZ, LUCIANA"],"4A":["PEREZ, FATIMA","ALIENDRE CONDORI, JOSE","ALMANZA HUANCA, ADRIELY","CASA MAMANI, YAMILE","CHAMBI PACHECO, TATIANA","CHOQUE CRUZ, RIHANNA","CHUMBE GERONIMO, DANIELA","CLAROS FERNANDEZ, BRIGITH","CONDORI FERNANDEZ, ADALID","CUTIPA TITO, DAYSI","GUTIERREZ CANAVIRI, ANA","MAIRE ALVARES, ALEJANDRA","MAREÑO SOSA, ALEXIS","PACHECO VELASCO, NAYELI","PARRA GARRON, JHONNY","QUISPE AGUILAR, ANAHI","RIOS MORALES, BELINDA","RIVERO ACERO, JADE","ROCHA VERGARA, MELANY","SOLIZ PEDRAZAS, MAIC","SORIA ESCOBAR, DIEGO","SOTO TAQUICHIRI, EDWARD","TABOADA POMA, FABIAN","TORIBIO TERAN, MATIAS","VELA MARAZA, FATIMA","VELARDE MONTEMAYOR, MATIAS","YUPANQUI RAMOS, EMILY","ZENTENO ALANEZ, ADHEMAR"],"4B":["AMONZABEL FLORES, CAMILA","ARISPE AGUILAR, HELEN","BARRIENTOS MAMANI, BRISA","BOJORGES CARVAJAL, NATALY","CABALLERO RAMALLO, MATEO","CABRERA LAGUNA, FERNANDA","CHOQUE GALVEZ, ABIEL","CONDORI SILES, SAMIEL","GARCIA CUARASI, JHON","GARCIA VILLEGAS, SINDEL","GERONIMO PEREZ, KARIM","GONZALES ROCHA, RUTH","JAILLITA REVOLLO, LIMBERT","JIMENEZ BERRIOS, JHOJAM","LIMACHI CANAVIRI, BRUCE","LIZARAZU MAMANI, ARIANA","LORA ACERO, CARLOS","MARZA AGUILAR, ANTHONY","PARRADO BUSTAMANTE, MARIANA","PINTO ROJAS, NICOLAS","RAMIREZ ALANIZ, GABRIEL","SAJAMA PACO, RUTH","TERRAZAS CAPRILES, ANEL","UGARTE VIDAURRE, LEONARDO","VARGAS JORA, SOFIA","VASQUEZ CUBA, KATERINE","VILLAMOR LORAS, ALISSON","ZULETA ANTEZANA, HAROLD","ZULETA LOPEZ, JEREMY"],"4C":["ALBAN MONZON, ISAAC","ALCOCER CAMPOS, MELANI","APAZA DELGADILLO, NATHANIEL","CABRERA UMAÑA, DIANA","CALDERON MANZEL, AARON","CAMACHO ZAMBRANA, LIZ","CAMARGO PECA, JHOSSTIN","CARVAJAL GABRIEL, HEIDY","CLAROS CARREÑO, ROCIO","COYO CHOQUE, ALISON","GONZALES CORIA, GABRIELA","GUARACHI FERNANDEZ, RUBEN","GUTIERREZ CACERES, JAVIER","HUANCA COSSIO, JOSE","HUANCA MAMANI, THIAGO","HUARACHI YUCRA, RUTH","LOPEZ GONZALES, SARAI","MAGNE ZUÑIGA, ANDERSON","ORELLANA MONTECINOS, JUAN","ORTEGA CARVALLO, MATIAS","PANIAGUA GUZMAN, LUCIANA","PEREDO PINTO, SANTIAGO","TICONA TORDOYA, DANIELA","TICONA MALLON, FABIOLA","TOROYA YAVE, BRITNEY","UGARTE VIDAURRE, LEONEL","VARGAS QUINTANA, CRISTAL","VILLCA VIZA, PAUL"],"5A":["AGNE CUIZA, NICOLAS","AGUILAR DIAZ, VALERIN","CHAVEZ MARISCAL, JOSUE","ESPINOZA DELGADO, DERICK","GARCIA TOTOLA, MARIANA","GOMEZ SOSA, HELSY","GUTIERREZ POMA, KATERIN","HUANCA FLORES, BENJAMIN","ICHUTA FERNANDEZ, JHON","LLAVETA ROJAS, ANTONY","LOPEZ CHOQUE, WILSON","MAMANI HUAYGUA, SAMUEL","ORELLANA MONTECINOS, JOSE","PEREIRA LOZA, JOSE","PEREZ VARGAS, MARIAN","PUÑA VALENCIA, LUCERO","QUISPE AGUILAR, MARCO","RIOS MORALES, NEYZA","RISUEÑO YUJRA, RONY","ROJAS VALDIVIA, DEREK","SARABIA FERNANDEZ, MARCOS","SARZUSA CLAROS, VANESSA","SOTO ORTIZ, JHAMIL","SUSAÑO FLORES, NAIKE","TAPIA ALANEZ, CESAR","TERAN IRAIPI, JUAN","YUJRA MAMANI, JHAMIL","ZAPATA NOGALES, JHOJAN"],"5B":["AQUINO AZURDUY, LUIS","ARIAS SOTO, JHANN","BLAS HUARITA, JUAN","CANDIA MAITA, MASIEL","CHOQUE CONDORI, KIOMMY","COLQUE CHOQUE, MACIEL","CONDORI BERBETTY, CARLOS","CUELLAR LEAÑOS, JOHANA","GUTIERREZ ALEGRE, SANTIAGO","LEDEZMA MIRANDA, BRITANI","MAMANI CANQUI, NAIM","MARTINEZ VILLARROEL, MARECK","MICO DIAZ, LUIS","MORENO MENESES, JHEISON","ORTUSTE ORELLANA, LEONARDO","PAREDES SANABRIA, STEFANY","PEREZ LUGARANI, SANDER","QUINTANILLA RAMIREZ, ANTHONY","QUIROGA SEJAS, VICTORIA","ROCA IBAGUARI, FERNANDA","RODRIGUEZ RODRIGUEZ, ADRIANA","SALINAS CHARUPA, ADRIANA","SANCHEZ ALMANZA, BERENICE","SIÑANIZ ALMANZA, FABIO","VASQUEZ CHOQUE, BOND","ZUBIETA ZENTENO, MARIA"],"5C":["ARGANA SOLIZ, LUCIANA","CAMACHO ZAMBRANA, DEBORAH","CHOQUE MENDOZA, ALVARO","CHUCAMANI JUYARI, HERLINDA","CLAROS TORRES, NICOLAS","CLAURE ARANIBAR, HAZIEL","CRUZ CALVI, SARA","DELGADO LAURA, MILEY","GONZALES ESTRADA, ADRIEL","JARRO CHOQUE, VANIA","MIRANDA AGUILAR, JHAEL","PATIÑO CATALAN, SANTIAGO","PEREDO SILVA, SANTIAGO","POQUECHOQUE CHOQUE, ANGHELI","POSTIGO CORNEJO, ANETH","QUISPE RODRIGUEZ, JHON","RAMOS FIQUE, OLIVER","ROMAY APAZA, JHEYSON","ROMERO RAMOS, REBECA","ROMERO RONDAL, PABLO","SANDOVAL BAZOALTO, AVRIL","SEGOVIA GARCIA, ELIOTH","SULLCA GARCIA, JHOSEP","TORRICO MERCADO, DYLAN","UGARTE VALLEJOS, YASSENDY","VARGAS JORA, PAULA","ZAMBRANA ESPINOZA, EDUARDO"],"6A":["ROJAS, FERNANDA","AGUILAR TITO, KEVIN","CHAVEZ FERNANDEZ, DIEGO","CLAURE GARCIA, DAIRA","COCA LOZA, OLIVER","CONDORCOTA CHUCAMANI, ELMER","COPALI ESPINOZA, OSVALDO","CUSICANQUI RADA, LEANDRO","HINOJOSA CHAMBI, FABRICIO","MAMANI HUAYGUA, HELEN","MARTINEZ VILLARROEL, NELYA","MENDOZA CONDORI, JHOSELIN","MOLINA BARRIENTOS, NOHELIA","MORALES FLORES, ALAIN","PANIAGUA GUZMAN, LUIS","PIEDRA CLAROS, AMY","QUISPE QUISPE, BRENDA","RAMIREZ ALANIZ, DANIEL","RAMOS CEPEDA, ADRIANA","RIOS MORALES, JHOSELIN","TAPIA OLIVERA, ALEJANDRO","TICONA SURUMI, RUBEN","TOLA SOLANO, LUIS","TORIBIO TERAN, ADRIANA","VALLEJOS ROSALES, NARETH","VARGAS AGUILAR, HERLAN"],"6B":["ARGANDOÑA MOYE, KATHERINE","BENITES OJEDA, NICOLAS","CACERES SANDY, MAIZA","CASTRO SANCHEZ, JOHN","CESPEDES OLIVERA, BRENDA","CHALLA MENDOZA, MICHEL","CLAROS TORRES, GUILLERMO","COLQUE BRAVO, ANTONY","COLQUE RODRIGUEZ, JHONATAN","CONDORI CHINCHILLA, FELIX","CUAQUIRA PINTO, JEFFERSON","DIAZ CAMACHO, GIORGIA","DURAN QUILLCA, DARLA","GUARACHI POMA, JOSE","GUTIERREZ GONZALO, MARISOL","JULIO ENRIQUEZ, LUIS","MAMANI SOLIZ, CRISTHIAN","MARCE QUIMPE, FERNANDO","MIRANDA PATZI, BRYANNA","MITA LIMA, CATRIN","PACHECO VELASCO, NEREIDA","QUIROGA SAAVEDRA, CAMILA","RAMIREZ CLAURE, DARLETH","SANCHEZ VELA, NOEMI","SANDAGORDA MONTAÑO, GUADALUPE","TAPIA ALANEZ, BRANDON","USIEDA ORIHUELA, SERGIO","VILLARROEL AÑEZ, DULCE"],"6C":["AGUILAR AGUILAR, ALEXANDER","ANGULO MAMANI, LUIS","CACERES SANDY, SARA","CATARI LIZARAZU, JOSUE","CHAMBI PACHECO, SANTIAGO","CHAMBI PARISACA, ANTHONY","CHAVARRIA ARISPE, JHASMIN","CHUNGARA BALDIVIEZO, RAFAEL","COLQUE CHOQUE, DIANELIS","CONDORI ESPEJO, NAHY","DURAN QUILLCA, DARELA","FERNANDEZ QUINTEROS, EMILY","LUNA CHAMBI, JENNIFER","MAMANI HUAYGUA, ABIGAIL","MAMANI TICONA, RUTH","MARCA CORANI, CRISTIAN","ORTEGA MONTAÑO, JOHAN","PARRA CONDORI, NURIA","QUISPE HINOJOSA, JHON","REYNOSO HERBAS, NICOL","SAJAMA VEIZAGA, ANGEL","TERAN IRAIPI, JOSE","TOTOLA PUQUI, LEIDY","ULURI CORI, GENESIS","VALDIVIEZO MAMANI, SEBASTIAN","VELA MARAZA, NOELIA","ZUNA ZEBALLOS, ELEXANDER"]};
-
-// ── PIANO VISUAL ─────────────────────────────────────────────────
-var PIANO_NOTAS = [
-    {t:'Do4',freq:261.63},{t:'Re4',freq:293.66},{t:'Mi4',freq:329.63},
-    {t:'Fa4',freq:349.23},{t:'Sol4',freq:392.00},{t:'La4',freq:440.00},
-    {t:'Si4',freq:493.88},{t:'Do5',freq:523.25},{t:'Re5',freq:587.33},
-    {t:'Mi5',freq:659.25},{t:'Fa5',freq:698.46},{t:'Sol5',freq:783.99}
-];
-
-function buildPiano() {
-    var cont = document.getElementById('pianoContainer');
-    if(!cont) return;
-    cont.innerHTML = '';
-    PIANO_NOTAS.forEach(function(n) {
-        var key = document.createElement('div');
-        key.style.cssText = 'width:52px;height:90px;background:#f5ead0;border:2px solid #4a3520;border-radius:0 0 8px 8px;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;font-size:.62rem;font-weight:800;color:#4a3520;user-select:none;box-shadow:2px 4px 8px rgba(0,0,0,.4);transition:background .08s,transform .08s;flex-shrink:0;';
-        key.textContent = n.t;
-        key.title = n.t;
-        var play = function(e) {
-            e.preventDefault();
-            initAudio();
-            playNote(n.freq, 1.2);
-            key.style.background = '#c8a96e';
-            key.style.transform = 'scaleY(0.93)';
-            setTimeout(function(){ key.style.background = '#f5ead0'; key.style.transform = ''; }, 250);
-        };
-        key.addEventListener('mousedown', play);
-        key.addEventListener('touchstart', play, {passive:false});
-        cont.appendChild(key);
-    });
-}
+// Continuará en el siguiente mensaje debido al límite de caracteres...
+var audioContext = null;
 
 function initAudio() {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
-    if (audioContext.state === 'suspended') {
-        audioContext.resume();
-    }
-    return audioContext;
 }
 
-function testAudio() {
-    var ctx = initAudio();
-    // Beep corto de prueba
-    var osc = ctx.createOscillator();
-    var g = ctx.createGain();
-    osc.connect(g); g.connect(ctx.destination);
-    osc.frequency.value = 440;
-    g.gain.setValueAtTime(0.3, ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.3);
-    showNotification('🔊 Audio activado - La4 (440Hz)', 'success');
-}
-
-// Desbloquear audio en cualquier interacción
-document.addEventListener('click', function(){ initAudio(); }, {once:true});
-document.addEventListener('touchstart', function(){ initAudio(); }, {once:true});
-
-function playNote(frequency, duration) {
-    duration = duration || 0.5;
+function playNote(frequency, duration = 0.5) {
     initAudio();
-    // Piano sintético: oscilador principal + armónicos
-    var t = audioContext.currentTime;
-    var master = audioContext.createGain();
-    master.connect(audioContext.destination);
-    master.gain.setValueAtTime(0, t);
-    master.gain.linearRampToValueAtTime(0.4, t + 0.01);
-    master.gain.exponentialRampToValueAtTime(0.15, t + duration * 0.3);
-    master.gain.exponentialRampToValueAtTime(0.001, t + duration * 1.2);
-
-    // Frecuencias armónicas de piano
-    [[1,0.6],[2,0.2],[3,0.1],[4,0.05]].forEach(function(h){
-        var osc = audioContext.createOscillator();
-        var g = audioContext.createGain();
-        osc.connect(g); g.connect(master);
-        osc.frequency.value = frequency * h[0];
-        osc.type = h[0] === 1 ? 'triangle' : 'sine';
-        g.gain.value = h[1];
-        osc.start(t);
-        osc.stop(t + duration * 1.2);
-    });
+    var oscillator = audioContext.createOscillator();
+    var gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = frequency;
+    oscillator.type = 'sine';
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + duration);
 }
 
 function showNotification(message, type = 'success') {
@@ -1391,11 +1301,6 @@ var APP = (function() {
         
         ctx.clearRect(0, 0, width, height);
 
-        // Fondo sepia cálido
-        ctx.fillStyle = '#f5ead0';
-        ctx.fillRect(0, 0, width, height);
-
-        // Líneas del pentagrama más gruesas y visibles
         var scale = canvasId === 'pizarraFullscreen' ? 1.8 : 1;
         var BASE_Y = canvasId === 'pizarraFullscreen' ? 350 : 200; 
         var ESP = 11 * scale;
@@ -1403,8 +1308,8 @@ var APP = (function() {
         var endX = width - 50;
 
         ctx.beginPath(); 
-        ctx.strokeStyle = "#4a3520"; 
-        ctx.lineWidth = 2 * scale;
+        ctx.strokeStyle = "#555"; 
+        ctx.lineWidth = 1.5 * scale;
         for(var i=0; i<5; i++) {
             var y = BASE_Y - (i * 2 * ESP);
             ctx.moveTo(startX, y); 
@@ -1412,22 +1317,13 @@ var APP = (function() {
         }
         ctx.stroke();
 
-        // Barra inicial
-        ctx.beginPath();
-        ctx.strokeStyle = "#4a3520";
-        ctx.lineWidth = 3 * scale;
-        ctx.moveTo(startX, BASE_Y - (8*ESP));
-        ctx.lineTo(startX, BASE_Y);
-        ctx.stroke();
-
-        // Clave de Sol
-        ctx.font = (90 * scale) + "px serif"; 
-        ctx.fillStyle = "#2c1810"; 
-        ctx.fillText("𝄞", startX - (5*scale), BASE_Y + (2 * scale));
+        ctx.font = (80 * scale) + "px serif"; 
+        ctx.fillStyle = "#222"; 
+        ctx.fillText("𝄞", startX, BASE_Y - (5 * scale));
 
         if(estado.notas.length === 0) {
              ctx.font = (22 * scale) + "px Arial"; 
-             ctx.fillStyle="#7a5c3a"; 
+             ctx.fillStyle="#666"; 
              ctx.textAlign = "center";
              ctx.fillText("Presiona 'Iniciar Ejercicio' para comenzar", width/2, height/2);
              return;
@@ -1443,40 +1339,37 @@ var APP = (function() {
 
             ctx.save();
             ctx.translate(x, y);
-            ctx.rotate(-0.2);
-            ctx.scale(1.3 * scale, 0.85 * scale);
+            ctx.scale(1.3 * scale, 0.9 * scale); 
             ctx.beginPath(); 
-            ctx.arc(0, 0, 8, 0, 2*Math.PI);
-            // Colores según estado
-            var colorNota = '#1a0a00';
-            if(modoAuto) {
-                var nc = estado.notasColor && estado.notasColor[k];
-                if(nc === 'acierto') colorNota = '#27ae60';        // verde = acertada
-                else if(nc === 'error') colorNota = '#e74c3c';     // rojo = error
-                else if(k === (estado.notaResaltada||0)) colorNota = '#f39c12'; // naranja = actual
+            ctx.arc(0, 0, 7, 0, 2*Math.PI);
+            // Colorear según auto-evaluación
+            var colorN = '#000';
+            if(_auto && _auto.on) {
+                if(k < _auto.idx) colorN = '#27ae60';      // verde = acertada
+                else if(k === _auto.idx) colorN = '#e67e22'; // naranja = actual
             }
-            ctx.fillStyle = colorNota;
+            ctx.fillStyle = colorN;
             ctx.fill();
             ctx.restore();
 
             ctx.beginPath(); 
             ctx.lineWidth = 2 * scale; 
-            ctx.strokeStyle = "#1a0a00";
+            ctx.strokeStyle = "#000";
             if(plicaAbajo) { 
-                ctx.moveTo(x-(10*scale), y+2); 
-                ctx.lineTo(x-(10*scale), y+(38*scale)); 
+                ctx.moveTo(x-(8*scale), y); 
+                ctx.lineTo(x-(8*scale), y+(40*scale)); 
             } else { 
-                ctx.moveTo(x+(10*scale), y-2); 
-                ctx.lineTo(x+(10*scale), y-(38*scale)); 
+                ctx.moveTo(x+(8*scale), y); 
+                ctx.lineTo(x+(8*scale), y-(40*scale)); 
             }
             ctx.stroke();
 
             var linea = function(ly) { 
                 ctx.beginPath(); 
-                ctx.strokeStyle = "#4a3520";
-                ctx.lineWidth = 2 * scale;
-                ctx.moveTo(x-(18*scale), ly); 
-                ctx.lineTo(x+(18*scale), ly); 
+                ctx.strokeStyle = "#555";
+                ctx.lineWidth = 1.5 * scale;
+                ctx.moveTo(x-(16*scale), ly); 
+                ctx.lineTo(x+(16*scale), ly); 
                 ctx.stroke(); 
             };
             
@@ -1486,16 +1379,10 @@ var APP = (function() {
             if(n.v >= 12) linea(BASE_Y - (12*ESP));
 
             if(estado.mostrarAyuda) {
-                // Fondo para el nombre de la nota
-                var labelY = plicaAbajo ? y-(25*scale) : y+(55*scale);
-                ctx.fillStyle = "rgba(220,80,60,.9)"; 
-                ctx.beginPath();
-                ctx.roundRect(x-(20*scale), labelY-(14*scale), 40*scale, 20*scale, 4*scale);
-                ctx.fill();
-                ctx.fillStyle = "#fff"; 
-                ctx.font="bold " + (15 * scale) + "px Arial"; 
+                ctx.fillStyle = "#e74c3c"; 
+                ctx.font="bold " + (16 * scale) + "px Arial"; 
                 ctx.textAlign="center";
-                ctx.fillText(n.t, x, labelY);
+                ctx.fillText(n.t, x, plicaAbajo ? y-(20*scale) : y+(50*scale));
             }
             
             x += spacing;
@@ -1503,16 +1390,9 @@ var APP = (function() {
         
         ctx.beginPath(); 
         ctx.lineWidth = 5 * scale; 
-        ctx.strokeStyle = "#2c1810"; 
-        ctx.moveTo(x, BASE_Y - (8*ESP)); 
+        ctx.strokeStyle = "#222"; 
+        ctx.moveTo(x, BASE_Y - (88*scale)); 
         ctx.lineTo(x, BASE_Y); 
-        ctx.stroke();
-        // Doble barra final
-        ctx.beginPath();
-        ctx.lineWidth = 2 * scale;
-        ctx.strokeStyle = "#2c1810";
-        ctx.moveTo(x + (6*scale), BASE_Y - (8*ESP));
-        ctx.lineTo(x + (6*scale), BASE_Y);
         ctx.stroke();
     }
 
@@ -1621,12 +1501,6 @@ var APP = (function() {
         if(jugar) {
             estado.segundos = 0;
             estado.ejercicioActual++;
-            estado.notaResaltada = 0;
-            estado.notasColor = {};
-            notaActualIdx = 0;
-            _pitchFrames = 0;
-            _pitchNotaActual = '';
-            _pitchEnfriamiento = 0;
             syncTimer();
             
             if(estado.timer) clearInterval(estado.timer);
@@ -1672,18 +1546,19 @@ var APP = (function() {
     }
 
     return {
+        _estado: estado,
+        _updateStats: updateStats,
+        _dibujar: dibujar,
         iniciar: function() {
-            var curso = document.getElementById('selCurso').value;
-            var nom = document.getElementById('selAlumno').value;
-            if(!curso) { 
-                showNotification('⚠️ Selecciona un curso', 'error');
-                return; 
-            }
+            var nom = document.getElementById('inpAlumno').value.trim();
             if(!nom) { 
                 showNotification('⚠️ Selecciona un estudiante', 'error');
-                document.getElementById('selAlumno').focus();
+                document.getElementById('inpAlumno').focus();
                 return; 
             }
+            _auto.idx = 0; _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 0;
+            _libreNotas = [];
+            estado.notaResaltada = 0;
             generar(true);
         },
         
@@ -1820,54 +1695,33 @@ var APP = (function() {
                 showNotification('⚠️ Detén el cronómetro primero', 'error');
                 return; 
             }
-            var curso = document.getElementById('selCurso').value;
-            var alumno = document.getElementById('selAlumno').value;
-            if(!curso || !alumno) {
-                showNotification('⚠️ Selecciona curso y estudiante', 'error');
-                return;
-            }
+            
             var nota = document.getElementById('inpNota').value;
             if(nota && (nota < 0 || nota > 100)) {
                 showNotification('⚠️ La nota debe estar entre 0-100', 'error');
                 return;
             }
-            var trimestre = document.getElementById('selTrimestre').value;
+            
             var data = {
                 f: new Date().toLocaleDateString('es-BO'),
                 h: new Date().toLocaleTimeString('es-BO', {hour: '2-digit', minute: '2-digit'}),
-                curso: curso,
-                estudiante: alumno,
-                trimestre: trimestre,
+                n: document.getElementById('inpAlumno').value,
                 t: document.getElementById('cronometro').innerText,
                 nv: document.getElementById('selNivel').options[document.getElementById('selNivel').selectedIndex].text,
                 ac: estado.aciertos,
                 er: estado.errores,
                 nt: nota || "-",
-                ob: document.getElementById('inpObs').value || "-",
-                ts: Date.now()
+                ob: document.getElementById('inpObs').value || "-"
             };
-            // Guardar en Firebase
-            if(navigator.onLine && window._FBS) {
-                fbGuardarSolfeo(data).then(function(){
-                    showNotification('✓ Guardado en Firebase ✓', 'success');
-                    fbCargarHistorialCurso(curso).then(function(hist){ renderTablaFirebase(hist); });
-                    fbCargarDestacados(curso).then(function(dest){
-                        var box = document.getElementById('destacadosBox');
-                        var list = document.getElementById('destacadosList');
-                        if(dest.length>0){
-                            box.style.display='block';
-                            list.innerHTML=dest.map(function(d,i){return '<span style="background:rgba(255,159,67,.2);border:1px solid rgba(255,159,67,.4);color:#ff9f43;padding:3px 10px;border-radius:20px;font-size:.75rem;">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'⭐')+' '+d[0].split(',')[0]+' ('+d[1]+')</span>';}).join('');
-                        }
-                    });
-                }).catch(function(){ showNotification('⚠️ Error al guardar en Firebase', 'error'); });
-            } else {
-                // Fallback localStorage
-                var hist = JSON.parse(localStorage.getItem('solfeo_pro_bolivia')) || [];
-                hist.unshift(data);
-                localStorage.setItem('solfeo_pro_bolivia', JSON.stringify(hist));
-                showNotification('✓ Guardado localmente (sin internet)', 'success');
-            }
+            
+            var hist = JSON.parse(localStorage.getItem('solfeo_pro_bolivia')) || [];
+            hist.unshift(data);
+            localStorage.setItem('solfeo_pro_bolivia', JSON.stringify(hist));
+            
+            this.renderTabla();
             document.getElementById('btnGuardar').disabled = true;
+            showNotification('✓ Calificación guardada exitosamente', 'success');
+            
             estado.aciertos = 0;
             estado.errores = 0;
             updateStats();
@@ -1908,66 +1762,8 @@ var APP = (function() {
             showNotification('📥 Archivo descargado', 'success');
         },
         
-        autoStart: function() { init(); },
-        
-        cargarEstudiantes: function() {
-            var curso = document.getElementById('selCurso').value;
-            var sel = document.getElementById('selAlumno');
-            sel.innerHTML = '<option value="">— Selecciona estudiante —</option>';
-            if(!curso || !ESTUDIANTES[curso]) return;
-            ESTUDIANTES[curso].forEach(function(n){
-                var op = document.createElement('option');
-                op.value = n; op.textContent = n;
-                sel.appendChild(op);
-            });
-            // Mostrar destacados
-            fbCargarDestacados(curso).then(function(dest){
-                var box = document.getElementById('destacadosBox');
-                var list = document.getElementById('destacadosList');
-                if(dest.length > 0){
-                    box.style.display = 'block';
-                    list.innerHTML = dest.map(function(d,i){
-                        return '<span style="background:rgba(255,159,67,.2);border:1px solid rgba(255,159,67,.4);color:#ff9f43;padding:3px 10px;border-radius:20px;font-size:.75rem;cursor:pointer;" onclick="document.getElementById(\'selAlumno\').value=\''+d[0]+'\'">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'⭐')+' '+d[0].split(',')[0]+' ('+d[1]+')</span>';
-                    }).join('');
-                } else {
-                    box.style.display = 'none';
-                }
-            });
-            // Cargar historial del curso
-            fbCargarHistorialCurso(curso).then(function(hist){
-                renderTablaFirebase(hist);
-            });
-        }
+        autoStart: function() { init(); }
     };
-
-    function renderTablaFirebase(hist) {
-        var tb = document.querySelector('#tablaRes tbody');
-        tb.innerHTML = "";
-        if(!hist || hist.length === 0) {
-            tb.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#999;padding:30px;">Sin registros para este curso</td></tr>';
-            return;
-        }
-        hist.forEach(function(x) {
-            var notaBadge = '';
-            if(x.nt && x.nt !== "-") {
-                var nota = parseInt(x.nt);
-                if(nota >= 70) notaBadge = '<span class="badge badge-success">'+x.nt+'</span>';
-                else if(nota >= 51) notaBadge = '<span class="badge badge-warning">'+x.nt+'</span>';
-                else notaBadge = '<span class="badge badge-danger">'+x.nt+'</span>';
-            } else { notaBadge = '-'; }
-            tb.innerHTML += "<tr>" +
-                "<td>"+x.f+" <br><small>"+x.h+"</small></td>" +
-                "<td><strong style='color:#ff9f43'>"+x.curso+"</strong></td>" +
-                "<td><strong>"+x.estudiante+"</strong></td>" +
-                "<td>"+x.t+"</td>" +
-                "<td>"+x.nv+"</td>" +
-                "<td style='color:var(--success);'><strong>"+x.ac+"</strong></td>" +
-                "<td style='color:var(--danger);'><strong>"+x.er+"</strong></td>" +
-                "<td>"+notaBadge+"</td>" +
-                "<td>"+x.ob+"</td>" +
-                "</tr>";
-        });
-    }
 
     function renderTabla() {
         var tb = document.querySelector('#tablaRes tbody');
@@ -2005,275 +1801,337 @@ var APP = (function() {
     }
 })();
 
-// ── PITCH DETECTION POR MICRÓFONO ────────────────────────────────
-var pitchStream = null, pitchAnalyser = null, pitchDetecting = false;
-var pitchAudioCtx = null;
+// ══════════════════════════════════════════════
+// MEJORAS NSP 2026
+// ══════════════════════════════════════════════
 
-function frecuenciaNota(freq) {
-    // Incluir más octavas para voces humanas (soprano, contralto, tenor, bajo)
-    var notas = [
-        {t:'Do3',freq:130.81},{t:'Re3',freq:146.83},{t:'Mi3',freq:164.81},
-        {t:'Fa3',freq:174.61},{t:'Sol3',freq:196.00},{t:'La3',freq:220.00},
-        {t:'Si3',freq:246.94},
-        {t:'Do4',freq:261.63},{t:'Re4',freq:293.66},{t:'Mi4',freq:329.63},
-        {t:'Fa4',freq:349.23},{t:'Sol4',freq:392.00},{t:'La4',freq:440.00},
-        {t:'Si4',freq:493.88},
-        {t:'Do5',freq:523.25},{t:'Re5',freq:587.33},{t:'Mi5',freq:659.25},
-        {t:'Fa5',freq:698.46},{t:'Sol5',freq:783.99},{t:'La5',freq:880.00},
-        {t:'Si5',freq:987.77}
-    ];
-    var mejor = notas[0], diff = Math.abs(freq - notas[0].freq);
-    for(var i=1;i<notas.length;i++){
-        var d = Math.abs(freq - notas[i].freq);
-        if(d < diff){diff = d; mejor = notas[i];}
-    }
-    // Tolerancia de 45Hz para voces humanas (antes era 30)
+// ── ESTUDIANTES POR CURSO ──
+var ED_NSP = {"1A":["ACHACOLLO AGUILAR, YABEL","AGUILAR QUISPE, KAEL","ALCON AZURDUY, SEBASTIAN","ANDRADE CONDORI, MAXIMILIANO","ARIAS ALVAREZ, ALEXANDRA","CALANI MARCA, HELEN","CANDIA MAITA, NELSON","CANQUI COLQUE, ISABELLA","CHAOCA MOLLE, SAMANTHA","CHAVARRIA ARISPE, MICHEL","CHOQUE TERRAZAS, NICOLAS","CONDORI FERNANDEZ, ILSEN","CRUZ CALIZAYA, LEANDRO","GUARACHI VILLA, RODRIGO","GUTIERREZ CANAVIRI, AYLIN","ICHUTA RODRIGUEZ, AYHELEN","JUYARI TUMIRI, RODRIGO","MEDINA JULIAN, ALEJANDRA","MELENDRES MONTAÑO, MATIAS","MENDOZA CONDORI, ALEXIA","MERIDA MORALES, SAUL","MIRANDA TINTAYA, DARLA","MITA AGUAYO, JANETH","MOLINA MAMANI, REBECA","PONCE AGUILAR, KEVIN","POQUECHOQUE HUAYTARI, DEYMAR","QUIRA MARTINEZ, JHONNY","QUISPE CONDORI, SEBASTIAN","QUISPE ESCALERA, ALINA","ROMERO CANEDO, RAFAELA","ROMERO JAUREGUI, CARLOS","SOLIZ CORIA, DREYKO","TOLA SOLANO, SELENA","VARGAS QUINTANILLA, ESTEFANY","VASQUEZ MALDONADO, ANDY","ZEBALLOS LOPEZ, LUCAS"],"1B":["AGUILAR MORALES, NICOL","AGUILAR MOYA, JHONATAN","ARISPE FERNANDEZ, THIAGO","ATAHUICHI COCA, MARIA","AVAROMA SOMOZA, AMANDA","BAUTISTA CONDORI, BRAYAN","CALLISAYA VASQUEZ, KEILA","CHUNGARA BALDIVIEZO, DAVID","CHUQUICHAMBI APAZA, YULY","CLAROS MAMANI, DAYANA","COLQUE MAMANI, REBECA","CRUZ COPALI, LUZ","FLORES ILLANES, FRANZ","GARCIA CUARASI, ROSZELIN","GARCIA VARGAS, STEFAN","GOMEZ SOSA, JHOAN","GONZALES ROCHA, ERICK","GUZMAN GARCIA, JAMES","JALDIN VILLARROEL, DARY","LOPEZ ARCE, ITAM","LUNA ARIAS, DEYVID","MORALES FLORES, DIANA","PEREZ LUGARANI, JAEL","QUIROZ CHOQUE, HEIDY","QUISPE ALBORTA, NATALIA","QUISPE RODRIGUEZ, JHULIANA","ROCHA CHECO, ALESKA","SANDOVAL BAZOALTO, JARED","TERAN IRAIPI, MARIA","TINTAYA ALVAREZ, JADEN","TORRICO CRESPO, JADE","TORRICO CRESPO, MATIAS","UNZUETA CAERO, RAFAELA","VILLAMOR LORAS, JORGE","ZEBALLOS ROCHA, LUIS"],"1C":["ALVAREZ CASTELLON, DAVID","APAZA DELGADILLO, JOSE","BARRIOS MIRANDA, WILLIAM","BOLIVAR MENDEZ, LUCIANA","CALLISAYA TICONA, CRISTIAN","CAMARGO ARISPE, ALEXA","CHUQUIMIA CORDERO, ELIZABETH","CLAURE MELGAREJO, NEYMAR","COLQUE QUISPE, DARLIN","CORDOVA AYRA, STEFANO","FIGUEROA ZULETA, MARIA","FLORES CALIZAYA, ALEXIA","GANDARILLAS MOLINA, PHEYTON","GARCIA JIMENEZ, JESUS","GARCIA JOANIQUINA, GABRIEL","GUTIERREZ CACERES, CAMILA","HERBAS POMA, CAMILA","JAILLITA REVOLLO, LUCIANA","LAZO CUBA, ADRIANA","MAIRE YUJRA, PEDRO","MAMANI HUAYGUA, SEBASTIAN","MAMANI TITO, YARITA","MANCILLA QUISPE, SHEYLA","MOLINA MAMANI, ANABEL","NOGALES ORELLANA, JUAN","PACARI MAMANI, SCARLETH","PARDO ALA, LINDSAY","PIEDRA CLAROS, CRISTOFER","SANCHEZ VELA, FABRICIO","VASQUEZ RAMOS, MATIAS","VELASQUEZ RIOS, VALERIA","VIDOVIC PAREDES, MILAGROS","YAVE ROLLANO, MARIOLY","ZAMBRANA ZAMBRANA, JHORDY","ZAPATA NOGALES, JHAMIL"],"2A":["ALBARES MENDOZA, ALEXIS","CABALLERO RAMALLO, MAITE","CALDERON GARCIA, WILLIAM","CALLE CRUZ, NICOLAS","CALLER IBAGUARI, EDITH","CARRILLO MEJIA, ITZEL","CASTRO PEÑAFIEL, NICOL","CHOCONI VENTURA, NEYMAR","CLAROS CARI, NICOLAS","CLAROS MAMANI, SOFIA","COPA MAMANI, THIAGO","DELGADILLO COLQUE, RYAN","GONZALES CHAMBI, NICOLAS","HUANCA MAMANI, TREYSI","JAILLITA QUISPE, BRYAN","LLAMPA FERNANDEZ, ELIOTH","MAMANI ZUÑIGA, FERNANDA","ORTUSTE ORELLANA, LUCIANA","PAREDES QUISBERT, ALEXIA","PARRA GARRON, ALBA","PARRADO BUSTAMANTE, SANTIAGO","PEREYRA HOSSE, GHI","PINTO ROJAS, ANDRES","PRADA POMA, ABIGAIL","PUÑA VALENCIA, ANTONIO","QUISPE MARIÑO, JHACK","RIERA GOYTIA, MEGAN","ROJAS BUSTAMANTE, CAMILA","ROMERO CANEDO, LEANDRO","ROMERO RAMOS, LUIS","ROMERO SALAZAR, SAUL","VEIZAGA SOLIS, AINHOA"],"2B":["AGNE CUIZA, ADRIAN","AGUILAR MORALES, SARA","ALBA ALVESTEGUI, JHOANA","ARAMAYO CHINCHILLA, SANTIAGO","ARGANA SOLIZ, LUCAS","AYALA CRESPO, SANTIAGO","CASTELLON MAMANI, TAMAYA","CLAURE GARCIA, WANNER","CLEMENTE MARTINES, JHOSELYN","CONTRERAS GONZALES, IAN","DURAN COLQUE, JOSE","FERNANDEZ FLORES, DANIEL","GONZALES CORIA, EMILY","GUTIERREZ ALEGRE, FAVIO","GUTIERREZ GONZALO, LIZ","LAZARTE CAMACHO, JHON","LOAIZA VELASCO, JHOJAN","LOPEZ ARISPE, DANIEL","MAMANI SEJAS, TATIANA","MERILES TOLA, MICHELLE","MIRANDA PONCE, FERNANDO","PACHECO VELASCO, ALEX","PEREIRA LOZA, JOSE","POZO ROJAS, JUAN","RAMIREZ CASTRO, SKAYLOR","RAMIREZ QUISBERT, MIKEYLA","RICALDEZ SANDOVAL, BRISSA","SILES QUISPE, CAMILA","TORRICO CRESPO, SEBASTIAN","VARGAS QUINTANA, SWAMI","VILLARROEL CAMAQUE, THAIS","ZURITA FERRUFINO, JOSE"],"2C":["GASPAR, SAMUEL","ALBAN MONZON, GERALDINE","ALBARES ZURITA, RODRIGO","CHALLA MENDOZA, ADRIANA","CONDORI BERBETTY, JAZMIN","CUBA OLMEDO, ALEXIS","CUSI VEISAGA, JOSUE","EQUISE CORDOVA, HAROLD","FERNANDEZ MARPARTIDA, PABLO","FLORES ALANES, DIEGO","FLORES PACO, SNAYDER","FRANCO VEGA, THIAGO","GUARACHI FERNANDEZ, HAZIEL","GUTIERREZ CANAVIRI, AMILKAR","LUIZAGA AVILA, BENJAMIN","MAMANI MORALES, FABIOLA","MAMANI SILVA, DOUGLAS","MEJIA VALENCIA, BENJAMIN","PACARI MAMANI, ANDRE","QUISPE CONDORI, LIOMA","QUISPE MARIÑO, NYCK","RAMIREZ ARZE, NATANAEL","RICALDEZ PAREDES, JHAKELIN","RODRIGUEZ GUTIERREZ, SAMUEL","ROMERO FLORES, JUAN","SANCHEZ MARZANA, SHEYLA","SOLIS CUARASI, SHADOL","SOLIZ YAVE, ERIKA","TICONA SURUMI, FERNANDA","TORDOYA QUIROGA, KARIM","URIBE VILLANUEVA, ENRIQUE","YUCRA TICONA, ZARLET"],"3A":["ALBARES ZURITA, JUAN","CAERO DELGADO, MATIAS","CESPEDES GUARENA, JOSE","CHILE ALVAREZ, DYLAN","CHOQUE GALVEZ, JIMENA","CLAURE ARANIBAR, MAYARA","COCA LOZA, KEATHON","CONDORI CEPEDA, AARON","CORIA JIMENEZ, ROSARIO","DELGADILLO COLQUE, ADEMAR","FERNANDEZ FLORES, MATIAS","GONZALES TORRICO, JHOSELIN","JAMES MAREÑO, SEBASTIAN","LEDEZMA MIRANDA, ARABEL","LIMACHI CANAVIRI, JACI","LUNA ARIAS, SAMUEL","MAMANI SOLIZ, DEYMAR","MELENDRES MONTAÑO, ANGELA","MORALES TABOADA, SELENA","PADILLA ROJAS, MIKEYLA","PATIÑO CHAVEZ, DIEGO","PATIÑO COSSIO, VALENTINA","PEREYRA HOSSE, JUAN","POMA VILLARPANDO, JAIR","POQUECHOQUE HUAYTARI, ANDRE","RAMIREZ CLAURE, LESLIE","RIVERO ACERO, EDGAR","RODRIGUEZ MAMANI, KEVIN","ROJAS BUSTAMANTE, ROSARIO","ROMERO RAMOS, MELISA","ROMERO TABORGA, ALAN","RUEDA RODRIGUEZ, LILIAN","UGARTE CHOQUE, JESSICA","VALDA ALVAREZ, JOSE","VILLCA BERNABEL, EVER"],"3B":["CANAVIRI, ANGEL","AGUILAR COLQUE, LUZ","AGUILAR MOYA, CAMILA","ALMANZA HUANCA, EMERSON","ANDIA APAZA, JHEREMY","AYALA CRESPO, ANDRES","BARROSO ROMERO, LUCAS","CAMACHO MAMANI, ANGIE","CANAVIRI VARGAS, SHARON","CARBALLO BUSTAMANTE, JHOSELYN","CHOQUE TITO, NEYMAR","FRANCO VEGA, ALEXANDRA","GARCIA GOMEZ, DILAN","GONZALES ESTRADA, IVANA","GUZMAN ZEPITA, ANDRUW","HERBAS ATAHUICHI, ERICK","HERRERA VIDAURRE, ROBERTO","ICHUTA FERNANDEZ, REINER","LIZARAZU MAMANI, ULISES","LOPEZ MAMANI, DIANA","LUIZAGA VEGA, LEONARDO","MAMANI SILVA, BRISA","MENDOZA PIZAYA, ABDIAZ","MENDOZA CONDORI, PAOLA","PADILLA MARCA, JHENIFER","PEREZ BARRIENTOS, ELIAS","RAMOS CEPEDA, IAN","REYNOSO HERBAS, CAMILA","RIERA GOYTIA, BRIZEIDA","SALINAS CHARUPA, IVONNE","SOLIZ QUIROGA, MATEO","VARGAS VASQUEZ, ANDREA","VEIZAGA GUZMAN, KENDRICK","VELA RIVERA, BRIHANA","YAVE ROLLANO, CHARLE"],"3C":["ANGULO MAMANI, JHON","ANGULO CEREZO, DAILIN","ARAUCO SARDAN, DARLIN","BARRENECHEA SALAZAR, LUIS","CANAVIRI ASTETE, NICOLAS","CESPEDES OLIVERA, LISANDRO","CHAVEZ CONDORI, AYELEN","CHOQUE CABRERA, VICTOR","CHOQUE CONDORI, ALISON","CHOQUE GUTIERREZ, XIOMARA","CORPUS HIDALGO, ALEJANDRA","GALLARDO MENDOZA, CAMILA","HERBAS POMA, DARLIN","JALDIN VILLARROEL, EIDEN","MAMANI REYES, DARLIN","MARCE YAVE, CARLA","MORALES CARICARI, SARAHI","MORALES FLORES, RAFAEL","ORELLANA SANTILLAN, VALERIA","PAREDES COSSIO, ALEJANDRO","PEREDO ORIHUELA, ANDREA","POQUECHOQUE HUAYTARI, ANDERSON","QUIROGA SEJAS, MARCO","RAMOS FIQUE, ALEX","SANCHEZ ROMERO, ANAHI","SILES QUISPE, MATEO","SOLIZ QUIROGA, SAI","SOSA PINTO, ALEJANDRO","TOROYA YAVE, NEYMAR","VASQUEZ SANCHEZ, AXCEL","VELARDE FERNANDEZ, MIGUELANGEL","ZULETA LOPEZ, LUCIANA"],"4A":["PEREZ, FATIMA","ALIENDRE CONDORI, JOSE","ALMANZA HUANCA, ADRIELY","CASA MAMANI, YAMILE","CHAMBI PACHECO, TATIANA","CHOQUE CRUZ, RIHANNA","CHUMBE GERONIMO, DANIELA","CLAROS FERNANDEZ, BRIGITH","CONDORI FERNANDEZ, ADALID","CUTIPA TITO, DAYSI","GUTIERREZ CANAVIRI, ANA","MAIRE ALVARES, ALEJANDRA","MAREÑO SOSA, ALEXIS","PACHECO VELASCO, NAYELI","PARRA GARRON, JHONNY","QUISPE AGUILAR, ANAHI","RIOS MORALES, BELINDA","RIVERO ACERO, JADE","ROCHA VERGARA, MELANY","SOLIZ PEDRAZAS, MAIC","SORIA ESCOBAR, DIEGO","SOTO TAQUICHIRI, EDWARD","TABOADA POMA, FABIAN","TORIBIO TERAN, MATIAS","VELA MARAZA, FATIMA","VELARDE MONTEMAYOR, MATIAS","YUPANQUI RAMOS, EMILY","ZENTENO ALANEZ, ADHEMAR"],"4B":["AMONZABEL FLORES, CAMILA","ARISPE AGUILAR, HELEN","BARRIENTOS MAMANI, BRISA","BOJORGES CARVAJAL, NATALY","CABALLERO RAMALLO, MATEO","CABRERA LAGUNA, FERNANDA","CHOQUE GALVEZ, ABIEL","CONDORI SILES, SAMIEL","GARCIA CUARASI, JHON","GARCIA VILLEGAS, SINDEL","GERONIMO PEREZ, KARIM","GONZALES ROCHA, RUTH","JAILLITA REVOLLO, LIMBERT","JIMENEZ BERRIOS, JHOJAM","LIMACHI CANAVIRI, BRUCE","LIZARAZU MAMANI, ARIANA","LORA ACERO, CARLOS","MARZA AGUILAR, ANTHONY","PARRADO BUSTAMANTE, MARIANA","PINTO ROJAS, NICOLAS","RAMIREZ ALANIZ, GABRIEL","SAJAMA PACO, RUTH","TERRAZAS CAPRILES, ANEL","UGARTE VIDAURRE, LEONARDO","VARGAS JORA, SOFIA","VASQUEZ CUBA, KATERINE","VILLAMOR LORAS, ALISSON","ZULETA ANTEZANA, HAROLD","ZULETA LOPEZ, JEREMY"],"4C":["ALBAN MONZON, ISAAC","ALCOCER CAMPOS, MELANI","APAZA DELGADILLO, NATHANIEL","CABRERA UMAÑA, DIANA","CALDERON MANZEL, AARON","CAMACHO ZAMBRANA, LIZ","CAMARGO PECA, JHOSSTIN","CARVAJAL GABRIEL, HEIDY","CLAROS CARREÑO, ROCIO","COYO CHOQUE, ALISON","GONZALES CORIA, GABRIELA","GUARACHI FERNANDEZ, RUBEN","GUTIERREZ CACERES, JAVIER","HUANCA COSSIO, JOSE","HUANCA MAMANI, THIAGO","HUARACHI YUCRA, RUTH","LOPEZ GONZALES, SARAI","MAGNE ZUÑIGA, ANDERSON","ORELLANA MONTECINOS, JUAN","ORTEGA CARVALLO, MATIAS","PANIAGUA GUZMAN, LUCIANA","PEREDO PINTO, SANTIAGO","TICONA TORDOYA, DANIELA","TICONA MALLON, FABIOLA","TOROYA YAVE, BRITNEY","UGARTE VIDAURRE, LEONEL","VARGAS QUINTANA, CRISTAL","VILLCA VIZA, PAUL"],"5A":["AGNE CUIZA, NICOLAS","AGUILAR DIAZ, VALERIN","CHAVEZ MARISCAL, JOSUE","ESPINOZA DELGADO, DERICK","GARCIA TOTOLA, MARIANA","GOMEZ SOSA, HELSY","GUTIERREZ POMA, KATERIN","HUANCA FLORES, BENJAMIN","ICHUTA FERNANDEZ, JHON","LLAVETA ROJAS, ANTONY","LOPEZ CHOQUE, WILSON","MAMANI HUAYGUA, SAMUEL","ORELLANA MONTECINOS, JOSE","PEREIRA LOZA, JOSE","PEREZ VARGAS, MARIAN","PUÑA VALENCIA, LUCERO","QUISPE AGUILAR, MARCO","RIOS MORALES, NEYZA","RISUEÑO YUJRA, RONY","ROJAS VALDIVIA, DEREK","SARABIA FERNANDEZ, MARCOS","SARZUSA CLAROS, VANESSA","SOTO ORTIZ, JHAMIL","SUSAÑO FLORES, NAIKE","TAPIA ALANEZ, CESAR","TERAN IRAIPI, JUAN","YUJRA MAMANI, JHAMIL","ZAPATA NOGALES, JHOJAN"],"5B":["AQUINO AZURDUY, LUIS","ARIAS SOTO, JHANN","BLAS HUARITA, JUAN","CANDIA MAITA, MASIEL","CHOQUE CONDORI, KIOMMY","COLQUE CHOQUE, MACIEL","CONDORI BERBETTY, CARLOS","CUELLAR LEAÑOS, JOHANA","GUTIERREZ ALEGRE, SANTIAGO","LEDEZMA MIRANDA, BRITANI","MAMANI CANQUI, NAIM","MARTINEZ VILLARROEL, MARECK","MICO DIAZ, LUIS","MORENO MENESES, JHEISON","ORTUSTE ORELLANA, LEONARDO","PAREDES SANABRIA, STEFANY","PEREZ LUGARANI, SANDER","QUINTANILLA RAMIREZ, ANTHONY","QUIROGA SEJAS, VICTORIA","ROCA IBAGUARI, FERNANDA","RODRIGUEZ RODRIGUEZ, ADRIANA","SALINAS CHARUPA, ADRIANA","SANCHEZ ALMANZA, BERENICE","SIÑANIZ ALMANZA, FABIO","VASQUEZ CHOQUE, BOND","ZUBIETA ZENTENO, MARIA"],"5C":["ARGANA SOLIZ, LUCIANA","CAMACHO ZAMBRANA, DEBORAH","CHOQUE MENDOZA, ALVARO","CHUCAMANI JUYARI, HERLINDA","CLAROS TORRES, NICOLAS","CLAURE ARANIBAR, HAZIEL","CRUZ CALVI, SARA","DELGADO LAURA, MILEY","GONZALES ESTRADA, ADRIEL","JARRO CHOQUE, VANIA","MIRANDA AGUILAR, JHAEL","PATIÑO CATALAN, SANTIAGO","PEREDO SILVA, SANTIAGO","POQUECHOQUE CHOQUE, ANGHELI","POSTIGO CORNEJO, ANETH","QUISPE RODRIGUEZ, JHON","RAMOS FIQUE, OLIVER","ROMAY APAZA, JHEYSON","ROMERO RAMOS, REBECA","ROMERO RONDAL, PABLO","SANDOVAL BAZOALTO, AVRIL","SEGOVIA GARCIA, ELIOTH","SULLCA GARCIA, JHOSEP","TORRICO MERCADO, DYLAN","UGARTE VALLEJOS, YASSENDY","VARGAS JORA, PAULA","ZAMBRANA ESPINOZA, EDUARDO"],"6A":["ROJAS, FERNANDA","AGUILAR TITO, KEVIN","CHAVEZ FERNANDEZ, DIEGO","CLAURE GARCIA, DAIRA","COCA LOZA, OLIVER","CONDORCOTA CHUCAMANI, ELMER","COPALI ESPINOZA, OSVALDO","CUSICANQUI RADA, LEANDRO","HINOJOSA CHAMBI, FABRICIO","MAMANI HUAYGUA, HELEN","MARTINEZ VILLARROEL, NELYA","MENDOZA CONDORI, JHOSELIN","MOLINA BARRIENTOS, NOHELIA","MORALES FLORES, ALAIN","PANIAGUA GUZMAN, LUIS","PIEDRA CLAROS, AMY","QUISPE QUISPE, BRENDA","RAMIREZ ALANIZ, DANIEL","RAMOS CEPEDA, ADRIANA","RIOS MORALES, JHOSELIN","TAPIA OLIVERA, ALEJANDRO","TICONA SURUMI, RUBEN","TOLA SOLANO, LUIS","TORIBIO TERAN, ADRIANA","VALLEJOS ROSALES, NARETH","VARGAS AGUILAR, HERLAN"],"6B":["ARGANDOÑA MOYE, KATHERINE","BENITES OJEDA, NICOLAS","CACERES SANDY, MAIZA","CASTRO SANCHEZ, JOHN","CESPEDES OLIVERA, BRENDA","CHALLA MENDOZA, MICHEL","CLAROS TORRES, GUILLERMO","COLQUE BRAVO, ANTONY","COLQUE RODRIGUEZ, JHONATAN","CONDORI CHINCHILLA, FELIX","CUAQUIRA PINTO, JEFFERSON","DIAZ CAMACHO, GIORGIA","DURAN QUILLCA, DARLA","GUARACHI POMA, JOSE","GUTIERREZ GONZALO, MARISOL","JULIO ENRIQUEZ, LUIS","MAMANI SOLIZ, CRISTHIAN","MARCE QUIMPE, FERNANDO","MIRANDA PATZI, BRYANNA","MITA LIMA, CATRIN","PACHECO VELASCO, NEREIDA","QUIROGA SAAVEDRA, CAMILA","RAMIREZ CLAURE, DARLETH","SANCHEZ VELA, NOEMI","SANDAGORDA MONTAÑO, GUADALUPE","TAPIA ALANEZ, BRANDON","USIEDA ORIHUELA, SERGIO","VILLARROEL AÑEZ, DULCE"],"6C":["AGUILAR AGUILAR, ALEXANDER","ANGULO MAMANI, LUIS","CACERES SANDY, SARA","CATARI LIZARAZU, JOSUE","CHAMBI PACHECO, SANTIAGO","CHAMBI PARISACA, ANTHONY","CHAVARRIA ARISPE, JHASMIN","CHUNGARA BALDIVIEZO, RAFAEL","COLQUE CHOQUE, DIANELIS","CONDORI ESPEJO, NAHY","DURAN QUILLCA, DARELA","FERNANDEZ QUINTEROS, EMILY","LUNA CHAMBI, JENNIFER","MAMANI HUAYGUA, ABIGAIL","MAMANI TICONA, RUTH","MARCA CORANI, CRISTIAN","ORTEGA MONTAÑO, JOHAN","PARRA CONDORI, NURIA","QUISPE HINOJOSA, JHON","REYNOSO HERBAS, NICOL","SAJAMA VEIZAGA, ANGEL","TERAN IRAIPI, JOSE","TOTOLA PUQUI, LEIDY","ULURI CORI, GENESIS","VALDIVIEZO MAMANI, SEBASTIAN","VELA MARAZA, NOELIA","ZUNA ZEBALLOS, ELEXANDER"]};
+
+function cargarEstudiantes() {
+    var curso = document.getElementById('selCurso').value;
+    var sel = document.getElementById('inpAlumno');
+    sel.innerHTML = '<option value="">— Estudiante —</option>';
+    if(!curso || !ED_NSP[curso]) return;
+    ED_NSP[curso].forEach(function(n){
+        var op = document.createElement('option');
+        op.value = n; op.textContent = n; sel.appendChild(op);
+    });
+}
+
+// ── PIANO VISUAL ──
+var PIANO_KEYS = [
+    {t:'Do4',f:261.63},{t:'Re4',f:293.66},{t:'Mi4',f:329.63},{t:'Fa4',f:349.23},
+    {t:'Sol4',f:392.00},{t:'La4',f:440.00},{t:'Si4',f:493.88},{t:'Do5',f:523.25},
+    {t:'Re5',f:587.33},{t:'Mi5',f:659.25},{t:'Fa5',f:698.46},{t:'Sol5',f:783.99}
+];
+
+function buildPiano() {
+    var c = document.getElementById('pianoContainer');
+    if(!c) return;
+    c.innerHTML = '';
+    PIANO_KEYS.forEach(function(n){
+        var k = document.createElement('div');
+        k.style.cssText = 'width:50px;height:88px;background:#f5ead0;border:2px solid #4a3520;border-radius:0 0 6px 6px;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;font-size:.6rem;font-weight:800;color:#4a3520;user-select:none;box-shadow:2px 3px 6px rgba(0,0,0,.3);transition:background .08s,transform .08s;flex-shrink:0;';
+        k.textContent = n.t;
+        var fn = function(e){ e.preventDefault(); playNote(n.f,1.0); k.style.background='#c8a96e'; k.style.transform='scaleY(.95)'; setTimeout(function(){k.style.background='#f5ead0';k.style.transform='';},200); };
+        k.addEventListener('mousedown', fn);
+        k.addEventListener('touchstart', fn, {passive:false});
+        c.appendChild(k);
+    });
+}
+
+// ── MICRÓFONO + AUTO-EVALUACIÓN ──
+var _mic = {stream:null, analyser:null, ctx:null, running:false};
+var _auto = {on:false, idx:0, frames:0, nota:'', enfriando:0};
+
+var NOTAS_PITCH = [
+    {t:'Do3',f:130.81},{t:'Re3',f:146.83},{t:'Mi3',f:164.81},{t:'Fa3',f:174.61},
+    {t:'Sol3',f:196.00},{t:'La3',f:220.00},{t:'Si3',f:246.94},
+    {t:'Do4',f:261.63},{t:'Re4',f:293.66},{t:'Mi4',f:329.63},{t:'Fa4',f:349.23},
+    {t:'Sol4',f:392.00},{t:'La4',f:440.00},{t:'Si4',f:493.88},
+    {t:'Do5',f:523.25},{t:'Re5',f:587.33},{t:'Mi5',f:659.25},
+    {t:'Fa5',f:698.46},{t:'Sol5',f:783.99},{t:'La5',f:880.00}
+];
+
+function detectarNota(freq) {
+    var mejor = null, diff = 999;
+    NOTAS_PITCH.forEach(function(n){
+        var d = Math.abs(freq - n.f);
+        if(d < diff){ diff = d; mejor = n; }
+    });
     return diff < 45 ? mejor : null;
 }
 
-function autoCorrelate(buf, sampleRate) {
+function autoCorrelate2(buf, sr) {
     var SIZE = buf.length, rms = 0;
     for(var i=0;i<SIZE;i++) rms += buf[i]*buf[i];
     rms = Math.sqrt(rms/SIZE);
-    if(rms < 0.01) return -1;
-    var r1=0,r2=SIZE-1,thres=0.2;
-    for(var i=0;i<SIZE/2;i++) if(Math.abs(buf[i])<thres){r1=i;break;}
-    for(var i=1;i<SIZE/2;i++) if(Math.abs(buf[SIZE-i])<thres){r2=SIZE-i;break;}
-    buf = buf.slice(r1,r2);
-    SIZE = buf.length;
+    if(rms < 0.015) return -1;
+    var r1=0, r2=SIZE-1, th=0.2;
+    for(var i=0;i<SIZE/2;i++) if(Math.abs(buf[i])<th){r1=i;break;}
+    for(var i=1;i<SIZE/2;i++) if(Math.abs(buf[SIZE-i])<th){r2=SIZE-i;break;}
+    buf = buf.slice(r1,r2); SIZE = buf.length;
     var c = new Array(SIZE).fill(0);
     for(var i=0;i<SIZE;i++) for(var j=0;j<SIZE-i;j++) c[i]+=buf[j]*buf[j+i];
-    var d=0;
-    while(c[d]>c[d+1]) d++;
-    var maxval=-1, maxpos=-1;
-    for(var i=d;i<SIZE;i++) if(c[i]>maxval){maxval=c[i];maxpos=i;}
-    var T0=maxpos;
-    var x1=c[T0-1],x2=c[T0],x3=c[T0+1],a=(x1+x3-2*x2)/2,b=(x3-x1)/2;
-    if(a) T0 = T0 - b/(2*a);
-    return sampleRate/T0;
+    var d=0; while(c[d]>c[d+1]) d++;
+    var max=-1, pos=-1;
+    for(var i=d;i<SIZE;i++) if(c[i]>max){max=c[i];pos=i;}
+    if(pos<0) return -1;
+    var x1=c[pos-1]||0, x2=c[pos], x3=c[pos+1]||0;
+    var a=(x1+x3-2*x2)/2, b=(x3-x1)/2;
+    if(a) pos = pos - b/(2*a);
+    return sr/pos;
 }
 
-async function iniciarPitch() {
-    if(pitchDetecting){detenerPitch();return;}
+async function togglePitch() {
+    if(_mic.running) {
+        _mic.running = false;
+        if(_mic.stream) _mic.stream.getTracks().forEach(function(t){t.stop();});
+        if(_mic.ctx) _mic.ctx.close();
+        _mic = {stream:null, analyser:null, ctx:null, running:false};
+        document.getElementById('btnPitch').textContent = '🎤 Activar Mic';
+        document.getElementById('btnPitch').style.background = '';
+        document.getElementById('pitchDisplay').textContent = '—';
+        return;
+    }
     try {
-        pitchStream = await navigator.mediaDevices.getUserMedia({audio:true});
-        pitchAudioCtx = new (window.AudioContext||window.webkitAudioContext)();
-        var src = pitchAudioCtx.createMediaStreamSource(pitchStream);
-        pitchAnalyser = pitchAudioCtx.createAnalyser();
-        pitchAnalyser.fftSize = 2048;
-        src.connect(pitchAnalyser);
-        pitchDetecting = true;
+        _mic.stream = await navigator.mediaDevices.getUserMedia({audio:true, video:false});
+        _mic.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        var src = _mic.ctx.createMediaStreamSource(_mic.stream);
+        _mic.analyser = _mic.ctx.createAnalyser();
+        _mic.analyser.fftSize = 2048;
+        src.connect(_mic.analyser);
+        _mic.running = true;
         document.getElementById('btnPitch').textContent = '🎤 Detener Mic';
         document.getElementById('btnPitch').style.background = '#e74c3c';
-        var fsBtn = document.getElementById('fsBtnPitch');
-        if(fsBtn) { fsBtn.textContent = '🎤✓'; fsBtn.style.background = '#e74c3c'; }
-        loopPitch();
-        showNotification('🎤 Micrófono activo — ¡Canta!', 'success');
+        document.getElementById('btnPitch').style.color = '#fff';
+        var fb2 = document.getElementById('fsBtnMic');
+        if(fb2){ fb2.textContent='🎤✓'; fb2.style.background='#e74c3c'; }
+        _loopPitch();
+        showNotification('🎤 Micrófono activo', 'success');
     } catch(e) {
         showNotification('⚠️ No se pudo acceder al micrófono', 'error');
     }
 }
 
-function detenerPitch() {
-    pitchDetecting = false;
-    if(pitchStream) pitchStream.getTracks().forEach(function(t){t.stop();});
-    if(pitchAudioCtx) pitchAudioCtx.close();
-    document.getElementById('btnPitch').textContent = '🎤 Activar Micrófono';
-    document.getElementById('btnPitch').style.background = '';
-    var fsBtn = document.getElementById('fsBtnPitch');
-    if(fsBtn) { fsBtn.textContent = '🎤'; fsBtn.style.background = ''; }
-    document.getElementById('pitchDisplay').textContent = '—';
-    var fsDisp = document.getElementById('fsPitchDisplay');
-    if(fsDisp) fsDisp.textContent = '—';
+// MODO: 'uno' = nota por nota | 'libre' = canta todo seguido | 'secuencia' = en orden sin pausas
+var _modo = 'uno'; // por defecto nota por nota
+var _libreNotas = []; // notas detectadas en modo libre
+var _libreTimer = null;
+
+function toggleModo() {
+    var modos = ['uno','secuencia','libre'];
+    var labels = ['🎵UNO','🎶SEQ','🎤LIBRE'];
+    var descs = ['Nota por nota — espera que aciertes para avanzar','Secuencia — detecta en orden sin esperar acierto','Libre — canta todo seguido, puntaje al final'];
+    var idx = modos.indexOf(_modo);
+    _modo = modos[(idx+1) % modos.length];
+    var btn = document.getElementById('fsBtnModo');
+    if(btn) btn.textContent = labels[modos.indexOf(_modo)];
+    _auto.idx = 0; _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 0;
+    _libreNotas = [];
+    showNotification('Modo: ' + descs[modos.indexOf(_modo)], 'success');
 }
 
-// ── PITCH AUTO-EVALUACIÓN ─────────────────────────────────────────
-var notaActualIdx = 0;
-var modoAuto = false;
-var _pitchFrames = 0;        // frames consecutivos con misma nota
-var _pitchNotaActual = '';   // nota detectada actualmente
-var _pitchEnfriamiento = 0;  // frames de espera tras evaluar
+function _evaluarLibre(nota, esp) {
+    var notaN = nota.t.replace(/\d/g,'');
+    var espN = esp.t.replace(/\d/g,'');
+    return nota.t === esp.t || notaN === espN;
+}
 
-function loopPitch() {
-    if(!pitchDetecting) return;
-    var buf = new Float32Array(pitchAnalyser.fftSize);
-    pitchAnalyser.getFloatTimeDomainData(buf);
-    var freq = autoCorrelate(buf, pitchAudioCtx.sampleRate);
+function _mostrarResumenLibre() {
+    if(!APP._estado) return;
+    var total = APP._estado.notas.length;
+    var ac = 0;
+    _libreNotas.forEach(function(n,i){
+        if(i < total) {
+            var notaN = (n||'').replace(/\d/g,'');
+            var espN = APP._estado.notas[i].t.replace(/\d/g,'');
+            if(notaN === espN) ac++;
+        }
+    });
+    var er = total - ac;
+    APP._estado.aciertos = ac;
+    APP._estado.errores = er;
+    APP._updateStats();
+    fsMostrarFeedback(ac+'/'+total+' ✅', ac >= total*0.7 ? '#2ecc71' : '#e74c3c');
+    showNotification('Resultado libre: '+ac+' aciertos de '+total, 'success');
+    APP.parar();
+}
+
+function toggleAuto() {
+    _auto.on = !_auto.on;
+    _auto.idx = 0; _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 0;
+    _libreNotas = [];
+    var btn = document.getElementById('btnAuto');
+    var btnFs = document.getElementById('fsBtnAuto');
+    var label = _auto.on ? '🤖 Auto: ON' : '🤖 Auto: OFF';
+    var labelFs = _auto.on ? '🤖ON' : '🤖OFF';
+    if(btn){ btn.textContent=label; btn.style.background=_auto.on?'#2ecc71':''; btn.style.color=_auto.on?'#000':'#2ecc71'; }
+    if(btnFs){ btnFs.textContent=labelFs; btnFs.style.background=_auto.on?'#2ecc71':'#333'; btnFs.style.color=_auto.on?'#000':'#fff'; }
+    showNotification(_auto.on?'🤖 Auto ON — modo: '+_modo:'✋ Auto OFF', 'success');
+}
+
+function _loopPitch() {
+    if(!_mic.running) return;
+    var buf = new Float32Array(_mic.analyser.fftSize);
+    _mic.analyser.getFloatTimeDomainData(buf);
+    var freq = autoCorrelate2(buf, _mic.ctx.sampleRate);
     var disp = document.getElementById('pitchDisplay');
-    var fsDisp = document.getElementById('fsPitchDisplay');
+    var fb = document.getElementById('pitchFeedback');
 
-    // Enfriamiento: ignorar detección por N frames tras evaluar
-    if(_pitchEnfriamiento > 0) {
-        _pitchEnfriamiento--;
-        setTimeout(loopPitch, 80);
-        return;
-    }
+    if(_auto.enfriando > 0) { _auto.enfriando--; setTimeout(_loopPitch, 80); return; }
 
-    if(freq > 80 && freq < 1200) {
-        var nota = frecuenciaNota(freq);
+    if(freq > 80 && freq < 1100) {
+        var nota = detectarNota(freq);
         if(nota) {
-            if(disp) { disp.textContent = nota.t + ' (' + Math.round(freq) + 'Hz)'; }
-            if(fsDisp) { fsDisp.textContent = nota.t; }
+            if(disp) disp.textContent = nota.t + ' (' + Math.round(freq) + 'Hz)';
+            var fsP = document.getElementById('fsPitchVal');
+            if(fsP) fsP.textContent = nota.t;
 
-            if(modoAuto && estado.notas.length > 0 && notaActualIdx < estado.notas.length) {
-                var notaEsperada = estado.notas[notaActualIdx];
+            if(_auto.on && APP._estado && APP._estado.notas.length > 0) {
+                var notaNombre = nota.t.replace(/\d/g,'');
 
-                if(nota.t === notaEsperada.t) {
-                    // Acumulamos frames de la nota correcta
-                    if(_pitchNotaActual === nota.t) {
-                        _pitchFrames++;
-                    } else {
-                        _pitchNotaActual = nota.t;
-                        _pitchFrames = 1;
-                    }
-                    if(disp) disp.style.color = '#2ecc71';
-                    if(fsDisp) fsDisp.style.color = '#2ecc71';
-
-                    // 7 frames consecutivos (~560ms) = acierto confirmado
-                    if(_pitchFrames >= 7) {
-                        _pitchFrames = 0;
-                        _pitchNotaActual = '';
-                        _pitchEnfriamiento = 12; // ~1 segundo de pausa
-                        estado.notasColor = estado.notasColor || {};
-                        estado.notasColor[notaActualIdx] = 'acierto';
-                        estado.aciertos++;
-                        updateStats();
-                        mostrarResultadoGrande('✅ ' + notaEsperada.t, '#2ecc71');
-                        notaActualIdx++;
-                        estado.notaResaltada = notaActualIdx;
-                        dibujar();
-                        if(estado.fullscreen) dibujar('pizarraFullscreen', 1600, 500);
-                        if(notaActualIdx >= estado.notas.length) {
-                            setTimeout(function(){
-                                mostrarResultadoGrande('🎉 ¡COMPLETADO!', '#f39c12');
-                                if(estado.corriendo) APP.parar();
-                            }, 400);
+                // ── MODO LIBRE: detecta todas las notas sin orden ──
+                if(_modo === 'libre') {
+                    if(disp) disp.style.color = '#f39c12';
+                    if(fsP) fsP.style.color = '#f39c12';
+                    if(_auto.nota === nota.t) _auto.frames++;
+                    else { _auto.nota = nota.t; _auto.frames = 1; }
+                    if(_auto.frames >= 5) {
+                        _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 8;
+                        _libreNotas.push(nota.t);
+                        var progreso = _libreNotas.length;
+                        var total = APP._estado.notas.length;
+                        fsMostrarFeedback(nota.t + ' (' + progreso + '/' + total + ')', '#f39c12');
+                        if(progreso >= total) {
+                            setTimeout(_mostrarResumenLibre, 300);
                         }
                     }
-                } else {
-                    // Nota incorrecta — resetear contador
-                    if(_pitchNotaActual !== nota.t) {
-                        _pitchNotaActual = nota.t;
-                        _pitchFrames = 1;
-                    } else {
-                        _pitchFrames++;
-                    }
-                    if(disp) disp.style.color = '#e74c3c';
-                    if(fsDisp) fsDisp.style.color = '#e74c3c';
 
-                    // 8 frames incorrectos = error confirmado
-                    if(_pitchFrames >= 8) {
-                        _pitchFrames = 0;
-                        _pitchNotaActual = '';
-                        _pitchEnfriamiento = 10;
-                        estado.notasColor = estado.notasColor || {};
-                        estado.notasColor[notaActualIdx] = 'error';
-                        estado.errores++;
-                        updateStats();
-                        mostrarResultadoGrande('❌ Era: ' + notaEsperada.t, '#e74c3c');
-                        dibujar();
-                        if(estado.fullscreen) dibujar('pizarraFullscreen', 1600, 500);
+                // ── MODO SECUENCIA: avanza en orden sin esperar acierto ──
+                } else if(_modo === 'secuencia' && _auto.idx < APP._estado.notas.length) {
+                    var esp = APP._estado.notas[_auto.idx];
+                    var espN = esp.t.replace(/\d/g,'');
+                    var acierta = notaNombre === espN;
+                    if(disp) disp.style.color = acierta ? '#2ecc71' : '#e74c3c';
+                    if(fsP) fsP.style.color = acierta ? '#2ecc71' : '#e74c3c';
+                    if(_auto.nota === nota.t) _auto.frames++;
+                    else { _auto.nota = nota.t; _auto.frames = 1; }
+                    if(_auto.frames >= 5) {
+                        _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 6;
+                        if(acierta) {
+                            APP._estado.aciertos++; fsMostrarFeedback('✅ '+esp.t, '#2ecc71');
+                        } else {
+                            APP._estado.errores++; fsMostrarFeedback('❌ '+nota.t+' ≠ '+esp.t, '#e74c3c');
+                        }
+                        APP._updateStats();
+                        _auto.idx++;
+                        APP._estado.notaResaltada = _auto.idx;
+                        APP._dibujar();
+                        if(_auto.idx >= APP._estado.notas.length) {
+                            setTimeout(function(){ fsMostrarFeedback('🎉 FIN','#f39c12'); APP.parar(); }, 300);
+                        }
+                    }
+
+                // ── MODO UNO: nota por nota, espera acierto ──
+                } else if(_modo === 'uno' && _auto.idx < APP._estado.notas.length) {
+                    var esp = APP._estado.notas[_auto.idx];
+                    var espN2 = esp.t.replace(/\d/g,'');
+                    var acierta2 = notaNombre === espN2;
+                    if(disp) disp.style.color = acierta2 ? '#2ecc71' : '#e74c3c';
+                    if(fsP) fsP.style.color = acierta2 ? '#2ecc71' : '#e74c3c';
+                    if(acierta2) {
+                        if(_auto.nota === nota.t) _auto.frames++;
+                        else { _auto.nota = nota.t; _auto.frames = 1; }
+                        if(_auto.frames >= 6) {
+                            _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 15;
+                            APP._estado.aciertos++; APP._updateStats();
+                            fsMostrarFeedback('✅ ' + esp.t, '#2ecc71');
+                            _auto.idx++;
+                            APP._estado.notaResaltada = _auto.idx;
+                            APP._dibujar();
+                            if(_auto.idx >= APP._estado.notas.length) {
+                                setTimeout(function(){ fsMostrarFeedback('🎉 ¡COMPLETADO!','#f39c12'); APP.parar(); }, 300);
+                            }
+                        }
+                    } else {
+                        if(_auto.nota === nota.t) _auto.frames++;
+                        else { _auto.nota = nota.t; _auto.frames = 1; }
+                        if(_auto.frames >= 8) {
+                            _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 10;
+                            APP._estado.errores++; APP._updateStats();
+                            fsMostrarFeedback('❌ Era: ' + esp.t, '#e74c3c');
+                        }
                     }
                 }
             } else {
                 if(disp) disp.style.color = '#2ecc71';
-                if(fsDisp) fsDisp.style.color = '#2ecc71';
-                _pitchFrames = 0;
+                if(fsP) fsP.style.color = '#2ecc71';
             }
         } else {
-            if(disp) { disp.textContent = Math.round(freq) + 'Hz'; disp.style.color = '#999'; }
-            if(fsDisp) { fsDisp.textContent = '~'; }
-            _pitchFrames = 0; _pitchNotaActual = '';
+            if(disp){ disp.textContent=Math.round(freq)+'Hz'; disp.style.color='#999'; }
+            _auto.frames=0;
         }
     } else {
-        if(disp) { disp.textContent = '—'; disp.style.color = '#999'; }
-        if(fsDisp) { fsDisp.textContent = '—'; }
-        _pitchFrames = 0; _pitchNotaActual = '';
+        if(disp){ disp.textContent='—'; disp.style.color='#999'; }
+        var fsP2=document.getElementById('fsPitchVal'); if(fsP2) fsP2.textContent='—';
+        _auto.frames=0; _auto.nota='';
     }
-    setTimeout(loopPitch, 80);
+    setTimeout(_loopPitch, 80);
 }
 
-function mostrarResultadoGrande(msg, color) {
-    // Resultado en panel normal
-    var fb = document.getElementById('feedbackAuto');
-    if(fb) { fb.textContent = msg; fb.style.color = color; fb.style.fontSize = '1.4rem'; fb.style.opacity = '1'; setTimeout(function(){ fb.style.opacity = '0'; }, 1500); }
-    // Resultado en fullscreen
-    var fbFs = document.getElementById('fsFeedback');
-    if(fbFs) { fbFs.textContent = msg; fbFs.style.color = color; fbFs.style.fontSize = '1.8rem'; fbFs.style.opacity = '1'; setTimeout(function(){ fbFs.style.opacity = '0'; }, 1500); }
-    // Flash de color en la pantalla completa
-    if(estado.fullscreen) {
-        var fc = document.getElementById('fullscreenContainer');
-        if(fc) {
-            fc.style.transition = 'background .1s';
-            fc.style.background = color + '22';
-            setTimeout(function(){ fc.style.background = ''; }, 400);
-        }
-    }
-}
-
-function mostrarFeedback(msg, color) {
-    mostrarResultadoGrande(msg, color);
-}
-
-function resaltarNota(idx) {
-    estado.notaResaltada = idx;
-    dibujar();
-    if(estado.fullscreen) dibujar('pizarraFullscreen', 1600, 500);
-}
-
-function toggleModoAuto() {
-    modoAuto = !modoAuto;
-    notaActualIdx = 0;
-    var btn = document.getElementById('btnModoAuto');
-    var btnFs = document.getElementById('fsBtnAuto');
-    if(btn) { btn.textContent = modoAuto ? '🤖 Auto: ON' : '🤖 Auto: OFF'; btn.style.background = modoAuto ? '#2ecc71' : ''; btn.style.color = modoAuto ? '#000' : ''; }
-    if(btnFs) { btnFs.textContent = modoAuto ? '🤖ON' : '🤖OFF'; btnFs.style.background = modoAuto ? '#2ecc71' : ''; btnFs.style.color = modoAuto ? '#000' : ''; }
-    showNotification(modoAuto ? '🤖 Modo automático ON — el sistema marca solo' : '✋ Modo manual', 'success');
-}
-
-// ── FIREBASE SOLFEO ───────────────────────────────────────────────
-async function fbGuardarSolfeo(data) {
-    if(!window._FBS) return;
-    var {db,ref,push} = window._FBS;
-    await push(ref(db,'solfeo'), data);
-}
-
-async function fbCargarHistorialCurso(curso) {
-    if(!window._FBS) return [];
-    var {db,ref,get} = window._FBS;
-    var snap = await get(ref(db,'solfeo'));
-    var result = [];
-    if(snap.exists()) {
-        snap.forEach(function(c){
-            var r = c.val();
-            if(r.curso === curso) result.push(r);
-        });
-    }
-    return result.sort(function(a,b){return b.ts-a.ts;});
-}
-
-async function fbCargarDestacados(curso) {
-    var hist = await fbCargarHistorialCurso(curso);
-    var conteo = {};
-    hist.forEach(function(r){
-        if(!conteo[r.estudiante]) conteo[r.estudiante] = 0;
-        conteo[r.estudiante]++;
+function fsCambiarCurso() {
+    var curso = document.getElementById('fsSelCurso').value;
+    var sel = document.getElementById('fsSelAlumno');
+    sel.innerHTML = '<option value="">— Estudiante —</option>';
+    if(!curso || !ED_NSP[curso]) return;
+    ED_NSP[curso].forEach(function(n){
+        var op = document.createElement('option');
+        op.value = n; op.textContent = n; sel.appendChild(op);
     });
-    return Object.entries(conteo).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+    // Sincronizar con selectores normales
+    var sc = document.getElementById('selCurso');
+    if(sc) sc.value = curso;
+    cargarEstudiantes();
+}
+
+function fsMostrarFeedback(msg, color) {
+    var fb = document.getElementById('fsFeedbackGrande');
+    if(!fb) return;
+    fb.textContent = msg;
+    fb.style.color = color;
+    fb.style.opacity = '1';
+    // Flash de fondo
+    var fc = document.getElementById('fullscreenContainer');
+    if(fc){ fc.style.transition='background .1s'; fc.style.background=color+'18'; setTimeout(function(){fc.style.background='';},350); }
+    setTimeout(function(){ fb.style.opacity='0'; }, 1000);
+}
+
+function fsGuardar() {
+    var curso = document.getElementById('fsSelCurso').value;
+    var alumno = document.getElementById('fsSelAlumno').value;
+    if(!curso || !alumno) { showNotification('⚠️ Selecciona curso y estudiante', 'error'); return; }
+    var est = APP._estado;
+    var data = {
+        f: new Date().toLocaleDateString('es-BO'),
+        h: new Date().toLocaleTimeString('es-BO',{hour:'2-digit',minute:'2-digit'}),
+        n: alumno,
+        curso: curso,
+        t: document.getElementById('fsCronometro').innerText,
+        nv: document.getElementById('selNivel').options[document.getElementById('selNivel').selectedIndex].text,
+        ac: est ? est.aciertos : 0,
+        er: est ? est.errores : 0,
+        nt: '-',
+        ob: 'Pantalla completa'
+    };
+    var hist = JSON.parse(localStorage.getItem('solfeo_pro_bolivia')||'[]');
+    hist.unshift(data);
+    localStorage.setItem('solfeo_pro_bolivia', JSON.stringify(hist));
+    showNotification('💾 Guardado: '+alumno.split(',')[0]+' — '+data.ac+' aciertos', 'success');
 }
 
 APP.autoStart();
-</script>
-<script>
-(function(){
-  if(!('serviceWorker' in navigator)) return;
-  var c = "self.addEventListener('install',function(){self.skipWaiting();});";
-  c += "self.addEventListener('activate',function(){self.clients.claim();});";
-  c += "self.addEventListener('fetch',function(e){";
-  c += "if(e.request.method!=='GET'||e.request.url.indexOf('firebaseio.com')>=0||e.request.url.indexOf('gstatic.com')>=0)return;";
-  c += "e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request);}));});";
-  try{navigator.serviceWorker.register(URL.createObjectURL(new Blob([c],{type:'text/javascript'})));}catch(x){}
-})();
 </script>
 </body>
 </html>
