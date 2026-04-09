@@ -1,2137 +1,532 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solfeo Pro Bolivia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --primary: #0f7b6c;
-            --primary-dark: #0a5a4e;
-            --primary-light: #a8e6cf;
-            --secondary: #ff9f43;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --warning: #f39c12;
-            --dark: #1a1a1a;
-            --dark-light: #2d2d2d;
-            --dark-lighter: #383838;
-            --text-light: #e0e0e0;
-            --text-muted: #999;
-            --border: #444;
-        }
-        
-        body { 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: var(--text-light);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        /* Navbar Superior */
-        .navbar {
-            background: var(--dark-light);
-            padding: 15px 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 2px solid var(--primary);
-        }
-        
-        .navbar-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 4px 15px rgba(15, 123, 108, 0.3);
-        }
-        
-        .logo-text h1 {
-            font-size: 22px;
-            font-weight: 800;
-            color: white;
-            line-height: 1;
-        }
-        
-        .logo-text .subtitle {
-            font-size: 11px;
-            color: var(--primary-light);
-            font-weight: 500;
-            margin-top: 2px;
-        }
-        
-        /* Container Principal */
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        
-        /* Cards Modernos */
-        .card {
-            background: var(--dark-light);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-        }
-        
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .card-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--primary);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-        
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
-        }
-        
-        /* Input Groups Modernos */
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        
-        .input-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        input[type="text"], 
-        input[type="number"], 
-        select {
-            width: 100%;
-            padding: 14px 16px;
-            font-size: 15px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            background: var(--dark);
-            color: white;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-        
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(15, 123, 108, 0.15);
-        }
-        
-        /* Grid Responsive */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-        }
-        
-        /* Stats Cards Modernos */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, var(--dark-lighter) 0%, var(--dark) 100%);
-            padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-            border: 1px solid var(--border);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-        
-        .stat-value {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--success);
-            margin-bottom: 5px;
-            line-height: 1;
-        }
-        
-        .stat-value.danger {
-            color: var(--danger);
-        }
-        
-        .stat-value.warning {
-            color: var(--warning);
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-        
-        /* Timer Profesional */
-        .timer-card {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            padding: 24px;
-            border-radius: 16px;
-            text-align: center;
-            border: 2px solid var(--secondary);
-            box-shadow: 0 0 30px rgba(255, 159, 67, 0.3);
-        }
-        
-        .timer-display {
-            font-size: 56px;
-            font-weight: 800;
-            color: var(--secondary);
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 20px rgba(255, 159, 67, 0.5);
-            letter-spacing: 4px;
-        }
-        
-        .timer-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 8px;
-            letter-spacing: 2px;
-        }
-        
-        /* Progress Bar Moderno */
-        .progress-wrapper {
-            margin: 20px 0;
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        
-        .progress-container {
-            width: 100%;
-            height: 8px;
-            background: var(--dark);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
-        }
-        
-        /* Botones Profesionales */
-        .btn {
-            padding: 14px 24px;
-            font-size: 15px;
-            font-weight: 600;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            justify-content: center;
-            text-decoration: none;
-            font-family: 'Inter', sans-serif;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #b33939 0%, var(--danger) 100%);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: linear-gradient(135deg, #227093 0%, #3498db 100%);
-            color: white;
-        }
-        
-        .btn-warning {
-            background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
-            color: white;
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--border);
-            color: var(--text-light);
-        }
-        
-        .btn-outline:hover {
-            background: var(--dark-lighter);
-            border-color: var(--primary);
-        }
-        
-        .btn-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-        }
-        
-        /* Toggle Chips */
-        .chip-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 16px 0;
-        }
-        
-        .chip {
-            padding: 10px 18px;
-            background: var(--dark);
-            border: 2px solid var(--border);
-            border-radius: 24px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .chip:hover {
-            border-color: var(--primary);
-            background: var(--dark-lighter);
-            transform: translateY(-1px);
-        }
-        
-        .chip.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-        }
-        
-        /* Checkbox Moderno */
-        .checkbox-item {
-            padding: 12px 16px;
-            background: var(--dark);
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .checkbox-item:hover {
-            border-color: var(--primary);
-            background: var(--dark-lighter);
-        }
-        
-        .checkbox-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: var(--primary);
-        }
-        
-        /* Canvas con Sombra */
-        canvas {
-            background: #f5ead0;
-            width: 100%;
-            max-width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-            border: 3px solid #c8a96e;
-        }
-        
-        /* Fullscreen Mejorado */
-        .fullscreen-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #f4f1ea;
-            z-index: 9999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .fullscreen-container.active {
-            display: flex;
-        }
-        
-        .fs-stats {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            display: flex;
-            gap: 20px;
-        }
-        
-        .fs-stat-box {
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 30px;
-            border-radius: 16px;
-            text-align: center;
-            min-width: 100px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .fs-stat-value {
-            font-size: 42px;
-            font-weight: 800;
-            color: var(--success);
-        }
-        
-        .fs-stat-value.error {
-            color: var(--danger);
-        }
-        
-        .fs-stat-label {
-            font-size: 11px;
-            color: #ccc;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
-        }
-        
-        .fs-timer {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 25px 40px;
-            border-radius: 16px;
-            font-size: 64px;
-            font-weight: 800;
-            color: var(--secondary);
-            font-family: 'Courier New', monospace;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            border: 3px solid var(--secondary);
-        }
-        
-        .fullscreen-canvas {
-            max-width: 95vw;
-            max-height: 75vh;
-        }
-        
-        .fullscreen-controls {
-            position: absolute;
-            bottom: 40px;
-            display: flex;
-            gap: 15px;
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 30px;
-            border-radius: 60px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-            transition: all 0.3s ease;
-        }
-        
-        .fullscreen-controls.hidden {
-            bottom: -100px;
-        }
-        
-        .toggle-controls {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 30px;
-            background: rgba(26, 26, 26, 0.8);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .toggle-controls:hover {
-            background: rgba(26, 26, 26, 0.95);
-            border-color: var(--primary);
-        }
-        
-        .toggle-controls.controls-visible {
-            bottom: 125px;
-        }
-        
-        .fs-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: none;
-            background: var(--dark-lighter);
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        
-        .fs-btn:hover {
-            transform: scale(1.15);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-        }
-        
-        .fs-btn.success {
-            background: linear-gradient(135deg, #218c74, #2ecc71);
-        }
-        
-        .fs-btn.danger {
-            background: linear-gradient(135deg, #b33939, #e74c3c);
-        }
-        
-        /* Tabla Profesional */
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-        
-        thead {
-            background: var(--dark);
-        }
-        
-        th {
-            padding: 16px;
-            text-align: left;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: var(--primary-light);
-        }
-        
-        td {
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        tbody tr {
-            transition: all 0.2s ease;
-        }
-        
-        tbody tr:hover {
-            background: var(--dark-lighter);
-        }
-        
-        /* Status Badge */
-        .badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .badge-success {
-            background: rgba(46, 204, 113, 0.2);
-            color: var(--success);
-        }
-        
-        .badge-warning {
-            background: rgba(243, 156, 18, 0.2);
-            color: var(--warning);
-        }
-        
-        .badge-danger {
-            background: rgba(231, 76, 60, 0.2);
-            color: var(--danger);
-        }
-        
-        /* Notificaciones */
-        .notification {
-            padding: 14px 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .notification.success {
-            background: rgba(46, 204, 113, 0.15);
-            border: 1px solid rgba(46, 204, 113, 0.3);
-            color: var(--success);
-        }
-        
-        .notification.error {
-            background: rgba(231, 76, 60, 0.15);
-            border: 1px solid rgba(231, 76, 60, 0.3);
-            color: var(--danger);
-        }
-        
-        /* Landscape en móviles (orientación horizontal) */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .navbar {
-                padding: 8px 0;
-                position: relative;
-            }
-            
-            .navbar-content {
-                padding: 0 15px;
-            }
-            
-            .logo-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
-            }
-            
-            .logo-text h1 {
-                font-size: 16px;
-            }
-            
-            .logo-text .subtitle {
-                font-size: 9px;
-            }
-            
-            .container {
-                margin: 15px auto;
-                padding: 0 15px;
-            }
-            
-            .card {
-                padding: 15px;
-                margin-bottom: 12px;
-            }
-            
-            .card-header {
-                margin-bottom: 10px;
-                padding-bottom: 8px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-                margin-bottom: 10px;
-            }
-            
-            .stat-card {
-                padding: 10px;
-            }
-            
-            .stat-value {
-                font-size: 24px;
-            }
-            
-            .stat-label {
-                font-size: 9px;
-            }
-            
-            .timer-card {
-                padding: 12px;
-            }
-            
-            .timer-display {
-                font-size: 32px;
-            }
-            
-            .timer-label {
-                font-size: 9px;
-                margin-top: 4px;
-            }
-            
-            canvas {
-                max-height: 180px;
-            }
-            
-            .btn {
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-            
-            input[type="text"],
-            input[type="number"],
-            select {
-                padding: 10px 12px;
-                font-size: 13px;
-            }
-            
-            .chip {
-                padding: 6px 12px;
-                font-size: 12px;
-            }
-            
-            .checkbox-item {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-        }
-        
-        /* Fullscreen optimizado para landscape móvil */
-        @media (max-height: 600px) and (orientation: landscape) {
-            .fs-stats {
-                top: 15px;
-                left: 15px;
-                gap: 10px;
-                flex-direction: row;
-            }
-            
-            .fs-stat-box {
-                padding: 12px 20px;
-                min-width: 70px;
-            }
-            
-            .fs-stat-value {
-                font-size: 28px;
-            }
-            
-            .fs-stat-label {
-                font-size: 9px;
-            }
-            
-            .fs-timer {
-                top: 15px;
-                right: 15px;
-                padding: 12px 25px;
-                font-size: 36px;
-                border-width: 2px;
-            }
-            
-            .fullscreen-canvas {
-                max-height: 60vh;
-            }
-            
-            .fullscreen-controls {
-                bottom: 20px;
-                padding: 12px 20px;
-                gap: 10px;
-            }
-            
-            .fs-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-        }
-        
-        /* Responsive normal (portrait o tablets) */
-        @media (max-width: 768px) {
-            .navbar-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .logo {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .timer-display {
-                font-size: 42px;
-            }
-            
-            .btn-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .fs-stats {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .fs-timer {
-                font-size: 42px;
-                padding: 15px 25px;
-            }
-            
-            .fullscreen-controls {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-        }
-        
-        /* Ajuste adicional para pantallas muy pequeñas en landscape */
-        @media (max-width: 700px) and (max-height: 400px) and (orientation: landscape) {
-            .navbar {
-                display: none;
-            }
-            
-            .container {
-                margin: 5px auto;
-            }
-            
-            .card {
-                padding: 10px;
-                margin-bottom: 8px;
-            }
-            
-            .stat-value {
-                font-size: 20px;
-            }
-            
-            .timer-display {
-                font-size: 28px;
-            }
-            
-            canvas {
-                max-height: 150px;
-            }
-        }
-        
-        /* Animaciones */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .card {
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.7;
-            }
-        }
-        
-        .stat-value {
-            animation: pulse 2s infinite;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Solfeo NSP 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0a0a0b;--sf:#151517;--sf2:#1e1e21;--sf3:#28282c;--bd:#2a2a2e;--bd2:#3a3a3f;--tx:#e8e6e3;--tx2:#a09d98;--tx3:#6b6965;--ac:#c9f06b;--acbg:rgba(201,240,107,.08);--ok:#4ade80;--er:#f87171;--wa:#fbbf24;--ra:14px;--rs:10px}
+html{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--tx);height:100%}
+body{
+  min-height:100%;
+  /* FIX SCROLL MOVIL */
+  overflow-y:scroll;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:auto;
+}
+.app{
+  max-width:520px;margin:0 auto;
+  padding:16px 16px 150px 16px;
+  /* FIX SCROLL MOVIL - permitir gestos verticales */
+  touch-action:pan-y pinch-zoom;
+  position:relative;
+}
+.hdr{
+  position:sticky;top:0;z-index:50;background:var(--bg);
+  padding:10px 0;border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;gap:10px;
+}
+.hi{width:34px;height:34px;border-radius:10px;background:var(--ac);color:#000;display:grid;place-items:center;font-size:16px;font-weight:700;flex-shrink:0}
+.hdr h1{font-size:16px;font-weight:700;line-height:1.2}.hdr small{font-size:10px;color:var(--tx3)}
+.sec{margin-top:16px}
+.st{font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px}
+.chs{display:flex;flex-wrap:wrap;gap:7px}
+.ch{
+  padding:8px 14px;border-radius:20px;background:var(--sf2);border:1.5px solid var(--bd);
+  color:var(--tx2);font-size:13px;font-weight:600;cursor:pointer;
+  transition:all .15s;user-select:none;-webkit-user-select:none;
+  /* FIX: no bloquear scroll del padre */
+  touch-action:manipulation;
+}
+.ch:active{transform:scale(.95)}.ch.on{background:var(--ac);border-color:var(--ac);color:#000}
+.ng{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:5px}
+.nc{
+  padding:9px 2px;border-radius:var(--rs);background:var(--sf);border:1.5px solid var(--bd);
+  color:var(--tx2);font-size:12px;font-weight:600;text-align:center;cursor:pointer;
+  transition:all .15s;user-select:none;font-family:'JetBrains Mono',monospace;
+  touch-action:manipulation;
+}
+.nc:active{transform:scale(.93)}.nc.on{background:var(--ac);border-color:var(--ac);color:#000;font-weight:700}
+.rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:5px}
+.rc{
+  padding:9px 5px;border-radius:var(--rs);background:var(--sf);border:1.5px solid var(--bd);
+  color:var(--tx2);font-size:11px;font-weight:600;text-align:center;cursor:pointer;
+  transition:all .15s;user-select:none;line-height:1.3;touch-action:manipulation;
+}
+.rc:active{transform:scale(.93)}.rc.on{background:var(--ac);border-color:var(--ac);color:#000}
+.rc .rn{font-size:12px;font-weight:700}.rc .rs{font-size:10px;opacity:.7;margin-top:1px}
+.sr{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.sl{
+  width:100%;padding:11px 10px;border-radius:var(--rs);background:var(--sf);
+  border:1.5px solid var(--bd);color:var(--tx);font-family:inherit;font-size:13px;font-weight:600;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b6965' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;
+}
+.sl:focus{outline:none;border-color:var(--ac)}
+.cw{
+  background:#f5ead0;border-radius:var(--ra);padding:6px;margin-top:14px;
+  border:2px solid #c8a96e;overflow-x:auto;overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  /* FIX: solo scroll horizontal en canvas, no bloquear vertical */
+  touch-action:pan-x pan-y;
+}
+.cw canvas{display:block;border-radius:6px}.cw::-webkit-scrollbar{display:none}
+.ab{
+  position:fixed;bottom:0;left:0;right:0;background:var(--sf);
+  border-top:1px solid var(--bd);
+  padding:8px 12px calc(8px + env(safe-area-inset-bottom));
+  display:flex;gap:8px;z-index:60;justify-content:center;
+}
+.bt{
+  flex:1;max-width:150px;padding:13px 8px;border-radius:var(--rs);border:none;
+  font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  transition:all .15s;display:flex;align-items:center;justify-content:center;
+  gap:5px;white-space:nowrap;touch-action:manipulation;
+}
+.bt:active{transform:scale(.96)}
+.ba{background:var(--ac);color:#000}.bs{background:var(--sf2);color:var(--tx);border:1.5px solid var(--bd)}.bp{background:#a855f7;color:#fff}
+.sts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:14px}
+.sb{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 6px;text-align:center}
+.sv{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;line-height:1}
+.sv.g{color:var(--ok)}.sv.r{color:var(--er)}.sv.y{color:var(--wa)}
+.sbl{font-size:9px;color:var(--tx3);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+.pa{
+  margin-top:14px;padding:14px;background:var(--sf);border:1.5px solid var(--bd);
+  border-radius:var(--ra);text-align:center;min-height:70px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.pn{font-family:'JetBrains Mono',monospace;font-size:38px;font-weight:700;color:var(--ok);transition:color .1s}
+.ph{font-size:11px;color:var(--tx3);margin-top:2px}
+.pf{font-size:22px;font-weight:800;margin-top:3px;min-height:28px;transition:opacity .2s}
+.mb{
+  width:100%;padding:14px;border-radius:var(--ra);border:2px solid var(--bd);
+  background:var(--sf);color:var(--tx);font-family:inherit;font-size:14px;font-weight:700;
+  cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;
+  gap:8px;margin-top:10px;touch-action:manipulation;
+}
+.mb:active{transform:scale(.97)}
+.mb.on{background:rgba(248,113,113,.12);border-color:var(--er);color:var(--er);animation:pm 1.5s infinite}
+@keyframes pm{0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,.3)}50%{box-shadow:0 0 0 10px rgba(248,113,113,0)}}
+.to{
+  position:fixed;top:56px;left:50%;transform:translateX(-50%);
+  background:var(--sf2);border:1px solid var(--bd2);color:var(--tx);
+  padding:9px 18px;border-radius:24px;font-size:12px;font-weight:600;z-index:999;
+  opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;
+}
+.to.sh{opacity:1}
+/* MODAL */
+.mo{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:20px;
+}
+.mo.sh{display:flex}
+.mc{background:var(--sf);border:1px solid var(--bd2);border-radius:var(--ra);padding:24px;width:100%;max-width:400px}
+.mc h2{font-size:18px;margin-bottom:16px}.mc .sl{margin-bottom:10px}
+.mcb{display:flex;gap:8px;margin-top:16px}.mcb .bt{padding:12px;max-width:none}
+/* FULLSCREEN */
+.fsc{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:#f4f0e8;z-index:500;flex-direction:column;align-items:center;justify-content:center;
+  touch-action:none;
+}
+.fsc.ac{display:flex}
+.ft{position:absolute;top:0;left:0;display:flex;gap:8px;padding:8px;flex-wrap:wrap;z-index:2}
+.fb{
+  background:rgba(10,10,11,.9);backdrop-filter:blur(8px);
+  padding:8px 14px;border-radius:12px;text-align:center;min-width:60px;
+  border:1px solid rgba(255,255,255,.06);
+}
+.fv{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:800;color:var(--ok)}
+.fv.e{color:var(--er)}.fv.t{color:var(--wa);font-size:20px}
+.fl{font-size:8px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.fpi{
+  position:absolute;top:8px;right:8px;
+  background:rgba(10,10,11,.9);backdrop-filter:blur(8px);
+  padding:8px 14px;border-radius:12px;text-align:center;
+  border:1px solid rgba(255,255,255,.06);
+}
+.fpv{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:900;color:var(--ok)}
+.ffb{
+  position:absolute;top:38%;left:50%;transform:translate(-50%,-50%);
+  font-size:min(16vw,90px);font-weight:900;opacity:0;transition:opacity .15s;
+  pointer-events:none;text-shadow:0 4px 20px rgba(0,0,0,.5);z-index:10;white-space:nowrap;
+}
+.fcv{max-width:95vw;max-height:55vh;border-radius:10px;border:2px solid #c8a96e;background:#f5ead0}
+.fba{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;background:rgba(10,10,11,.9);backdrop-filter:blur(8px);
+  padding:10px 14px;border-radius:40px;transition:transform .3s;
+  border:1px solid rgba(255,255,255,.06);
+}
+.fba.hd{transform:translateX(-50%) translateY(110px)}
+.fbt{
+  width:48px;height:48px;border-radius:50%;border:none;
+  background:var(--sf3);color:#fff;font-size:18px;cursor:pointer;display:grid;place-items:center;
+}
+.fbt:active{transform:scale(.88)}.fbt.gr{background:var(--ok);color:#000}.fbt.re{background:var(--er);color:#000}.fbt.bl{background:#3b82f6}
+.ftg{
+  position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+  width:44px;height:22px;background:rgba(10,10,11,.6);border-radius:11px;
+  display:grid;place-items:center;cursor:pointer;color:#888;font-size:11px;z-index:2;
+}
+@media(min-width:768px){.app{max-width:640px;padding:16px 24px 150px}.ng{grid-template-columns:repeat(auto-fill,minmax(60px,1fr))}}
+</style>
 </head>
 <body>
+<div class="app">
+<div class="hdr"><div class="hi">♪</div><div><h1>Solfeo NSP 2026</h1><small>Nuestra Señora del Pilar — Fe y Alegría</small></div></div>
 
-<!-- Navbar Superior -->
-<nav class="navbar">
-    <div class="navbar-content">
-        <div class="logo">
-            <div class="logo-icon">🎵</div>
-            <div class="logo-text">
-                <h1>Solfeo Pro NSP 2026</h1>
-                <div class="subtitle">Colegio Nuestra Señora del Pilar — Fe y Alegría</div>
-            </div>
-        </div>
-    </div>
-</nav>
+<div class="sec"><div class="st">👤 Identificación</div>
+<div class="sr">
+<select class="sl" id="sC" onchange="cAl('sC','sAl')"><option value="">— Curso —</option></select>
+<select class="sl" id="sAl"><option value="">— Estudiante —</option></select>
+</div></div>
 
-<div class="container">
-    <!-- Notificación de Estado -->
-    <div id="notification" class="notification success" style="display: none;">
-        <span id="notificationIcon">✓</span>
-        <span id="notificationText">Sistema listo</span>
-    </div>
-    
-    <!-- Card de Configuración -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-icon">⚙️</div>
-            <div class="card-title">Configuración del Ejercicio</div>
-        </div>
-        
-        <div class="grid-2">
-            <div class="input-group">
-                <label class="input-label">🏫 Curso</label>
-                <select id="selCurso" onchange="cargarEstudiantes()">
-                    <option value="">— Selecciona curso —</option>
-                    <option value="1A">1ro "A"</option><option value="1B">1ro "B"</option><option value="1C">1ro "C"</option>
-                    <option value="2A">2do "A"</option><option value="2B">2do "B"</option><option value="2C">2do "C"</option>
-                    <option value="3A">3ro "A"</option><option value="3B">3ro "B"</option><option value="3C">3ro "C"</option>
-                    <option value="4A">4to "A"</option><option value="4B">4to "B"</option><option value="4C">4to "C"</option>
-                    <option value="5A">5to "A"</option><option value="5B">5to "B"</option><option value="5C">5to "C"</option>
-                    <option value="6A">6to "A"</option><option value="6B">6to "B"</option><option value="6C">6to "C"</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label class="input-label">👤 Estudiante</label>
-                <select id="inpAlumno">
-                    <option value="">— Selecciona curso primero —</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label class="input-label">📊 Nivel de Dificultad</label>
-                <select id="selNivel">
-                    <option value="principiante">🟢 Principiante (5 notas)</option>
-                    <option value="intermedio" selected>🟡 Intermedio (10 notas)</option>
-                    <option value="avanzado">🔴 Avanzado (15 notas)</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label class="input-label">📅 Trimestre</label>
-                <select id="selTrimestre">
-                    <option value="1">1er Trimestre 2026</option>
-                    <option value="2">2do Trimestre 2026</option>
-                    <option value="3">3er Trimestre 2026</option>
-                </select>
-            </div>
-        </div>
-        <!-- Destacados -->
-        <div id="destacadosBox" style="display:none;margin-top:10px;padding:10px;background:rgba(255,159,67,.08);border:1px solid rgba(255,159,67,.3);border-radius:8px;">
-            <div style="font-size:.8rem;color:#ff9f43;font-weight:700;margin-bottom:6px;">⭐ MÁS PARTICIPATIVOS</div>
-            <div id="destacadosList" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
-        </div>
-    </div>
-    
-    <!-- Stats y Timer Grid -->
-    <div class="grid-2">
-        <div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="statAciertos">0</div>
-                    <div class="stat-label">✓ Aciertos</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value danger" id="statErrores">0</div>
-                    <div class="stat-label">✗ Errores</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value warning" id="statProgreso">0%</div>
-                    <div class="stat-label">📈 Progreso</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="timer-card">
-            <div class="timer-display" id="cronometro">00:00</div>
-            <div class="timer-label">⏱️ Cronómetro</div>
-        </div>
-    </div>
-    
-    <!-- Progress Bar -->
-    <div class="progress-wrapper">
-        <div class="progress-info">
-            <span>Progreso del Ejercicio</span>
-            <span id="progressPercent">0%</span>
-        </div>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-    </div>
-    
-    <!-- Card de Filtros de Notas -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-icon">🎼</div>
-            <div class="card-title">Seleccionar Rango de Notas</div>
-        </div>
-        
-        <div class="chip-group">
-            <button class="chip" onclick="APP.filtrar('grave')">📉 Graves</button>
-            <button class="chip active" onclick="APP.filtrar('centro')">➡️ Centro</button>
-            <button class="chip" onclick="APP.filtrar('agudo')">📈 Agudas</button>
-            <button class="chip" onclick="APP.filtrar('todo')">🎹 Todas</button>
-        </div>
-        
-        <div id="chkBoxArea" class="chip-group"></div>
-    </div>
-    
-    <!-- Card de Audio -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-icon">🔊</div>
-            <div class="card-title">Controles de Audio</div>
-        </div>
-        
-        <div class="btn-grid">
-            <button class="btn btn-secondary" onclick="APP.reproducirNotas()">
-                ▶️ Reproducir Notas
-            </button>
-            <button class="btn btn-outline" onclick="APP.reproducirLento()">
-                🐢 Reproducir Lento
-            </button>
-        </div>
-    </div>
-    
-    <!-- Canvas del Pentagrama -->
-    <div class="card">
-        <canvas id="pizarra" width="900" height="280"></canvas>
-    </div>
+<div class="sec"><div class="st">🎼 Compás</div><div class="chs" id="ccC"></div></div>
+<div class="sec"><div class="st">🎵 Figuras Rítmicas</div><div class="rg" id="rcC"></div></div>
+<div class="sec"><div class="st">🎹 Notas</div><div class="chs" id="rgC"></div><div class="ng" id="nG" style="margin-top:8px"></div></div>
 
-    <!-- Botones de Control Principal -->
-    <div class="btn-grid">
-        <button class="btn btn-primary" onclick="APP.iniciar()">
-            ▶️ Iniciar Ejercicio
-        </button>
-        <button class="btn btn-danger" onclick="APP.parar()">
-            ⏸️ Detener
-        </button>
-        <button class="btn btn-secondary" onclick="APP.ayuda()">
-            👁️ Ver Respuestas
-        </button>
-        <button class="btn btn-warning" onclick="APP.nuevoEjercicio()">
-            🔄 Nuevo Ejercicio
-        </button>
-        <button class="btn btn-outline" onclick="APP.toggleFullscreen()" style="border-color: #8e44ad; color: #9b59b6;">
-            ⛶ Pantalla Completa
-        </button>
-    </div>
-    
-    <!-- Micrófono y Auto-evaluación -->
-    <div class="card" style="background:rgba(46,204,113,.05);border-color:rgba(46,204,113,.3);">
-        <div class="card-header">
-            <div class="card-icon">🎤</div>
-            <div class="card-title">Detección de Voz — Auto-evaluación</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-            <button id="btnPitch" class="btn btn-secondary" onclick="togglePitch()">🎤 Activar Mic</button>
-            <button id="btnAuto" class="btn btn-outline" onclick="toggleAuto()" style="border-color:#2ecc71;color:#2ecc71;">🤖 Auto: OFF</button>
-            <div style="flex:1;text-align:center;">
-                <div style="font-size:.7rem;color:#999;margin-bottom:3px;">NOTA DETECTADA</div>
-                <div id="pitchDisplay" style="font-size:1.8rem;font-weight:800;color:#2ecc71;font-family:serif;min-height:2rem;">—</div>
-                <div id="pitchFeedback" style="font-size:1rem;font-weight:700;min-height:1.5rem;transition:opacity .3s;"></div>
-            </div>
-        </div>
-        <div style="margin-top:8px;font-size:.72rem;color:#888;">
-            💡 <b style="color:#2ecc71">Auto ON</b>: canta la nota y el sistema marca ✅/❌ automáticamente &nbsp;|&nbsp; <b style="color:#ff9f43">Auto OFF</b>: tú marcas con los botones
-        </div>
-    </div>
+<div class="cw"><canvas id="piz" width="1200" height="280"></canvas></div>
 
-    <!-- Card de Calificación -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-icon">📝</div>
-            <div class="card-title">Calificación del Ejercicio</div>
-        </div>
-        
-        <div class="grid-2">
-            <div class="input-group">
-                <label class="input-label">Nota (0-100)</label>
-                <input type="number" id="inpNota" placeholder="0-100" min="0" max="100">
-            </div>
-            <div class="input-group">
-                <label class="input-label">Observaciones</label>
-                <input type="text" id="inpObs" placeholder="Comentarios del profesor...">
-            </div>
-        </div>
-        
-        <button class="btn btn-primary" id="btnGuardar" onclick="APP.guardar()" disabled style="width: 100%; margin-top: 10px;">
-            💾 Guardar Calificación
-        </button>
-    </div>
-    
-    <!-- Card de Tabla de Resultados -->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-icon">📊</div>
-            <div class="card-title">Historial de Ejercicios</div>
-        </div>
-        
-        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <button class="btn btn-outline" onclick="APP.descargar()">
-                📥 Exportar Excel
-            </button>
-            <button class="btn btn-danger" onclick="APP.borrar()">
-                🗑️ Borrar Todo
-            </button>
-        </div>
-        
-        <div class="table-wrapper">
-            <table id="tablaRes">
-                <thead>
-                    <tr>
-                        <th>📅 Fecha</th>
-                        <th>👤 Estudiante</th>
-                        <th>⏱️ Tiempo</th>
-                        <th>📊 Nivel</th>
-                        <th>✓ Aciertos</th>
-                        <th>✗ Errores</th>
-                        <th>📝 Nota</th>
-                        <th>💬 Observaciones</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    </div>
+<div class="sts">
+<div class="sb"><div class="sv g" id="sA">0</div><div class="sbl">✓ Aciertos</div></div>
+<div class="sb"><div class="sv r" id="sE">0</div><div class="sbl">✗ Errores</div></div>
+<div class="sb"><div class="sv y" id="sT">00:00</div><div class="sbl">⏱ Tiempo</div></div>
 </div>
 
-<!-- Modo Pantalla Completa -->
-<div id="fullscreenContainer" class="fullscreen-container">
+<div class="pa" id="pA" style="display:none">
+<div class="pn" id="pN">—</div><div class="ph" id="pH"></div><div class="pf" id="pF"></div>
+</div>
 
-    <!-- FILA SUPERIOR -->
-    <div class="fs-stats">
-        <div class="fs-stat-box">
-            <div class="fs-stat-value" id="fsAciertos">0</div>
-            <div class="fs-stat-label">✓ Aciertos</div>
-        </div>
-        <div class="fs-stat-box">
-            <div class="fs-stat-value error" id="fsErrores">0</div>
-            <div class="fs-stat-label">✗ Errores</div>
-        </div>
-        <div class="fs-stat-box" style="min-width:220px;">
-            <select id="fsSelCurso" onchange="fsCambiarCurso()" style="background:#1a1a2e;color:#fff;border:1px solid #444;border-radius:6px;padding:4px 8px;font-size:.75rem;width:100%;margin-bottom:4px;">
-                <option value="">— Curso —</option>
-                <option value="1A">1ro A</option><option value="1B">1ro B</option><option value="1C">1ro C</option>
-                <option value="2A">2do A</option><option value="2B">2do B</option><option value="2C">2do C</option>
-                <option value="3A">3ro A</option><option value="3B">3ro B</option><option value="3C">3ro C</option>
-                <option value="4A">4to A</option><option value="4B">4to B</option><option value="4C">4to C</option>
-                <option value="5A">5to A</option><option value="5B">5to B</option><option value="5C">5to C</option>
-                <option value="6A">6to A</option><option value="6B">6to B</option><option value="6C">6to C</option>
-            </select>
-            <select id="fsSelAlumno" style="background:#1a1a2e;color:#fff;border:1px solid #444;border-radius:6px;padding:4px 8px;font-size:.75rem;width:100%;">
-                <option value="">— Estudiante —</option>
-            </select>
-        </div>
-        <div class="fs-stat-box" style="min-width:150px;text-align:center;">
-            <div id="fsPitchVal" style="font-size:2rem;font-weight:900;font-family:serif;color:#2ecc71;min-height:2.2rem;">—</div>
-            <div class="fs-stat-label">🎤 Nota detectada</div>
-        </div>
-    </div>
+<button class="mb" id="mB" onclick="MIC.tg()">🎤 Activar Micrófono</button>
+</div><div class="to" id="to"></div>
 
-    <!-- FEEDBACK GRANDE -->
-    <div id="fsFeedbackGrande" style="position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);font-size:6rem;font-weight:900;opacity:0;transition:opacity .15s;pointer-events:none;text-shadow:0 4px 24px rgba(0,0,0,.9);z-index:10;white-space:nowrap;"></div>
+<div class="ab">
+<button class="bt ba" id="bI" onclick="EJ.ini()">▶ Iniciar</button>
+<button class="bt bs" onclick="EJ.nv()">🔄 Nuevo</button>
+<button class="bt bp" onclick="EJ.tFS()">⛶ Full</button>
+</div>
 
-    <div class="fs-timer" id="fsCronometro">00:00</div>
+<div class="mo" id="moG">
+<div class="mc">
+<h2>💾 Guardar Práctica</h2>
+<select class="sl" id="mC" onchange="cAl('mC','mAl')"><option value="">— Curso —</option></select>
+<select class="sl" id="mAl"><option value="">— Estudiante —</option></select>
+<div style="margin-top:12px;padding:12px;background:var(--sf2);border-radius:var(--rs)">
+<div style="display:flex;justify-content:space-between;font-size:13px">
+<span>✓ <b id="mAc" style="color:var(--ok)">0</b></span>
+<span>✗ <b id="mEr" style="color:var(--er)">0</b></span>
+<span>⏱ <b id="mTm" style="color:var(--wa)">00:00</b></span>
+</div></div>
+<div class="mcb">
+<button class="bt ba" id="mSd" onclick="gFB()" style="flex:2">📤 Enviar al Profesor</button>
+<button class="bt bs" onclick="cMo()">Cancelar</button>
+</div></div></div>
 
-    <canvas id="pizarraFullscreen" width="1600" height="500" class="fullscreen-canvas"></canvas>
-
-    <div class="toggle-controls controls-visible" id="toggleControls" onclick="APP.toggleFsControls()">
-        <span id="toggleIcon">▼</span>
-    </div>
-
-    <div class="fullscreen-controls" id="fsControls">
-        <button class="fs-btn" onclick="APP.fsNuevoEjercicio()" title="Nuevo">🔄</button>
-        <button class="fs-btn" onclick="APP.fsReproducir()" title="Reproducir">▶️</button>
-        <button class="fs-btn" onclick="APP.fsReproducirLento()" title="Lento">🐢</button>
-        <button class="fs-btn" onclick="APP.fsAyuda()" title="Respuestas">👁️</button>
-        <button id="fsBtnMic" class="fs-btn" onclick="togglePitch()" title="Micrófono">🎤</button>
-        <button id="fsBtnAuto" class="fs-btn" onclick="toggleAuto()" title="Auto-eval" style="font-size:12px;">🤖OFF</button>
-        <button id="fsBtnModo" class="fs-btn" onclick="toggleModo()" title="Modo" style="font-size:11px;background:#8e44ad;">🎵UNO</button>
-        <button class="fs-btn success" onclick="APP.fsAcierto()" title="Acierto">✓</button>
-        <button class="fs-btn danger" onclick="APP.fsError()" title="Error">✗</button>
-        <button class="fs-btn" onclick="fsGuardar()" title="Guardar" style="background:#2e75b6;font-size:12px;">💾</button>
-        <button class="fs-btn danger" onclick="APP.toggleFullscreen()" title="Salir">✕</button>
-    </div>
+<div class="fsc" id="fsC">
+<div class="ft">
+<div class="fb"><div class="fv" id="fA">0</div><div class="fl">✓ Aciertos</div></div>
+<div class="fb"><div class="fv e" id="fE">0</div><div class="fl">✗ Errores</div></div>
+<div class="fb"><div class="fv t" id="fT">00:00</div><div class="fl">⏱ Tiempo</div></div>
+</div>
+<div class="fpi"><div class="fpv" id="fP">—</div><div class="fl">🎤 Nota</div></div>
+<div class="ffb" id="fFb"></div>
+<canvas id="pFS" width="1600" height="460" class="fcv"></canvas>
+<div class="ftg" onclick="EJ.tFC()">▼</div>
+<div class="fba" id="fBa">
+<button class="fbt" onclick="EJ.nv()">🔄</button>
+<button class="fbt" onclick="EJ.rep(0)">▶️</button>
+<button class="fbt" onclick="EJ.rep(1)">🐢</button>
+<button class="fbt" onclick="EJ.tAy()">👁️</button>
+<button class="fbt" id="fMi" onclick="MIC.tg()">🎤</button>
+<button class="fbt gr" onclick="EJ.mA()">✓</button>
+<button class="fbt re" onclick="EJ.mE()">✗</button>
+<button class="fbt bl" onclick="EJ.sS()">💾</button>
+<button class="fbt re" onclick="EJ.tFS()">✕</button>
+</div>
 </div>
 
 <script>
-// Continuará en el siguiente mensaje debido al límite de caracteres...
-var audioContext = null;
+// ═══ FIREBASE ═══
+var FBU='https://registro-ba4fa-default-rtdb.firebaseio.com';
+function fbPush(d,cb){var x=new XMLHttpRequest();x.open('POST',FBU+'/solfeo2026/practicas.json');x.setRequestHeader('Content-Type','application/json');x.onload=function(){cb(x.status===200)};x.onerror=function(){cb(false)};x.send(JSON.stringify(d))}
 
-function initAudio() {
-    if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
+// ═══ UTILS ═══
+function toast(m){var t=document.getElementById('to');t.textContent=m;t.classList.add('sh');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('sh')},2400)}
+var _aCtx=null;function iAu(){if(!_aCtx)_aCtx=new(window.AudioContext||window.webkitAudioContext)}
+function playTone(f,d){iAu();var o=_aCtx.createOscillator(),g=_aCtx.createGain();o.connect(g);g.connect(_aCtx.destination);o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(.3,_aCtx.currentTime);g.gain.exponentialRampToValueAtTime(.01,_aCtx.currentTime+(d||.5));o.start();o.stop(_aCtx.currentTime+(d||.5))}
+
+// ═══ NOTAS ═══
+var NDB=[
+{id:'sol3',t:'Sol3',v:-5,g:'grave',f:196},{id:'la3',t:'La3',v:-4,g:'grave',f:220},
+{id:'si3',t:'Si3',v:-3,g:'grave',f:246.94},{id:'do4',t:'Do4',v:-2,g:'grave',f:261.63},
+{id:'re4',t:'Re4',v:-1,g:'centro',f:293.66},{id:'mi4',t:'Mi4',v:0,g:'centro',f:329.63},
+{id:'fa4',t:'Fa4',v:1,g:'centro',f:349.23},{id:'sol4',t:'Sol4',v:2,g:'centro',f:392},
+{id:'la4',t:'La4',v:3,g:'centro',f:440},{id:'si4',t:'Si4',v:4,g:'centro',f:493.88},
+{id:'do5',t:'Do5',v:5,g:'centro',f:523.25},{id:'re5',t:'Re5',v:6,g:'agudo',f:587.33},
+{id:'mi5',t:'Mi5',v:7,g:'agudo',f:659.25},{id:'fa5',t:'Fa5',v:8,g:'agudo',f:698.46},
+{id:'sol5',t:'Sol5',v:9,g:'agudo',f:783.99},{id:'la5',t:'La5',v:10,g:'agudo',f:880},
+{id:'si5',t:'Si5',v:11,g:'agudo',f:987.77},{id:'do6',t:'Do6',v:12,g:'agudo',f:1046.5}
+];
+var PT=[
+{t:'Do3',f:130.81},{t:'Re3',f:146.83},{t:'Mi3',f:164.81},{t:'Fa3',f:174.61},
+{t:'Sol3',f:196},{t:'La3',f:220},{t:'Si3',f:246.94},
+{t:'Do4',f:261.63},{t:'Re4',f:293.66},{t:'Mi4',f:329.63},{t:'Fa4',f:349.23},
+{t:'Sol4',f:392},{t:'La4',f:440},{t:'Si4',f:493.88},
+{t:'Do5',f:523.25},{t:'Re5',f:587.33},{t:'Mi5',f:659.25},
+{t:'Fa5',f:698.46},{t:'Sol5',f:783.99},{t:'La5',f:880},{t:'Si5',f:987.77},{t:'Do6',f:1046.5}
+];
+
+// Detección por cents (50 cents = medio semitono) — soluciona problema del Mi
+function detNota(fr){
+  var m=null,mc=9999;
+  for(var i=0;i<PT.length;i++){var c=Math.abs(1200*Math.log2(fr/PT[i].f));if(c<mc){mc=c;m=PT[i]}}
+  return mc<=50?{t:m.t,f:m.f,cents:Math.round(mc)}:null;
 }
 
-function playNote(frequency, duration = 0.5) {
-    initAudio();
-    var oscillator = audioContext.createOscillator();
-    var gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.value = frequency;
-    oscillator.type = 'sine';
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + duration);
+// Autocorrelation con parabolic interpolation optimizado para móvil
+function autoCorr(buf,sr){
+  var S=buf.length,rms=0;
+  for(var i=0;i<S;i++)rms+=buf[i]*buf[i];
+  rms=Math.sqrt(rms/S);if(rms<.012)return-1;
+  var r1=0,r2=S-1,th=.15;
+  for(var i=0;i<S/2;i++)if(Math.abs(buf[i])<th){r1=i;break}
+  for(var i=1;i<S/2;i++)if(Math.abs(buf[S-i])<th){r2=S-i;break}
+  buf=buf.slice(r1,r2);S=buf.length;if(S<50)return-1;
+  
+  // OPTIMIZACIÓN: Limitar maxLag para no trabar el celular
+  var maxLag = Math.min(S, 400); 
+  var c=new Array(maxLag).fill(0);
+  for(var i=0;i<maxLag;i++)for(var j=0;j<S-i;j++)c[i]+=buf[j]*buf[j+i];
+  var d=0;while(d<maxLag-1&&c[d]>c[d+1])d++;
+  var mx=-1,p=-1;for(var i=d;i<maxLag;i++)if(c[i]>mx){mx=c[i];p=i}
+  if(p<1||p>=maxLag-1)return-1;
+  var x1=c[p-1]||0,x2=c[p],x3=c[p+1]||0,a=(x1+x3-2*x2)/2,b=(x3-x1)/2;
+  if(a)p=p-b/(2*a);return sr/p;
 }
 
-function showNotification(message, type = 'success') {
-    var notif = document.getElementById('notification');
-    var icon = document.getElementById('notificationIcon');
-    var text = document.getElementById('notificationText');
-    
-    notif.className = 'notification ' + type;
-    icon.innerText = type === 'success' ? '✓' : '⚠';
-    text.innerText = message;
-    notif.style.display = 'flex';
-    
-    setTimeout(function() {
-        notif.style.display = 'none';
-    }, 3000);
+// ═══ ESTUDIANTES ═══
+var ED={"1A":["ACHACOLLO AGUILAR, YABEL","AGUILAR QUISPE, KAEL","ALCON AZURDUY, SEBASTIAN","ANDRADE CONDORI, MAXIMILIANO","ARIAS ALVAREZ, ALEXANDRA","CALANI MARCA, HELEN","CANDIA MAITA, NELSON","CANQUI COLQUE, ISABELLA","CHAOCA MOLLE, SAMANTHA","CHAVARRIA ARISPE, MICHEL","CHOQUE TERRAZAS, NICOLAS","CONDORI FERNANDEZ, ILSEN","CRUZ CALIZAYA, LEANDRO","GUARACHI VILLA, RODRIGO","GUTIERREZ CANAVIRI, AYLIN","ICHUTA RODRIGUEZ, AYHELEN","JUYARI TUMIRI, RODRIGO","MEDINA JULIAN, ALEJANDRA","MELENDRES MONTAÑO, MATIAS","MENDOZA CONDORI, ALEXIA","MERIDA MORALES, SAUL","MIRANDA TINTAYA, DARLA","MITA AGUAYO, JANETH","MOLINA MAMANI, REBECA","PONCE AGUILAR, KEVIN","POQUECHOQUE HUAYTARI, DEYMAR","QUIRA MARTINEZ, JHONNY","QUISPE CONDORI, SEBASTIAN","QUISPE ESCALERA, ALINA","ROMERO CANEDO, RAFAELA","ROMERO JAUREGUI, CARLOS","SOLIZ CORIA, DREYKO","TOLA SOLANO, SELENA","VARGAS QUINTANILLA, ESTEFANY","VASQUEZ MALDONADO, ANDY","ZEBALLOS LOPEZ, LUCAS"],"1B":["AGUILAR MORALES, NICOL","AGUILAR MOYA, JHONATAN","ARISPE FERNANDEZ, THIAGO","ATAHUICHI COCA, MARIA","AVAROMA SOMOZA, AMANDA","BAUTISTA CONDORI, BRAYAN","CALLISAYA VASQUEZ, KEILA","CHUNGARA BALDIVIEZO, DAVID","CHUQUICHAMBI APAZA, YULY","CLAROS MAMANI, DAYANA","COLQUE MAMANI, REBECA","CRUZ COPALI, LUZ","FLORES ILLANES, FRANZ","GARCIA CUARASI, ROSZELIN","GARCIA VARGAS, STEFAN","GOMEZ SOSA, JHOAN","GONZALES ROCHA, ERICK","GUZMAN GARCIA, JAMES","JALDIN VILLARROEL, DARY","LOPEZ ARCE, ITAM","LUNA ARIAS, DEYVID","MORALES FLORES, DIANA","PEREZ LUGARANI, JAEL","QUIROZ CHOQUE, HEIDY","QUISPE ALBORTA, NATALIA","QUISPE RODRIGUEZ, JHULIANA","ROCHA CHECO, ALESKA","SANDOVAL BAZOALTO, JARED","TERAN IRAIPI, MARIA","TINTAYA ALVAREZ, JADEN","TORRICO CRESPO, JADE","TORRICO CRESPO, MATIAS","UNZUETA CAERO, RAFAELA","VILLAMOR LORAS, JORGE","ZEBALLOS ROCHA, LUIS"],"1C":["ALVAREZ CASTELLON, DAVID","APAZA DELGADILLO, JOSE","BARRIOS MIRANDA, WILLIAM","BOLIVAR MENDEZ, LUCIANA","CALLISAYA TICONA, CRISTIAN","CAMARGO ARISPE, ALEXA","CHUQUIMIA CORDERO, ELIZABETH","CLAURE MELGAREJO, NEYMAR","COLQUE QUISPE, DARLIN","CORDOVA AYRA, STEFANO","FIGUEROA ZULETA, MARIA","FLORES CALIZAYA, ALEXIA","GANDARILLAS MOLINA, PHEYTON","GARCIA JIMENEZ, JESUS","GARCIA JOANIQUINA, GABRIEL","GUTIERREZ CACERES, CAMILA","HERBAS POMA, CAMILA","JAILLITA REVOLLO, LUCIANA","LAZO CUBA, ADRIANA","MAIRE YUJRA, PEDRO","MAMANI HUAYGUA, SEBASTIAN","MAMANI TITO, YARITA","MANCILLA QUISPE, SHEYLA","MOLINA MAMANI, ANABEL","NOGALES ORELLANA, JUAN","PACARI MAMANI, SCARLETH","PARDO ALA, LINDSAY","PIEDRA CLAROS, CRISTOFER","SANCHEZ VELA, FABRICIO","VASQUEZ RAMOS, MATIAS","VELASQUEZ RIOS, VALERIA","VIDOVIC PAREDES, MILAGROS","YAVE ROLLANO, MARIOLY","ZAMBRANA ZAMBRANA, JHORDY","ZAPATA NOGALES, JHAMIL"],"2A":["ALBARES MENDOZA, ALEXIS","CABALLERO RAMALLO, MAITE","CALDERON GARCIA, WILLIAM","CALLE CRUZ, NICOLAS","CALLER IBAGUARI, EDITH","CARRILLO MEJIA, ITZEL","CASTRO PEÑAFIEL, NICOL","CHOCONI VENTURA, NEYMAR","CLAROS CARI, NICOLAS","CLAROS MAMANI, SOFIA","COPA MAMANI, THIAGO","DELGADILLO COLQUE, RYAN","GONZALES CHAMBI, NICOLAS","HUANCA MAMANI, TREYSI","JAILLITA QUISPE, BRYAN","LLAMPA FERNANDEZ, ELIOTH","MAMANI ZUÑIGA, FERNANDA","ORTUSTE ORELLANA, LUCIANA","PAREDES QUISBERT, ALEXIA","PARRA GARRON, ALBA","PARRADO BUSTAMANTE, SANTIAGO","PEREYRA HOSSE, GHI","PINTO ROJAS, ANDRES","PRADA POMA, ABIGAIL","PUÑA VALENCIA, ANTONIO","QUISPE MARIÑO, JHACK","RIERA GOYTIA, MEGAN","ROJAS BUSTAMANTE, CAMILA","ROMERO CANEDO, LEANDRO","ROMERO RAMOS, LUIS","ROMERO SALAZAR, SAUL","VEIZAGA SOLIS, AINHOA"],"2B":["AGNE CUIZA, ADRIAN","AGUILAR MORALES, SARA","ALBA ALVESTEGUI, JHOANA","ARAMAYO CHINCHILLA, SANTIAGO","ARGANA SOLIZ, LUCAS","AYALA CRESPO, SANTIAGO","CASTELLON MAMANI, TAMAYA","CLAURE GARCIA, WANNER","CLEMENTE MARTINES, JHOSELYN","CONTRERAS GONZALES, IAN","DURAN COLQUE, JOSE","FERNANDEZ FLORES, DANIEL","GONZALES CORIA, EMILY","GUTIERREZ ALEGRE, FAVIO","GUTIERREZ GONZALO, LIZ","LAZARTE CAMACHO, JHON","LOAIZA VELASCO, JHOJAN","LOPEZ ARISPE, DANIEL","MAMANI SEJAS, TATIANA","MERILES TOLA, MICHELLE","MIRANDA PONCE, FERNANDO","PACHECO VELASCO, ALEX","PEREIRA LOZA, JOSE","POZO ROJAS, JUAN","RAMIREZ CASTRO, SKAYLOR","RAMIREZ QUISBERT, MIKEYLA","RICALDEZ SANDOVAL, BRISSA","SILES QUISPE, CAMILA","TORRICO CRESPO, SEBASTIAN","VARGAS QUINTANA, SWAMI","VILLARROEL CAMAQUE, THAIS","ZURITA FERRUFINO, JOSE"],"2C":["GASPAR, SAMUEL","ALBAN MONZON, GERALDINE","ALBARES ZURITA, RODRIGO","CHALLA MENDOZA, ADRIANA","CONDORI BERBETTY, JAZMIN","CUBA OLMEDO, ALEXIS","CUSI VEISAGA, JOSUE","EQUISE CORDOVA, HAROLD","FERNANDEZ MARPARTIDA, PABLO","FLORES ALANES, DIEGO","FLORES PACO, SNAYDER","FRANCO VEGA, THIAGO","GUARACHI FERNANDEZ, HAZIEL","GUTIERREZ CANAVIRI, AMILKAR","LUIZAGA AVILA, BENJAMIN","MAMANI MORALES, FABIOLA","MAMANI SILVA, DOUGLAS","MEJIA VALENCIA, BENJAMIN","PACARI MAMANI, ANDRE","QUISPE CONDORI, LIOMA","QUISPE MARIÑO, NYCK","RAMIREZ ARZE, NATANAEL","RICALDEZ PAREDES, JHAKELIN","RODRIGUEZ GUTIERREZ, SAMUEL","ROMERO FLORES, JUAN","SANCHEZ MARZANA, SHEYLA","SOLIS CUARASI, SHADOL","SOLIZ YAVE, ERIKA","TICONA SURUMI, FERNANDA","TORDOYA QUIROGA, KARIM","URIBE VILLANUEVA, ENRIQUE","YUCRA TICONA, ZARLET"],"3A":["ALBARES ZURITA, JUAN","CAERO DELGADO, MATIAS","CESPEDES GUARENA, JOSE","CHILE ALVAREZ, DYLAN","CHOQUE GALVEZ, JIMENA","CLAURE ARANIBAR, MAYARA","COCA LOZA, KEATHON","CONDORI CEPEDA, AARON","CORIA JIMENEZ, ROSARIO","DELGADILLO COLQUE, ADEMAR","FERNANDEZ FLORES, MATIAS","GONZALES TORRICO, JHOSELIN","JAMES MAREÑO, SEBASTIAN","LEDEZMA MIRANDA, ARABEL","LIMACHI CANAVIRI, JACI","LUNA ARIAS, SAMUEL","MAMANI SOLIZ, DEYMAR","MELENDRES MONTAÑO, ANGELA","MORALES TABOADA, SELENA","PADILLA ROJAS, MIKEYLA","PATIÑO CHAVEZ, DIEGO","PATIÑO COSSIO, VALENTINA","PEREYRA HOSSE, JUAN","POMA VILLARPANDO, JAIR","POQUECHOQUE HUAYTARI, ANDRE","RAMIREZ CLAURE, LESLIE","RIVERO ACERO, EDGAR","RODRIGUEZ MAMANI, KEVIN","ROJAS BUSTAMANTE, ROSARIO","ROMERO RAMOS, MELISA","ROMERO TABORGA, ALAN","RUEDA RODRIGUEZ, LILIAN","UGARTE CHOQUE, JESSICA","VALDA ALVAREZ, JOSE","VILLCA BERNABEL, EVER"],"3B":["CANAVIRI, ANGEL","AGUILAR COLQUE, LUZ","AGUILAR MOYA, CAMILA","ALMANZA HUANCA, EMERSON","ANDIA APAZA, JHEREMY","AYALA CRESPO, ANDRES","BARROSO ROMERO, LUCAS","CAMACHO MAMANI, ANGIE","CANAVIRI VARGAS, SHARON","CARBALLO BUSTAMANTE, JHOSELYN","CHOQUE TITO, NEYMAR","FRANCO VEGA, ALEXANDRA","GARCIA GOMEZ, DILAN","GONZALES ESTRADA, IVANA","GUZMAN ZEPITA, ANDRUW","HERBAS ATAHUICHI, ERICK","HERRERA VIDAURRE, ROBERTO","ICHUTA FERNANDEZ, REINER","LIZARAZU MAMANI, ULISES","LOPEZ MAMANI, DIANA","LUIZAGA VEGA, LEONARDO","MAMANI SILVA, BRISA","MENDOZA PIZAYA, ABDIAZ","MENDOZA CONDORI, PAOLA","PADILLA MARCA, JHENIFER","PEREZ BARRIENTOS, ELIAS","RAMOS CEPEDA, IAN","REYNOSO HERBAS, CAMILA","RIERA GOYTIA, BRIZEIDA","SALINAS CHARUPA, IVONNE","SOLIZ QUIROGA, MATEO","VARGAS VASQUEZ, ANDREA","VEIZAGA GUZMAN, KENDRICK","VELA RIVERA, BRIHANA","YAVE ROLLANO, CHARLE"],"3C":["ANGULO MAMANI, JHON","ANGULO CEREZO, DAILIN","ARAUCO SARDAN, DARLIN","BARRENECHEA SALAZAR, LUIS","CANAVIRI ASTETE, NICOLAS","CESPEDES OLIVERA, LISANDRO","CHAVEZ CONDORI, AYELEN","CHOQUE CABRERA, VICTOR","CHOQUE CONDORI, ALISON","CHOQUE GUTIERREZ, XIOMARA","CORPUS HIDALGO, ALEJANDRA","GALLARDO MENDOZA, CAMILA","HERBAS POMA, DARLIN","JALDIN VILLARROEL, EIDEN","MAMANI REYES, DARLIN","MARCE YAVE, CARLA","MORALES CARICARI, SARAHI","MORALES FLORES, RAFAEL","ORELLANA SANTILLAN, VALERIA","PAREDES COSSIO, ALEJANDRO","PEREDO ORIHUELA, ANDREA","POQUECHOQUE HUAYTARI, ANDERSON","QUIROGA SEJAS, MARCO","RAMOS FIQUE, ALEX","SANCHEZ ROMERO, ANAHI","SILES QUISPE, MATEO","SOLIZ QUIROGA, SAI","SOSA PINTO, ALEJANDRO","TOROYA YAVE, NEYMAR","VASQUEZ SANCHEZ, AXCEL","VELARDE FERNANDEZ, MIGUELANGEL","ZULETA LOPEZ, LUCIANA"],"4A":["PEREZ, FATIMA","ALIENDRE CONDORI, JOSE","ALMANZA HUANCA, ADRIELY","CASA MAMANI, YAMILE","CHAMBI PACHECO, TATIANA","CHOQUE CRUZ, RIHANNA","CHUMBE GERONIMO, DANIELA","CLAROS FERNANDEZ, BRIGITH","CONDORI FERNANDEZ, ADALID","CUTIPA TITO, DAYSI","GUTIERREZ CANAVIRI, ANA","MAIRE ALVARES, ALEJANDRA","MAREÑO SOSA, ALEXIS","PACHECO VELASCO, NAYELI","PARRA GARRON, JHONNY","QUISPE AGUILAR, ANAHI","RIOS MORALES, BELINDA","RIVERO ACERO, JADE","ROCHA VERGARA, MELANY","SOLIZ PEDRAZAS, MAIC","SORIA ESCOBAR, DIEGO","SOTO TAQUICHIRI, EDWARD","TABOADA POMA, FABIAN","TORIBIO TERAN, MATIAS","VELA MARAZA, FATIMA","VELARDE MONTEMAYOR, MATIAS","YUPANQUI RAMOS, EMILY","ZENTENO ALANEZ, ADHEMAR"],"4B":["AMONZABEL FLORES, CAMILA","ARISPE AGUILAR, HELEN","BARRIENTOS MAMANI, BRISA","BOJORGES CARVAJAL, NATALY","CABALLERO RAMALLO, MATEO","CABRERA LAGUNA, FERNANDA","CHOQUE GALVEZ, ABIEL","CONDORI SILES, SAMIEL","GARCIA CUARASI, JHON","GARCIA VILLEGAS, SINDEL","GERONIMO PEREZ, KARIM","GONZALES ROCHA, RUTH","JAILLITA REVOLLO, LIMBERT","JIMENEZ BERRIOS, JHOJAM","LIMACHI CANAVIRI, BRUCE","LIZARAZU MAMANI, ARIANA","LORA ACERO, CARLOS","MARZA AGUILAR, ANTHONY","PARRADO BUSTAMANTE, MARIANA","PINTO ROJAS, NICOLAS","RAMIREZ ALANIZ, GABRIEL","SAJAMA PACO, RUTH","TERRAZAS CAPRILES, ANEL","UGARTE VIDAURRE, LEONARDO","VARGAS JORA, SOFIA","VASQUEZ CUBA, KATERINE","VILLAMOR LORAS, ALISSON","ZULETA ANTEZANA, HAROLD","ZULETA LOPEZ, JEREMY"],"4C":["ALBAN MONZON, ISAAC","ALCOCER CAMPOS, MELANI","APAZA DELGADILLO, NATHANIEL","CABRERA UMAÑA, DIANA","CALDERON MANZEL, AARON","CAMACHO ZAMBRANA, LIZ","CAMARGO PECA, JHOSSTIN","CARVAJAL GABRIEL, HEIDY","CLAROS CARREÑO, ROCIO","COYO CHOQUE, ALISON","GONZALES CORIA, GABRIELA","GUARACHI FERNANDEZ, RUBEN","GUTIERREZ CACERES, JAVIER","HUANCA COSSIO, JOSE","HUANCA MAMANI, THIAGO","HUARACHI YUCRA, RUTH","LOPEZ GONZALES, SARAI","MAGNE ZUÑIGA, ANDERSON","ORELLANA MONTECINOS, JUAN","ORTEGA CARVALLO, MATIAS","PANIAGUA GUZMAN, LUCIANA","PEREDO PINTO, SANTIAGO","TICONA TORDOYA, DANIELA","TICONA MALLON, FABIOLA","TOROYA YAVE, BRITNEY","UGARTE VIDAURRE, LEONEL","VARGAS QUINTANA, CRISTAL","VILLCA VIZA, PAUL"],"5A":["AGNE CUIZA, NICOLAS","AGUILAR DIAZ, VALERIN","CHAVEZ MARISCAL, JOSUE","ESPINOZA DELGADO, DERICK","GARCIA TOTOLA, MARIANA","GOMEZ SOSA, HELSY","GUTIERREZ POMA, KATERIN","HUANCA FLORES, BENJAMIN","ICHUTA FERNANDEZ, JHON","LLAVETA ROJAS, ANTONY","LOPEZ CHOQUE, WILSON","MAMANI HUAYGUA, SAMUEL","ORELLANA MONTECINOS, JOSE","PEREIRA LOZA, JOSE","PEREZ VARGAS, MARIAN","PUÑA VALENCIA, LUCERO","QUISPE AGUILAR, MARCO","RIOS MORALES, NEYZA","RISUEÑO YUJRA, RONY","ROJAS VALDIVIA, DEREK","SARABIA FERNANDEZ, MARCOS","SARZUSA CLAROS, VANESSA","SOTO ORTIZ, JHAMIL","SUSAÑO FLORES, NAIKE","TAPIA ALANEZ, CESAR","TERAN IRAIPI, JUAN","YUJRA MAMANI, JHAMIL","ZAPATA NOGALES, JHOJAN"],"5B":["AQUINO AZURDUY, LUIS","ARIAS SOTO, JHANN","BLAS HUARITA, JUAN","CANDIA MAITA, MASIEL","CHOQUE CONDORI, KIOMMY","COLQUE CHOQUE, MACIEL","CONDORI BERBETTY, CARLOS","CUELLAR LEAÑOS, JOHANA","GUTIERREZ ALEGRE, SANTIAGO","LEDEZMA MIRANDA, BRITANI","MAMANI CANQUI, NAIM","MARTINEZ VILLARROEL, MARECK","MICO DIAZ, LUIS","MORENO MENESES, JHEISON","ORTUSTE ORELLANA, LEONARDO","PAREDES SANABRIA, STEFANY","PEREZ LUGARANI, SANDER","QUINTANILLA RAMIREZ, ANTHONY","QUIROGA SEJAS, VICTORIA","ROCA IBAGUARI, FERNANDA","RODRIGUEZ RODRIGUEZ, ADRIANA","SALINAS CHARUPA, ADRIANA","SANCHEZ ALMANZA, BERENICE","SIÑANIZ ALMANZA, FABIO","VASQUEZ CHOQUE, BOND","ZUBIETA ZENTENO, MARIA"],"5C":["ARGANA SOLIZ, LUCIANA","CAMACHO ZAMBRANA, DEBORAH","CHOQUE MENDOZA, ALVARO","CHUCAMANI JUYARI, HERLINDA","CLAROS TORRES, NICOLAS","CLAURE ARANIBAR, HAZIEL","CRUZ CALVI, SARA","DELGADO LAURA, MILEY","GONZALES ESTRADA, ADRIEL","JARRO CHOQUE, VANIA","MIRANDA AGUILAR, JHAEL","PATIÑO CATALAN, SANTIAGO","PEREDO SILVA, SANTIAGO","POQUECHOQUE CHOQUE, ANGHELI","POSTIGO CORNEJO, ANETH","QUISPE RODRIGUEZ, JHON","RAMOS FIQUE, OLIVER","ROMAY APAZA, JHEYSON","ROMERO RAMOS, REBECA","ROMERO RONDAL, PABLO","SANDOVAL BAZOALTO, AVRIL","SEGOVIA GARCIA, ELIOTH","SULLCA GARCIA, JHOSEP","TORRICO MERCADO, DYLAN","UGARTE VALLEJOS, YASSENDY","VARGAS JORA, PAULA","ZAMBRANA ESPINOZA, EDUARDO"],"6A":["ROJAS, FERNANDA","AGUILAR TITO, KEVIN","CHAVEZ FERNANDEZ, DIEGO","CLAURE GARCIA, DAIRA","COCA LOZA, OLIVER","CONDORCOTA CHUCAMANI, ELMER","COPALI ESPINOZA, OSVALDO","CUSICANQUI RADA, LEANDRO","HINOJOSA CHAMBI, FABRICIO","MAMANI HUAYGUA, HELEN","MARTINEZ VILLARROEL, NELYA","MENDOZA CONDORI, JHOSELIN","MOLINA BARRIENTOS, NOHELIA","MORALES FLORES, ALAIN","PANIAGUA GUZMAN, LUIS","PIEDRA CLAROS, AMY","QUISPE QUISPE, BRENDA","RAMIREZ ALANIZ, DANIEL","RAMOS CEPEDA, ADRIANA","RIOS MORALES, JHOSELIN","TAPIA OLIVERA, ALEJANDRO","TICONA SURUMI, RUBEN","TOLA SOLANO, LUIS","TORIBIO TERAN, ADRIANA","VALLEJOS ROSALES, NARETH","VARGAS AGUILAR, HERLAN"],"6B":["ARGANDOÑA MOYE, KATHERINE","BENITES OJEDA, NICOLAS","CACERES SANDY, MAIZA","CASTRO SANCHEZ, JOHN","CESPEDES OLIVERA, BRENDA","CHALLA MENDOZA, MICHEL","CLAROS TORRES, GUILLERMO","COLQUE BRAVO, ANTONY","COLQUE RODRIGUEZ, JHONATAN","CONDORI CHINCHILLA, FELIX","CUAQUIRA PINTO, JEFFERSON","DIAZ CAMACHO, GIORGIA","DURAN QUILLCA, DARLA","GUARACHI POMA, JOSE","GUTIERREZ GONZALO, MARISOL","JULIO ENRIQUEZ, LUIS","MAMANI SOLIZ, CRISTHIAN","MARCE QUIMPE, FERNANDO","MIRANDA PATZI, BRYANNA","MITA LIMA, CATRIN","PACHECO VELASCO, NEREIDA","QUIROGA SAAVEDRA, CAMILA","RAMIREZ CLAURE, DARLETH","SANCHEZ VELA, NOEMI","SANDAGORDA MONTAÑO, GUADALUPE","TAPIA ALANEZ, BRANDON","USIEDA ORIHUELA, SERGIO","VILLARROEL AÑEZ, DULCE"],"6C":["AGUILAR AGUILAR, ALEXANDER","ANGULO MAMANI, LUIS","CACERES SANDY, SARA","CATARI LIZARAZU, JOSUE","CHAMBI PACHECO, SANTIAGO","CHAMBI PARISACA, ANTHONY","CHAVARRIA ARISPE, JHASMIN","CHUNGARA BALDIVIEZO, RAFAEL","COLQUE CHOQUE, DIANELIS","CONDORI ESPEJO, NAHY","DURAN QUILLCA, DARELA","FERNANDEZ QUINTEROS, EMILY","LUNA CHAMBI, JENNIFER","MAMANI HUAYGUA, ABIGAIL","MAMANI TICONA, RUTH","MARCA CORANI, CRISTIAN","ORTEGA MONTAÑO, JOHAN","PARRA CONDORI, NURIA","QUISPE HINOJOSA, JHON","REYNOSO HERBAS, NICOL","SAJAMA VEIZAGA, ANGEL","TERAN IRAIPI, JOSE","TOTOLA PUQUI, LEIDY","ULURI CORI, GENESIS","VALDIVIEZO MAMANI, SEBASTIAN","VELA MARAZA, NOELIA","ZUNA ZEBALLOS, ELEXANDER"]};
+
+function pCursos(id){var s=document.getElementById(id);Object.keys(ED).sort().forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=k.replace(/(\d+)/,'$1° ').replace(/([ABC])$/,'"$1"');s.appendChild(o)})}
+function cAl(ci,ai){var c=document.getElementById(ci).value,s=document.getElementById(ai);s.innerHTML='<option value="">— Estudiante —</option>';if(!c||!ED[c])return;ED[c].forEach(function(n){var o=document.createElement('option');o.value=n;o.textContent=n;s.appendChild(o)})}
+
+// ═══ CONFIG ═══
+var CF={co:'4/4',ri:['negra','2corcheas'],on:{},rg:'centro'};
+var CMP=['2/4','3/4','4/4'];
+var RI=[{id:'negra',n:'Negra',s:'Ta',p:1},{id:'blanca',n:'Blanca',s:'Ta-a',p:2},{id:'redonda',n:'Redonda',s:'Ta-a-a-a',p:4},{id:'2corcheas',n:'2 Corcheas',s:'Ti-Ti',p:1},{id:'4semi',n:'Semicorcheas',s:'Tiki-Tiki',p:1},{id:'co2semi',n:'Corchea+2Semi',s:'Ti-Tiki',p:1},{id:'2semico',n:'2Semi+Corchea',s:'Tiki-Ti',p:1}];
+var RN=[{id:'grave',l:'Graves'},{id:'centro',l:'Centro'},{id:'agudo',l:'Agudas'},{id:'todo',l:'Todas'}];
+NDB.forEach(function(n){CF.on[n.id]=(n.g==='centro')});
+
+function bUI(){
+  var cc=document.getElementById('ccC');cc.innerHTML='';
+  CMP.forEach(function(c){var d=document.createElement('div');d.className='ch'+(CF.co===c?' on':'');d.textContent=c;d.onclick=function(){CF.co=c;bUI();EJ.gn()};cc.appendChild(d)});
+  var rc=document.getElementById('rcC');rc.innerHTML='';
+  RI.forEach(function(r){var on=CF.ri.indexOf(r.id)!==-1;var d=document.createElement('div');d.className='rc'+(on?' on':'');d.innerHTML='<div class="rn">'+r.n+'</div><div class="rs">'+r.s+'</div>';d.onclick=function(){var i=CF.ri.indexOf(r.id);if(i===-1)CF.ri.push(r.id);else if(CF.ri.length>1)CF.ri.splice(i,1);bUI();EJ.gn()};rc.appendChild(d)});
+  var rg=document.getElementById('rgC');rg.innerHTML='';
+  RN.forEach(function(r){var d=document.createElement('div');d.className='ch'+(CF.rg===r.id?' on':'');d.textContent=r.l;d.onclick=function(){CF.rg=r.id;NDB.forEach(function(n){CF.on[n.id]=(r.id==='todo'||n.g===r.id)});bUI();EJ.gn()};rg.appendChild(d)});
+  var ng=document.getElementById('nG');ng.innerHTML='';
+  NDB.forEach(function(n){var on=!!CF.on[n.id];var d=document.createElement('div');d.className='nc'+(on?' on':'');d.textContent=n.t;d.onclick=function(){CF.on[n.id]=!CF.on[n.id];CF.rg='';bUI();EJ.gn()};ng.appendChild(d)});
 }
 
-var APP = (function() {
-    var DB = [
-        {id:'g3', t:'Sol3', v:-5, g:'grave', freq: 196.00},
-        {id:'a3', t:'La3', v:-4, g:'grave', freq: 220.00},
-        {id:'b3', t:'Si3', v:-3, g:'grave', freq: 246.94},
-        {id:'c4', t:'Do4', v:-2, g:'grave', freq: 261.63},
-        {id:'d4', t:'Re4', v:-1, g:'centro', freq: 293.66},
-        {id:'e4', t:'Mi4', v:0, g:'centro', freq: 329.63},
-        {id:'f4', t:'Fa4', v:1, g:'centro', freq: 349.23},
-        {id:'g4', t:'Sol4', v:2, g:'centro', freq: 392.00},
-        {id:'a4', t:'La4', v:3, g:'centro', freq: 440.00},
-        {id:'b4', t:'Si4', v:4, g:'centro', freq: 493.88},
-        {id:'c5', t:'Do5', v:5, g:'centro', freq: 523.25},
-        {id:'d5', t:'Re5', v:6, g:'centro', freq: 587.33},
-        {id:'e5', t:'Mi5', v:7, g:'centro', freq: 659.25},
-        {id:'f5', t:'Fa5', v:8, g:'centro', freq: 698.46},
-        {id:'g5', t:'Sol5', v:9, g:'agudo', freq: 783.99},
-        {id:'a5', t:'La5', v:10, g:'agudo', freq: 880.00},
-        {id:'b5', t:'Si5', v:11, g:'agudo', freq: 987.77},
-        {id:'c6', t:'Do6', v:12, g:'agudo', freq: 1046.50}
-    ];
+// ═══ EJERCICIO ═══
+var EJ=(function(){
+  var S={ns:[],ru:false,tm:null,sg:0,ac:0,er:0,ay:false,fs:false};
+  var AE={ix:0,fr:0,nt:'',en:0};
 
-    var estado = { 
-        notas: [], 
-        timer: null, 
-        segundos: 0, 
-        corriendo: false, 
-        mostrarAyuda: false,
-        aciertos: 0,
-        errores: 0,
-        ejercicioActual: 0,
-        fullscreen: false
-    };
+  function pool(){var p=[];NDB.forEach(function(n){if(CF.on[n.id])p.push(n)});return p}
+  function riPool(){var p=[];RI.forEach(function(r){if(CF.ri.indexOf(r.id)!==-1)p.push(r)});return p.length?p:[RI[0]]}
 
-    function dibujar(canvasId, width, height) {
-        canvasId = canvasId || 'pizarra';
-        width = width || 900;
-        height = height || 280;
-        
-        var canvas = document.getElementById(canvasId);
-        if(!canvas.getContext) return;
-        var ctx = canvas.getContext('2d');
-        
-        ctx.clearRect(0, 0, width, height);
+  function gn(){
+    var po=pool();if(!po.length){S.ns=[];draw('piz',1200,280);return}
+    var rp=riPool(),pc=parseInt(CF.co);S.ns=[];
+    for(var c=0;c<3;c++){var pr=pc;while(pr>0){
+      var ca=rp.filter(function(r){return r.p<=pr});if(!ca.length)break;
+      var ri=ca[Math.floor(Math.random()*ca.length)];
+      var nn=ri.id==='2corcheas'?2:ri.id==='4semi'?4:(ri.id==='co2semi'||ri.id==='2semico')?3:1;
+      for(var j=0;j<nn;j++){
+        var nt=po[Math.floor(Math.random()*po.length)];
+        if(S.ns.length>0&&po.length>1){var it=0;while(nt.id===S.ns[S.ns.length-1].id&&it<5){nt=po[Math.floor(Math.random()*po.length)];it++}}
+        S.ns.push({t:nt.t,v:nt.v,f:nt.f,id:nt.id,ri:ri.id,gr:j,co:c});
+      }pr-=ri.p;
+    }}
+    AE.ix=0;AE.fr=0;AE.nt='';AE.en=0;
+    draw('piz',1200,280);if(S.fs)draw('pFS',1600,460);
+  }
 
-        var scale = canvasId === 'pizarraFullscreen' ? 1.8 : 1;
-        var BASE_Y = canvasId === 'pizarraFullscreen' ? 350 : 200; 
-        var ESP = 11 * scale;
-        var startX = 50 * scale;
-        var endX = width - 50;
+  function draw(ci,W,H){
+    var cv=document.getElementById(ci);if(!cv)return;
+    var cx=cv.getContext('2d');cx.clearRect(0,0,W,H);
+    var fs=ci==='pFS',sc=fs?1.6:1,E=12*sc,BY=fs?340:200,sx=50*sc,ex=W-30;
+    // Staff lines
+    cx.beginPath();cx.strokeStyle='#777';cx.lineWidth=1.5*sc;
+    for(var i=0;i<5;i++){var y=BY-(i*2*E);cx.moveTo(sx,y);cx.lineTo(ex,y)}cx.stroke();
+    // Clef
+    cx.font=(80*sc)+'px serif';cx.fillStyle='#333';cx.fillText('𝄞',sx,BY-(5*sc));
+    // Time sig
+    var pp=CF.co.split('/');cx.font='bold '+(26*sc)+'px "DM Sans",sans-serif';cx.fillStyle='#333';cx.textAlign='center';
+    cx.fillText(pp[0],sx+65*sc,BY-4*E+4*sc);cx.fillText(pp[1],sx+65*sc,BY+2*sc);cx.textAlign='start';
+    if(!S.ns.length){cx.font=(16*sc)+'px "DM Sans"';cx.fillStyle='#999';cx.textAlign='center';cx.fillText('Pulsa Iniciar',W/2,H/2);cx.textAlign='start';return}
 
-        ctx.beginPath(); 
-        ctx.strokeStyle = "#555"; 
-        ctx.lineWidth = 1.5 * scale;
-        for(var i=0; i<5; i++) {
-            var y = BASE_Y - (i * 2 * ESP);
-            ctx.moveTo(startX, y); 
-            ctx.lineTo(endX, y);
-        }
-        ctx.stroke();
-
-        ctx.font = (80 * scale) + "px serif"; 
-        ctx.fillStyle = "#222"; 
-        ctx.fillText("𝄞", startX, BASE_Y - (5 * scale));
-
-        if(estado.notas.length === 0) {
-             ctx.font = (22 * scale) + "px Arial"; 
-             ctx.fillStyle="#666"; 
-             ctx.textAlign = "center";
-             ctx.fillText("Presiona 'Iniciar Ejercicio' para comenzar", width/2, height/2);
-             return;
-        }
-
-        var x = 150 * scale;
-        var spacing = canvasId === 'pizarraFullscreen' ? 140 : 85;
-        
-        for(var k=0; k<estado.notas.length; k++) {
-            var n = estado.notas[k];
-            var y = BASE_Y - (n.v * ESP);
-            var plicaAbajo = n.v >= 4;
-
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.scale(1.3 * scale, 0.9 * scale); 
-            ctx.beginPath(); 
-            ctx.arc(0, 0, 7, 0, 2*Math.PI);
-            // Colorear según auto-evaluación
-            var colorN = '#000';
-            if(_auto && _auto.on) {
-                if(k < _auto.idx) colorN = '#27ae60';      // verde = acertada
-                else if(k === _auto.idx) colorN = '#e67e22'; // naranja = actual
-            }
-            ctx.fillStyle = colorN;
-            ctx.fill();
-            ctx.restore();
-
-            ctx.beginPath(); 
-            ctx.lineWidth = 2 * scale; 
-            ctx.strokeStyle = "#000";
-            if(plicaAbajo) { 
-                ctx.moveTo(x-(8*scale), y); 
-                ctx.lineTo(x-(8*scale), y+(40*scale)); 
-            } else { 
-                ctx.moveTo(x+(8*scale), y); 
-                ctx.lineTo(x+(8*scale), y-(40*scale)); 
-            }
-            ctx.stroke();
-
-            var linea = function(ly) { 
-                ctx.beginPath(); 
-                ctx.strokeStyle = "#555";
-                ctx.lineWidth = 1.5 * scale;
-                ctx.moveTo(x-(16*scale), ly); 
-                ctx.lineTo(x+(16*scale), ly); 
-                ctx.stroke(); 
-            };
-            
-            if(n.v <= -2) linea(BASE_Y - (-2*ESP));
-            if(n.v <= -4) linea(BASE_Y - (-4*ESP));
-            if(n.v >= 10) linea(BASE_Y - (10*ESP));
-            if(n.v >= 12) linea(BASE_Y - (12*ESP));
-
-            if(estado.mostrarAyuda) {
-                ctx.fillStyle = "#e74c3c"; 
-                ctx.font="bold " + (16 * scale) + "px Arial"; 
-                ctx.textAlign="center";
-                ctx.fillText(n.t, x, plicaAbajo ? y-(20*scale) : y+(50*scale));
-            }
-            
-            x += spacing;
-        }
-        
-        ctx.beginPath(); 
-        ctx.lineWidth = 5 * scale; 
-        ctx.strokeStyle = "#222"; 
-        ctx.moveTo(x, BASE_Y - (88*scale)); 
-        ctx.lineTo(x, BASE_Y); 
-        ctx.stroke();
+    var x=sx+100*sc,sp=Math.min(75*sc,Math.max(40*sc,(ex-x-20)/S.ns.length)),pco=-1;
+    for(var k=0;k<S.ns.length;k++){
+      var n=S.ns[k];
+      // Barline
+      if(n.co!==pco&&pco>=0){cx.beginPath();cx.strokeStyle='#999';cx.lineWidth=1.5*sc;cx.moveTo(x-sp*.3,BY-8*E);cx.lineTo(x-sp*.3,BY);cx.stroke()}
+      pco=n.co;var y=BY-(n.v*E),pd=n.v>=4;
+      var cl='#000';if(S.ru&&MIC._r){if(k<AE.ix)cl='#16a34a';else if(k===AE.ix)cl='#ea580c'}
+      // Note head
+      cx.save();cx.translate(x,y);
+      var eB=n.ri==='blanca',eR=n.ri==='redonda';
+      if(eR){cx.scale(1.5*sc,.85*sc);cx.beginPath();cx.arc(0,0,7,0,2*Math.PI);cx.lineWidth=2.5;cx.strokeStyle=cl;cx.stroke()}
+      else if(eB){cx.scale(1.3*sc,.9*sc);cx.beginPath();cx.arc(0,0,7,0,2*Math.PI);cx.lineWidth=2.5;cx.strokeStyle=cl;cx.stroke()}
+      else{cx.scale(1.3*sc,.9*sc);cx.beginPath();cx.arc(0,0,7,0,2*Math.PI);cx.fillStyle=cl;cx.fill()}
+      cx.restore();
+      // Stem
+      if(!eR){cx.beginPath();cx.lineWidth=2*sc;cx.strokeStyle=cl;
+        if(pd){cx.moveTo(x-8*sc,y);cx.lineTo(x-8*sc,y+40*sc)}else{cx.moveTo(x+8*sc,y);cx.lineTo(x+8*sc,y-40*sc)}cx.stroke();
+        // Beams
+        if(n.ri==='2corcheas'&&n.gr===0&&k+1<S.ns.length){var y2=BY-(S.ns[k+1].v*E);cx.beginPath();cx.lineWidth=3*sc;cx.strokeStyle=cl;if(pd){cx.moveTo(x-8*sc,y+40*sc);cx.lineTo(x-8*sc+sp,y2+40*sc)}else{cx.moveTo(x+8*sc,y-40*sc);cx.lineTo(x+8*sc+sp,y2-40*sc)}cx.stroke()}
+        if((n.ri==='4semi'||n.ri==='co2semi'||n.ri==='2semico')&&n.gr===0){
+          var ng2=n.ri==='4semi'?4:3;
+          for(var b=0;b<ng2-1;b++){if(k+b+1>=S.ns.length)break;
+            var yA=BY-(S.ns[k+b].v*E),yB=BY-(S.ns[k+b+1].v*E),xA=x+b*sp,xB=x+(b+1)*sp;
+            cx.beginPath();cx.lineWidth=3*sc;cx.strokeStyle=cl;
+            if(pd){cx.moveTo(xA-8*sc,yA+40*sc);cx.lineTo(xB-8*sc,yB+40*sc);cx.stroke();cx.beginPath();cx.moveTo(xA-8*sc,yA+35*sc);cx.lineTo(xB-8*sc,yB+35*sc)}
+            else{cx.moveTo(xA+8*sc,yA-40*sc);cx.lineTo(xB+8*sc,yB-40*sc);cx.stroke();cx.beginPath();cx.moveTo(xA+8*sc,yA-35*sc);cx.lineTo(xB+8*sc,yB-35*sc)}
+            cx.stroke()}}
+      }
+      // Ledger lines
+      var ll=function(ly){cx.beginPath();cx.strokeStyle='#777';cx.lineWidth=1.5*sc;cx.moveTo(x-16*sc,ly);cx.lineTo(x+16*sc,ly);cx.stroke()};
+      if(n.v<=-2)ll(BY-(-2*E));if(n.v<=-4)ll(BY-(-4*E));if(n.v>=10)ll(BY-(10*E));if(n.v>=12)ll(BY-(12*E));
+      // Help text
+      if(S.ay){cx.fillStyle='#dc2626';cx.font='bold '+(14*sc)+'px "DM Sans"';cx.textAlign='center';cx.fillText(n.t,x,pd?y-18*sc:y+52*sc);cx.textAlign='start'}
+      x+=sp;
     }
+    // Final barline
+    cx.beginPath();cx.lineWidth=4*sc;cx.strokeStyle='#333';cx.moveTo(x+10,BY-8*E);cx.lineTo(x+10,BY);cx.stroke();
+    cx.beginPath();cx.lineWidth=1.5*sc;cx.moveTo(x+4,BY-8*E);cx.lineTo(x+4,BY);cx.stroke();
+  }
 
-    function updateStats() {
-        document.getElementById('statAciertos').innerText = estado.aciertos;
-        document.getElementById('statErrores').innerText = estado.errores;
-        
-        if(estado.fullscreen) {
-            document.getElementById('fsAciertos').innerText = estado.aciertos;
-            document.getElementById('fsErrores').innerText = estado.errores;
-        }
-        
-        var total = estado.aciertos + estado.errores;
-        var progreso = total > 0 ? Math.round((estado.aciertos / total) * 100) : 0;
-        
-        document.getElementById('statProgreso').innerText = progreso + '%';
-        document.getElementById('progressPercent').innerText = progreso + '%';
-        document.getElementById('progressBar').style.width = progreso + '%';
-    }
-    
-    function syncTimer() {
-        var m = Math.floor(estado.segundos/60).toString().padStart(2,'0');
-        var s = (estado.segundos%60).toString().padStart(2,'0');
-        var timeStr = m+":"+s;
-        
-        document.getElementById('cronometro').innerText = timeStr;
-        if(estado.fullscreen) {
-            document.getElementById('fsCronometro').innerText = timeStr;
-        }
-    }
+  function uS(){document.getElementById('sA').textContent=S.ac;document.getElementById('sE').textContent=S.er;if(S.fs){document.getElementById('fA').textContent=S.ac;document.getElementById('fE').textContent=S.er}}
+  function uT(){var m=Math.floor(S.sg/60).toString().padStart(2,'0'),s2=(S.sg%60).toString().padStart(2,'0'),t=m+':'+s2;document.getElementById('sT').textContent=t;if(S.fs)document.getElementById('fT').textContent=t}
 
-    function init() {
-        try {
-            var div = document.getElementById('chkBoxArea');
-            var html = "";
-            for(var i=0; i<DB.length; i++) {
-                var n = DB[i];
-                html += '<label class="checkbox-item"><input type="checkbox" value="'+n.id+'" class="nota-check"> '+n.t+'</label>';
-            }
-            div.innerHTML = html;
-            filtrar('centro');
-            renderTabla();
-            updateStats();
-            buildPiano();
-            showNotification('✓ Sistema listo para usar', 'success');
-        } catch(e) { 
-            console.error(e); 
-            showNotification('❌ Error al inicializar: ' + e.message, 'error');
-        }
-    }
+  function ini(){
+    if(!pool().length){toast('⚠ Selecciona notas');return}
+    S.ac=0;S.er=0;S.sg=0;AE.ix=0;AE.fr=0;AE.nt='';AE.en=0;uS();uT();gn();S.ru=true;
+    if(S.tm)clearInterval(S.tm);S.tm=setInterval(function(){S.sg++;uT()},1000);
+    document.getElementById('bI').innerHTML='⏸ Detener';document.getElementById('bI').onclick=function(){det()};
+    toast('🎵 ¡Canta las notas!');if(!MIC._r)MIC.tg();
+  }
 
-    function filtrar(tipo) {
-        var chks = document.querySelectorAll('.nota-check');
-        var chips = document.querySelectorAll('.chip-group .chip');
-        
-        chips.forEach(function(chip) {
-            chip.classList.remove('active');
-            if(chip.textContent.includes(tipo === 'grave' ? 'Graves' : 
-               tipo === 'centro' ? 'Centro' : 
-               tipo === 'agudo' ? 'Agudas' : 'Todas')) {
-                chip.classList.add('active');
-            }
-        });
-        
-        for(var i=0; i<chks.length; i++) {
-            var val = chks[i].value;
-            var obj = DB.find(function(x){ return x.id == val });
-            if(tipo === 'todo') {
-                chks[i].checked = true;
-            } else {
-                chks[i].checked = (obj.g === tipo);
-            }
-        }
-        generar(false);
-    }
+  function det(){
+    if(!S.ru)return;clearInterval(S.tm);S.ru=false;
+    document.getElementById('bI').innerHTML='▶ Iniciar';document.getElementById('bI').onclick=function(){ini()};
+    var t=S.ns.length,p=t?Math.round(S.ac/t*100):0;
+    if(AE.ix>=t&&t>0){toast('🎉 ¡Completado! '+p+'%');setTimeout(sS,600)}
+    else toast('⏸ '+S.ac+'/'+t);
+  }
 
-    function generar(jugar) {
-        var chks = document.querySelectorAll('.nota-check:checked');
-        var pool = [];
-        for(var i=0; i<chks.length; i++) {
-            var val = chks[i].value;
-            pool.push(DB.find(function(x){ return x.id == val }));
-        }
+  function evP(nota){
+    if(!S.ru||!S.ns.length)return;if(AE.en>0){AE.en--;return}if(AE.ix>=S.ns.length)return;
+    var esp=S.ns[AE.ix],eN=esp.t.replace(/\d/g,''),dNm=nota.t.replace(/\d/g,''),ok=dNm===eN;
+    if(AE.nt===nota.t)AE.fr++;else{AE.nt=nota.t;AE.fr=1}
+    var p1=document.getElementById('pN'),fp=document.getElementById('fP');
+    if(p1)p1.style.color=ok?'var(--ok)':'var(--er)';if(fp)fp.style.color=ok?'#4ade80':'#f87171';
+    if(ok&&AE.fr>=5){AE.fr=0;AE.nt='';AE.en=12;S.ac++;uS();sfb('✅ '+esp.t,'#4ade80');AE.ix++;draw('piz',1200,280);if(S.fs)draw('pFS',1600,460);if(AE.ix>=S.ns.length)setTimeout(det,400)}
+    else if(!ok&&AE.fr>=7){AE.fr=0;AE.nt='';AE.en=8;S.er++;uS();sfb('❌ Era: '+esp.t,'#f87171')}
+  }
 
-        if(pool.length === 0) { 
-            estado.notas = []; 
-            dibujar(); 
-            return; 
-        }
+  function sfb(m,cl){
+    var f=document.getElementById('pF');if(f){f.textContent=m;f.style.color=cl;f.style.opacity='1';setTimeout(function(){f.style.opacity='0'},1200)}
+    var ff=document.getElementById('fFb');if(ff&&S.fs){ff.textContent=m;ff.style.color=cl;ff.style.opacity='1';setTimeout(function(){ff.style.opacity='0'},1000)}
+  }
 
-        var nivel = document.getElementById('selNivel').value;
-        var cantidad = nivel === 'principiante' ? 5 : (nivel === 'intermedio' ? 10 : 15);
+  function sS(){
+    document.getElementById('mC').value=document.getElementById('sC').value;
+    cAl('mC','mAl');
+    document.getElementById('mAl').value=document.getElementById('sAl').value;
+    document.getElementById('mAc').textContent=S.ac;
+    document.getElementById('mEr').textContent=S.er;
+    document.getElementById('mTm').textContent=document.getElementById('sT').textContent;
+    document.getElementById('moG').classList.add('sh');
+  }
 
-        estado.notas = [];
-        for(var j=0; j<cantidad; j++) {
-            var rnd = Math.floor(Math.random() * pool.length);
-            estado.notas.push(pool[rnd]);
-        }
-        
-        estado.mostrarAyuda = false;
-        dibujar();
-        if(estado.fullscreen) {
-            dibujar('pizarraFullscreen', 1600, 500);
-        }
+  function tFS(){
+    S.fs=!S.fs;var c=document.getElementById('fsC');
+    if(S.fs){c.classList.add('ac');draw('pFS',1600,460);uS();uT();
+      try{c.requestFullscreen?c.requestFullscreen():c.webkitRequestFullscreen&&c.webkitRequestFullscreen()}catch(e){}}
+    else{c.classList.remove('ac');
+      try{document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen&&document.webkitExitFullscreen()}catch(e){}}
+  }
 
-        if(jugar) {
-            estado.segundos = 0;
-            estado.ejercicioActual++;
-            syncTimer();
-            
-            if(estado.timer) clearInterval(estado.timer);
-            estado.corriendo = true;
-            
-            estado.timer = setInterval(function(){
-                estado.segundos++;
-                syncTimer();
-            }, 1000);
-            
-            document.getElementById('btnGuardar').disabled = true;
-            document.getElementById('inpNota').value = "";
-            document.getElementById('inpObs').value = "";
-            
-            showNotification('⏱️ Ejercicio iniciado - ¡Adelante!', 'success');
-        }
-    }
+  var fch=false;
+  function tFC(){fch=!fch;document.getElementById('fBa').classList.toggle('hd',fch);document.querySelector('.ftg').textContent=fch?'▲':'▼'}
 
-    function reproducirNotas() {
-        initAudio();
-        var delay = 0;
-        for(var i=0; i<estado.notas.length; i++) {
-            (function(nota, tiempo) {
-                setTimeout(function() {
-                    playNote(nota.freq, 0.5);
-                }, tiempo);
-            })(estado.notas[i], delay);
-            delay += 600;
-        }
-    }
+  function doRep(sl){if(!S.ns.length)return;iAu();var d=0;S.ns.forEach(function(n){setTimeout(function(){playTone(n.f,sl?.8:.5)},d);d+=sl?1200:600})}
 
-    function reproducirLento() {
-        initAudio();
-        var delay = 0;
-        for(var i=0; i<estado.notas.length; i++) {
-            (function(nota, tiempo) {
-                setTimeout(function() {
-                    playNote(nota.freq, 0.8);
-                }, tiempo);
-            })(estado.notas[i], delay);
-            delay += 1200;
-        }
-    }
-
-    return {
-        _estado: estado,
-        _updateStats: updateStats,
-        _dibujar: dibujar,
-        iniciar: function() {
-            var nom = document.getElementById('inpAlumno').value.trim();
-            if(!nom) { 
-                showNotification('⚠️ Selecciona un estudiante', 'error');
-                document.getElementById('inpAlumno').focus();
-                return; 
-            }
-            _auto.idx = 0; _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 0;
-            _libreNotas = [];
-            estado.notaResaltada = 0;
-            generar(true);
-        },
-        
-        parar: function() {
-            if(!estado.corriendo) {
-                showNotification('⚠️ No hay ejercicio en curso', 'error');
-                return;
-            }
-            clearInterval(estado.timer);
-            estado.corriendo = false;
-            document.getElementById('btnGuardar').disabled = false;
-            showNotification('✓ Ejercicio detenido - Puedes guardar', 'success');
-        },
-        
-        ayuda: function() { 
-            estado.mostrarAyuda = !estado.mostrarAyuda; 
-            dibujar();
-            if(estado.fullscreen) {
-                dibujar('pizarraFullscreen', 1600, 500);
-            }
-            showNotification(estado.mostrarAyuda ? '👁️ Mostrando respuestas' : '✓ Respuestas ocultas', 'success');
-        },
-        
-        nuevoEjercicio: function() {
-            if(estado.corriendo) {
-                if(!confirm("¿Detener y generar nuevo ejercicio?")) return;
-                this.parar();
-            }
-            generar(false);
-            if(estado.fullscreen) {
-                dibujar('pizarraFullscreen', 1600, 500);
-            }
-            showNotification('🔄 Nuevo ejercicio generado', 'success');
-        },
-        
-        reproducirNotas: function() {
-            if(estado.notas.length === 0) {
-                showNotification('⚠️ Genera un ejercicio primero', 'error');
-                return;
-            }
-            reproducirNotas();
-            showNotification('🔊 Reproduciendo notas...', 'success');
-        },
-        
-        reproducirLento: function() {
-            if(estado.notas.length === 0) {
-                showNotification('⚠️ Genera un ejercicio primero', 'error');
-                return;
-            }
-            reproducirLento();
-            showNotification('🐢 Reproduciendo lento...', 'success');
-        },
-        
-        toggleFullscreen: function() {
-            estado.fullscreen = !estado.fullscreen;
-            var container = document.getElementById('fullscreenContainer');
-            
-            if(estado.fullscreen) {
-                container.classList.add('active');
-                dibujar('pizarraFullscreen', 1600, 500);
-                document.getElementById('fsAciertos').innerText = estado.aciertos;
-                document.getElementById('fsErrores').innerText = estado.errores;
-                syncTimer();
-                
-                var elem = container;
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) {
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) {
-                    elem.msRequestFullscreen();
-                }
-            } else {
-                container.classList.remove('active');
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
-            }
-        },
-        
-        fsNuevoEjercicio: function() {
-            generar(false);
-            dibujar('pizarraFullscreen', 1600, 500);
-        },
-        
-        fsReproducir: function() {
-            if(estado.notas.length === 0) return;
-            reproducirNotas();
-        },
-        
-        fsReproducirLento: function() {
-            if(estado.notas.length === 0) return;
-            reproducirLento();
-        },
-        
-        fsAyuda: function() {
-            estado.mostrarAyuda = !estado.mostrarAyuda;
-            dibujar('pizarraFullscreen', 1600, 500);
-        },
-        
-        fsAcierto: function() {
-            estado.aciertos++;
-            updateStats();
-        },
-        
-        fsError: function() {
-            estado.errores++;
-            updateStats();
-        },
-        
-        toggleFsControls: function() {
-            var controls = document.getElementById('fsControls');
-            var toggle = document.getElementById('toggleControls');
-            var icon = document.getElementById('toggleIcon');
-            
-            controls.classList.toggle('hidden');
-            toggle.classList.toggle('controls-visible');
-            
-            if(controls.classList.contains('hidden')) {
-                icon.innerText = '▲';
-                toggle.style.bottom = '15px';
-            } else {
-                icon.innerText = '▼';
-                toggle.style.bottom = '125px';
-            }
-        },
-        
-        guardar: function() {
-            if(estado.corriendo) { 
-                showNotification('⚠️ Detén el cronómetro primero', 'error');
-                return; 
-            }
-            
-            var nota = document.getElementById('inpNota').value;
-            if(nota && (nota < 0 || nota > 100)) {
-                showNotification('⚠️ La nota debe estar entre 0-100', 'error');
-                return;
-            }
-            
-            var data = {
-                f: new Date().toLocaleDateString('es-BO'),
-                h: new Date().toLocaleTimeString('es-BO', {hour: '2-digit', minute: '2-digit'}),
-                n: document.getElementById('inpAlumno').value,
-                t: document.getElementById('cronometro').innerText,
-                nv: document.getElementById('selNivel').options[document.getElementById('selNivel').selectedIndex].text,
-                ac: estado.aciertos,
-                er: estado.errores,
-                nt: nota || "-",
-                ob: document.getElementById('inpObs').value || "-"
-            };
-            
-            var hist = JSON.parse(localStorage.getItem('solfeo_pro_bolivia')) || [];
-            hist.unshift(data);
-            localStorage.setItem('solfeo_pro_bolivia', JSON.stringify(hist));
-            
-            this.renderTabla();
-            document.getElementById('btnGuardar').disabled = true;
-            showNotification('✓ Calificación guardada exitosamente', 'success');
-            
-            estado.aciertos = 0;
-            estado.errores = 0;
-            updateStats();
-        },
-        
-        renderTabla: function() { renderTabla(); },
-        filtrar: function(t) { filtrar(t); },
-        
-        borrar: function() { 
-            if(confirm("⚠️ ¿Borrar todos los registros?")) { 
-                localStorage.removeItem('solfeo_pro_bolivia'); 
-                renderTabla();
-                showNotification('🗑️ Registros eliminados', 'success');
-            } 
-        },
-        
-        descargar: function() {
-            var h = JSON.parse(localStorage.getItem('solfeo_pro_bolivia')) || [];
-            if(h.length == 0) { 
-                showNotification('⚠️ No hay registros para exportar', 'error');
-                return; 
-            }
-            
-            var csv = "Fecha,Hora,Estudiante,Tiempo,Nivel,Aciertos,Errores,Nota,Observaciones\n";
-            h.forEach(function(x){ 
-                csv += x.f+","+x.h+","+x.n+","+x.t+",\""+x.nv+"\","+x.ac+","+x.er+","+x.nt+",\""+x.ob+"\"\n";
-            });
-            
-            var b = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-            var url = URL.createObjectURL(b);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = "solfeo_bolivia_" + new Date().toISOString().split('T')[0] + ".csv";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            
-            showNotification('📥 Archivo descargado', 'success');
-        },
-        
-        autoStart: function() { init(); }
-    };
-
-    function renderTabla() {
-        var tb = document.querySelector('#tablaRes tbody');
-        tb.innerHTML = "";
-        var h = JSON.parse(localStorage.getItem('solfeo_pro_bolivia')) || [];
-        
-        if(h.length === 0) {
-            tb.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#999; padding:30px;">No hay registros guardados</td></tr>';
-            return;
-        }
-        
-        for(var i=0; i<h.length; i++) {
-            var x = h[i];
-            var notaBadge = '';
-            if(x.nt !== "-") {
-                var nota = parseInt(x.nt);
-                if(nota >= 70) notaBadge = '<span class="badge badge-success">'+x.nt+'</span>';
-                else if(nota >= 50) notaBadge = '<span class="badge badge-warning">'+x.nt+'</span>';
-                else notaBadge = '<span class="badge badge-danger">'+x.nt+'</span>';
-            } else {
-                notaBadge = '-';
-            }
-            
-            tb.innerHTML += "<tr>" +
-                "<td>"+x.f+" <br><small>"+x.h+"</small></td>" +
-                "<td><strong>"+x.n+"</strong></td>" +
-                "<td>"+x.t+"</td>" +
-                "<td>"+x.nv+"</td>" +
-                "<td style='color:var(--success);'><strong>"+x.ac+"</strong></td>" +
-                "<td style='color:var(--danger);'><strong>"+x.er+"</strong></td>" +
-                "<td>"+notaBadge+"</td>" +
-                "<td>"+x.ob+"</td>" +
-                "</tr>";
-        }
-    }
+  return{
+    gn:gn,ini:ini,det:det,evP:evP,
+    nv:function(){if(S.ru)det();gn();toast('🔄 Nuevo')},
+    tAy:function(){S.ay=!S.ay;draw('piz',1200,280);if(S.fs)draw('pFS',1600,460)},
+    tFS:tFS,tFC:tFC,sS:sS,
+    rep:function(sl){doRep(sl)},
+    mA:function(){S.ac++;uS()},mE:function(){S.er++;uS()},
+    _st:S
+  };
 })();
 
-// ══════════════════════════════════════════════
-// MEJORAS NSP 2026
-// ══════════════════════════════════════════════
+// ═══ MICRÓFONO ═══
+var MIC=(function(){
+  var str=null,an=null,cx=null,r=false;
+  function lp(){
+    if(!r)return;var buf=new Float32Array(an.fftSize);an.getFloatTimeDomainData(buf);
+    var fr=autoCorr(buf,cx.sampleRate);
+    var p1=document.getElementById('pN'),ph=document.getElementById('pH'),fp=document.getElementById('fP');
+    if(fr>75&&fr<1200){var n=detNota(fr);
+      if(n){if(p1){p1.textContent=n.t;p1.style.color='var(--ok)'}if(ph)ph.textContent=Math.round(fr)+' Hz (±'+n.cents+'¢)';if(fp){fp.textContent=n.t;fp.style.color='#4ade80'}EJ.evP(n)}
+      else{if(p1){p1.textContent=Math.round(fr)+'Hz';p1.style.color='var(--tx3)'}if(ph)ph.textContent='';if(fp){fp.textContent='~';fp.style.color='#6b6965'}}}
+    else{if(p1){p1.textContent='—';p1.style.color='var(--tx3)'}if(ph)ph.textContent='';if(fp){fp.textContent='—';fp.style.color='#6b6965'}}
+    setTimeout(lp,70);
+  }
+  async function tg(){
+    var btn=document.getElementById('mB'),ar=document.getElementById('pA'),fm=document.getElementById('fMi');
+    if(r){r=false;if(str)str.getTracks().forEach(function(t){t.stop()});if(cx)cx.close();str=null;an=null;cx=null;
+      btn.textContent='🎤 Activar Micrófono';btn.classList.remove('on');ar.style.display='none';
+      if(fm){fm.textContent='🎤';fm.style.background=''}return}
+    try{
+      cx=new(window.AudioContext||window.webkitAudioContext)();
+      if(cx.state==='suspended'){await cx.resume();}
+      str=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:true}});
+      var src=cx.createMediaStreamSource(str);
+      an=cx.createAnalyser();an.fftSize=4096;src.connect(an);r=true;
+      btn.innerHTML='🔴 Mic Activo';btn.classList.add('on');ar.style.display='flex';
+      if(fm){fm.textContent='🔴';fm.style.background='#f87171'}lp();toast('🎤 Mic activo');
+    }catch(e){toast('⚠ Sin acceso al micrófono')}
+  }
+  return{tg:tg,get _r(){return r}};
+})();
 
-// ── ESTUDIANTES POR CURSO ──
-var ED_NSP = {"1A":["ACHACOLLO AGUILAR, YABEL","AGUILAR QUISPE, KAEL","ALCON AZURDUY, SEBASTIAN","ANDRADE CONDORI, MAXIMILIANO","ARIAS ALVAREZ, ALEXANDRA","CALANI MARCA, HELEN","CANDIA MAITA, NELSON","CANQUI COLQUE, ISABELLA","CHAOCA MOLLE, SAMANTHA","CHAVARRIA ARISPE, MICHEL","CHOQUE TERRAZAS, NICOLAS","CONDORI FERNANDEZ, ILSEN","CRUZ CALIZAYA, LEANDRO","GUARACHI VILLA, RODRIGO","GUTIERREZ CANAVIRI, AYLIN","ICHUTA RODRIGUEZ, AYHELEN","JUYARI TUMIRI, RODRIGO","MEDINA JULIAN, ALEJANDRA","MELENDRES MONTAÑO, MATIAS","MENDOZA CONDORI, ALEXIA","MERIDA MORALES, SAUL","MIRANDA TINTAYA, DARLA","MITA AGUAYO, JANETH","MOLINA MAMANI, REBECA","PONCE AGUILAR, KEVIN","POQUECHOQUE HUAYTARI, DEYMAR","QUIRA MARTINEZ, JHONNY","QUISPE CONDORI, SEBASTIAN","QUISPE ESCALERA, ALINA","ROMERO CANEDO, RAFAELA","ROMERO JAUREGUI, CARLOS","SOLIZ CORIA, DREYKO","TOLA SOLANO, SELENA","VARGAS QUINTANILLA, ESTEFANY","VASQUEZ MALDONADO, ANDY","ZEBALLOS LOPEZ, LUCAS"],"1B":["AGUILAR MORALES, NICOL","AGUILAR MOYA, JHONATAN","ARISPE FERNANDEZ, THIAGO","ATAHUICHI COCA, MARIA","AVAROMA SOMOZA, AMANDA","BAUTISTA CONDORI, BRAYAN","CALLISAYA VASQUEZ, KEILA","CHUNGARA BALDIVIEZO, DAVID","CHUQUICHAMBI APAZA, YULY","CLAROS MAMANI, DAYANA","COLQUE MAMANI, REBECA","CRUZ COPALI, LUZ","FLORES ILLANES, FRANZ","GARCIA CUARASI, ROSZELIN","GARCIA VARGAS, STEFAN","GOMEZ SOSA, JHOAN","GONZALES ROCHA, ERICK","GUZMAN GARCIA, JAMES","JALDIN VILLARROEL, DARY","LOPEZ ARCE, ITAM","LUNA ARIAS, DEYVID","MORALES FLORES, DIANA","PEREZ LUGARANI, JAEL","QUIROZ CHOQUE, HEIDY","QUISPE ALBORTA, NATALIA","QUISPE RODRIGUEZ, JHULIANA","ROCHA CHECO, ALESKA","SANDOVAL BAZOALTO, JARED","TERAN IRAIPI, MARIA","TINTAYA ALVAREZ, JADEN","TORRICO CRESPO, JADE","TORRICO CRESPO, MATIAS","UNZUETA CAERO, RAFAELA","VILLAMOR LORAS, JORGE","ZEBALLOS ROCHA, LUIS"],"1C":["ALVAREZ CASTELLON, DAVID","APAZA DELGADILLO, JOSE","BARRIOS MIRANDA, WILLIAM","BOLIVAR MENDEZ, LUCIANA","CALLISAYA TICONA, CRISTIAN","CAMARGO ARISPE, ALEXA","CHUQUIMIA CORDERO, ELIZABETH","CLAURE MELGAREJO, NEYMAR","COLQUE QUISPE, DARLIN","CORDOVA AYRA, STEFANO","FIGUEROA ZULETA, MARIA","FLORES CALIZAYA, ALEXIA","GANDARILLAS MOLINA, PHEYTON","GARCIA JIMENEZ, JESUS","GARCIA JOANIQUINA, GABRIEL","GUTIERREZ CACERES, CAMILA","HERBAS POMA, CAMILA","JAILLITA REVOLLO, LUCIANA","LAZO CUBA, ADRIANA","MAIRE YUJRA, PEDRO","MAMANI HUAYGUA, SEBASTIAN","MAMANI TITO, YARITA","MANCILLA QUISPE, SHEYLA","MOLINA MAMANI, ANABEL","NOGALES ORELLANA, JUAN","PACARI MAMANI, SCARLETH","PARDO ALA, LINDSAY","PIEDRA CLAROS, CRISTOFER","SANCHEZ VELA, FABRICIO","VASQUEZ RAMOS, MATIAS","VELASQUEZ RIOS, VALERIA","VIDOVIC PAREDES, MILAGROS","YAVE ROLLANO, MARIOLY","ZAMBRANA ZAMBRANA, JHORDY","ZAPATA NOGALES, JHAMIL"],"2A":["ALBARES MENDOZA, ALEXIS","CABALLERO RAMALLO, MAITE","CALDERON GARCIA, WILLIAM","CALLE CRUZ, NICOLAS","CALLER IBAGUARI, EDITH","CARRILLO MEJIA, ITZEL","CASTRO PEÑAFIEL, NICOL","CHOCONI VENTURA, NEYMAR","CLAROS CARI, NICOLAS","CLAROS MAMANI, SOFIA","COPA MAMANI, THIAGO","DELGADILLO COLQUE, RYAN","GONZALES CHAMBI, NICOLAS","HUANCA MAMANI, TREYSI","JAILLITA QUISPE, BRYAN","LLAMPA FERNANDEZ, ELIOTH","MAMANI ZUÑIGA, FERNANDA","ORTUSTE ORELLANA, LUCIANA","PAREDES QUISBERT, ALEXIA","PARRA GARRON, ALBA","PARRADO BUSTAMANTE, SANTIAGO","PEREYRA HOSSE, GHI","PINTO ROJAS, ANDRES","PRADA POMA, ABIGAIL","PUÑA VALENCIA, ANTONIO","QUISPE MARIÑO, JHACK","RIERA GOYTIA, MEGAN","ROJAS BUSTAMANTE, CAMILA","ROMERO CANEDO, LEANDRO","ROMERO RAMOS, LUIS","ROMERO SALAZAR, SAUL","VEIZAGA SOLIS, AINHOA"],"2B":["AGNE CUIZA, ADRIAN","AGUILAR MORALES, SARA","ALBA ALVESTEGUI, JHOANA","ARAMAYO CHINCHILLA, SANTIAGO","ARGANA SOLIZ, LUCAS","AYALA CRESPO, SANTIAGO","CASTELLON MAMANI, TAMAYA","CLAURE GARCIA, WANNER","CLEMENTE MARTINES, JHOSELYN","CONTRERAS GONZALES, IAN","DURAN COLQUE, JOSE","FERNANDEZ FLORES, DANIEL","GONZALES CORIA, EMILY","GUTIERREZ ALEGRE, FAVIO","GUTIERREZ GONZALO, LIZ","LAZARTE CAMACHO, JHON","LOAIZA VELASCO, JHOJAN","LOPEZ ARISPE, DANIEL","MAMANI SEJAS, TATIANA","MERILES TOLA, MICHELLE","MIRANDA PONCE, FERNANDO","PACHECO VELASCO, ALEX","PEREIRA LOZA, JOSE","POZO ROJAS, JUAN","RAMIREZ CASTRO, SKAYLOR","RAMIREZ QUISBERT, MIKEYLA","RICALDEZ SANDOVAL, BRISSA","SILES QUISPE, CAMILA","TORRICO CRESPO, SEBASTIAN","VARGAS QUINTANA, SWAMI","VILLARROEL CAMAQUE, THAIS","ZURITA FERRUFINO, JOSE"],"2C":["GASPAR, SAMUEL","ALBAN MONZON, GERALDINE","ALBARES ZURITA, RODRIGO","CHALLA MENDOZA, ADRIANA","CONDORI BERBETTY, JAZMIN","CUBA OLMEDO, ALEXIS","CUSI VEISAGA, JOSUE","EQUISE CORDOVA, HAROLD","FERNANDEZ MARPARTIDA, PABLO","FLORES ALANES, DIEGO","FLORES PACO, SNAYDER","FRANCO VEGA, THIAGO","GUARACHI FERNANDEZ, HAZIEL","GUTIERREZ CANAVIRI, AMILKAR","LUIZAGA AVILA, BENJAMIN","MAMANI MORALES, FABIOLA","MAMANI SILVA, DOUGLAS","MEJIA VALENCIA, BENJAMIN","PACARI MAMANI, ANDRE","QUISPE CONDORI, LIOMA","QUISPE MARIÑO, NYCK","RAMIREZ ARZE, NATANAEL","RICALDEZ PAREDES, JHAKELIN","RODRIGUEZ GUTIERREZ, SAMUEL","ROMERO FLORES, JUAN","SANCHEZ MARZANA, SHEYLA","SOLIS CUARASI, SHADOL","SOLIZ YAVE, ERIKA","TICONA SURUMI, FERNANDA","TORDOYA QUIROGA, KARIM","URIBE VILLANUEVA, ENRIQUE","YUCRA TICONA, ZARLET"],"3A":["ALBARES ZURITA, JUAN","CAERO DELGADO, MATIAS","CESPEDES GUARENA, JOSE","CHILE ALVAREZ, DYLAN","CHOQUE GALVEZ, JIMENA","CLAURE ARANIBAR, MAYARA","COCA LOZA, KEATHON","CONDORI CEPEDA, AARON","CORIA JIMENEZ, ROSARIO","DELGADILLO COLQUE, ADEMAR","FERNANDEZ FLORES, MATIAS","GONZALES TORRICO, JHOSELIN","JAMES MAREÑO, SEBASTIAN","LEDEZMA MIRANDA, ARABEL","LIMACHI CANAVIRI, JACI","LUNA ARIAS, SAMUEL","MAMANI SOLIZ, DEYMAR","MELENDRES MONTAÑO, ANGELA","MORALES TABOADA, SELENA","PADILLA ROJAS, MIKEYLA","PATIÑO CHAVEZ, DIEGO","PATIÑO COSSIO, VALENTINA","PEREYRA HOSSE, JUAN","POMA VILLARPANDO, JAIR","POQUECHOQUE HUAYTARI, ANDRE","RAMIREZ CLAURE, LESLIE","RIVERO ACERO, EDGAR","RODRIGUEZ MAMANI, KEVIN","ROJAS BUSTAMANTE, ROSARIO","ROMERO RAMOS, MELISA","ROMERO TABORGA, ALAN","RUEDA RODRIGUEZ, LILIAN","UGARTE CHOQUE, JESSICA","VALDA ALVAREZ, JOSE","VILLCA BERNABEL, EVER"],"3B":["CANAVIRI, ANGEL","AGUILAR COLQUE, LUZ","AGUILAR MOYA, CAMILA","ALMANZA HUANCA, EMERSON","ANDIA APAZA, JHEREMY","AYALA CRESPO, ANDRES","BARROSO ROMERO, LUCAS","CAMACHO MAMANI, ANGIE","CANAVIRI VARGAS, SHARON","CARBALLO BUSTAMANTE, JHOSELYN","CHOQUE TITO, NEYMAR","FRANCO VEGA, ALEXANDRA","GARCIA GOMEZ, DILAN","GONZALES ESTRADA, IVANA","GUZMAN ZEPITA, ANDRUW","HERBAS ATAHUICHI, ERICK","HERRERA VIDAURRE, ROBERTO","ICHUTA FERNANDEZ, REINER","LIZARAZU MAMANI, ULISES","LOPEZ MAMANI, DIANA","LUIZAGA VEGA, LEONARDO","MAMANI SILVA, BRISA","MENDOZA PIZAYA, ABDIAZ","MENDOZA CONDORI, PAOLA","PADILLA MARCA, JHENIFER","PEREZ BARRIENTOS, ELIAS","RAMOS CEPEDA, IAN","REYNOSO HERBAS, CAMILA","RIERA GOYTIA, BRIZEIDA","SALINAS CHARUPA, IVONNE","SOLIZ QUIROGA, MATEO","VARGAS VASQUEZ, ANDREA","VEIZAGA GUZMAN, KENDRICK","VELA RIVERA, BRIHANA","YAVE ROLLANO, CHARLE"],"3C":["ANGULO MAMANI, JHON","ANGULO CEREZO, DAILIN","ARAUCO SARDAN, DARLIN","BARRENECHEA SALAZAR, LUIS","CANAVIRI ASTETE, NICOLAS","CESPEDES OLIVERA, LISANDRO","CHAVEZ CONDORI, AYELEN","CHOQUE CABRERA, VICTOR","CHOQUE CONDORI, ALISON","CHOQUE GUTIERREZ, XIOMARA","CORPUS HIDALGO, ALEJANDRA","GALLARDO MENDOZA, CAMILA","HERBAS POMA, DARLIN","JALDIN VILLARROEL, EIDEN","MAMANI REYES, DARLIN","MARCE YAVE, CARLA","MORALES CARICARI, SARAHI","MORALES FLORES, RAFAEL","ORELLANA SANTILLAN, VALERIA","PAREDES COSSIO, ALEJANDRO","PEREDO ORIHUELA, ANDREA","POQUECHOQUE HUAYTARI, ANDERSON","QUIROGA SEJAS, MARCO","RAMOS FIQUE, ALEX","SANCHEZ ROMERO, ANAHI","SILES QUISPE, MATEO","SOLIZ QUIROGA, SAI","SOSA PINTO, ALEJANDRO","TOROYA YAVE, NEYMAR","VASQUEZ SANCHEZ, AXCEL","VELARDE FERNANDEZ, MIGUELANGEL","ZULETA LOPEZ, LUCIANA"],"4A":["PEREZ, FATIMA","ALIENDRE CONDORI, JOSE","ALMANZA HUANCA, ADRIELY","CASA MAMANI, YAMILE","CHAMBI PACHECO, TATIANA","CHOQUE CRUZ, RIHANNA","CHUMBE GERONIMO, DANIELA","CLAROS FERNANDEZ, BRIGITH","CONDORI FERNANDEZ, ADALID","CUTIPA TITO, DAYSI","GUTIERREZ CANAVIRI, ANA","MAIRE ALVARES, ALEJANDRA","MAREÑO SOSA, ALEXIS","PACHECO VELASCO, NAYELI","PARRA GARRON, JHONNY","QUISPE AGUILAR, ANAHI","RIOS MORALES, BELINDA","RIVERO ACERO, JADE","ROCHA VERGARA, MELANY","SOLIZ PEDRAZAS, MAIC","SORIA ESCOBAR, DIEGO","SOTO TAQUICHIRI, EDWARD","TABOADA POMA, FABIAN","TORIBIO TERAN, MATIAS","VELA MARAZA, FATIMA","VELARDE MONTEMAYOR, MATIAS","YUPANQUI RAMOS, EMILY","ZENTENO ALANEZ, ADHEMAR"],"4B":["AMONZABEL FLORES, CAMILA","ARISPE AGUILAR, HELEN","BARRIENTOS MAMANI, BRISA","BOJORGES CARVAJAL, NATALY","CABALLERO RAMALLO, MATEO","CABRERA LAGUNA, FERNANDA","CHOQUE GALVEZ, ABIEL","CONDORI SILES, SAMIEL","GARCIA CUARASI, JHON","GARCIA VILLEGAS, SINDEL","GERONIMO PEREZ, KARIM","GONZALES ROCHA, RUTH","JAILLITA REVOLLO, LIMBERT","JIMENEZ BERRIOS, JHOJAM","LIMACHI CANAVIRI, BRUCE","LIZARAZU MAMANI, ARIANA","LORA ACERO, CARLOS","MARZA AGUILAR, ANTHONY","PARRADO BUSTAMANTE, MARIANA","PINTO ROJAS, NICOLAS","RAMIREZ ALANIZ, GABRIEL","SAJAMA PACO, RUTH","TERRAZAS CAPRILES, ANEL","UGARTE VIDAURRE, LEONARDO","VARGAS JORA, SOFIA","VASQUEZ CUBA, KATERINE","VILLAMOR LORAS, ALISSON","ZULETA ANTEZANA, HAROLD","ZULETA LOPEZ, JEREMY"],"4C":["ALBAN MONZON, ISAAC","ALCOCER CAMPOS, MELANI","APAZA DELGADILLO, NATHANIEL","CABRERA UMAÑA, DIANA","CALDERON MANZEL, AARON","CAMACHO ZAMBRANA, LIZ","CAMARGO PECA, JHOSSTIN","CARVAJAL GABRIEL, HEIDY","CLAROS CARREÑO, ROCIO","COYO CHOQUE, ALISON","GONZALES CORIA, GABRIELA","GUARACHI FERNANDEZ, RUBEN","GUTIERREZ CACERES, JAVIER","HUANCA COSSIO, JOSE","HUANCA MAMANI, THIAGO","HUARACHI YUCRA, RUTH","LOPEZ GONZALES, SARAI","MAGNE ZUÑIGA, ANDERSON","ORELLANA MONTECINOS, JUAN","ORTEGA CARVALLO, MATIAS","PANIAGUA GUZMAN, LUCIANA","PEREDO PINTO, SANTIAGO","TICONA TORDOYA, DANIELA","TICONA MALLON, FABIOLA","TOROYA YAVE, BRITNEY","UGARTE VIDAURRE, LEONEL","VARGAS QUINTANA, CRISTAL","VILLCA VIZA, PAUL"],"5A":["AGNE CUIZA, NICOLAS","AGUILAR DIAZ, VALERIN","CHAVEZ MARISCAL, JOSUE","ESPINOZA DELGADO, DERICK","GARCIA TOTOLA, MARIANA","GOMEZ SOSA, HELSY","GUTIERREZ POMA, KATERIN","HUANCA FLORES, BENJAMIN","ICHUTA FERNANDEZ, JHON","LLAVETA ROJAS, ANTONY","LOPEZ CHOQUE, WILSON","MAMANI HUAYGUA, SAMUEL","ORELLANA MONTECINOS, JOSE","PEREIRA LOZA, JOSE","PEREZ VARGAS, MARIAN","PUÑA VALENCIA, LUCERO","QUISPE AGUILAR, MARCO","RIOS MORALES, NEYZA","RISUEÑO YUJRA, RONY","ROJAS VALDIVIA, DEREK","SARABIA FERNANDEZ, MARCOS","SARZUSA CLAROS, VANESSA","SOTO ORTIZ, JHAMIL","SUSAÑO FLORES, NAIKE","TAPIA ALANEZ, CESAR","TERAN IRAIPI, JUAN","YUJRA MAMANI, JHAMIL","ZAPATA NOGALES, JHOJAN"],"5B":["AQUINO AZURDUY, LUIS","ARIAS SOTO, JHANN","BLAS HUARITA, JUAN","CANDIA MAITA, MASIEL","CHOQUE CONDORI, KIOMMY","COLQUE CHOQUE, MACIEL","CONDORI BERBETTY, CARLOS","CUELLAR LEAÑOS, JOHANA","GUTIERREZ ALEGRE, SANTIAGO","LEDEZMA MIRANDA, BRITANI","MAMANI CANQUI, NAIM","MARTINEZ VILLARROEL, MARECK","MICO DIAZ, LUIS","MORENO MENESES, JHEISON","ORTUSTE ORELLANA, LEONARDO","PAREDES SANABRIA, STEFANY","PEREZ LUGARANI, SANDER","QUINTANILLA RAMIREZ, ANTHONY","QUIROGA SEJAS, VICTORIA","ROCA IBAGUARI, FERNANDA","RODRIGUEZ RODRIGUEZ, ADRIANA","SALINAS CHARUPA, ADRIANA","SANCHEZ ALMANZA, BERENICE","SIÑANIZ ALMANZA, FABIO","VASQUEZ CHOQUE, BOND","ZUBIETA ZENTENO, MARIA"],"5C":["ARGANA SOLIZ, LUCIANA","CAMACHO ZAMBRANA, DEBORAH","CHOQUE MENDOZA, ALVARO","CHUCAMANI JUYARI, HERLINDA","CLAROS TORRES, NICOLAS","CLAURE ARANIBAR, HAZIEL","CRUZ CALVI, SARA","DELGADO LAURA, MILEY","GONZALES ESTRADA, ADRIEL","JARRO CHOQUE, VANIA","MIRANDA AGUILAR, JHAEL","PATIÑO CATALAN, SANTIAGO","PEREDO SILVA, SANTIAGO","POQUECHOQUE CHOQUE, ANGHELI","POSTIGO CORNEJO, ANETH","QUISPE RODRIGUEZ, JHON","RAMOS FIQUE, OLIVER","ROMAY APAZA, JHEYSON","ROMERO RAMOS, REBECA","ROMERO RONDAL, PABLO","SANDOVAL BAZOALTO, AVRIL","SEGOVIA GARCIA, ELIOTH","SULLCA GARCIA, JHOSEP","TORRICO MERCADO, DYLAN","UGARTE VALLEJOS, YASSENDY","VARGAS JORA, PAULA","ZAMBRANA ESPINOZA, EDUARDO"],"6A":["ROJAS, FERNANDA","AGUILAR TITO, KEVIN","CHAVEZ FERNANDEZ, DIEGO","CLAURE GARCIA, DAIRA","COCA LOZA, OLIVER","CONDORCOTA CHUCAMANI, ELMER","COPALI ESPINOZA, OSVALDO","CUSICANQUI RADA, LEANDRO","HINOJOSA CHAMBI, FABRICIO","MAMANI HUAYGUA, HELEN","MARTINEZ VILLARROEL, NELYA","MENDOZA CONDORI, JHOSELIN","MOLINA BARRIENTOS, NOHELIA","MORALES FLORES, ALAIN","PANIAGUA GUZMAN, LUIS","PIEDRA CLAROS, AMY","QUISPE QUISPE, BRENDA","RAMIREZ ALANIZ, DANIEL","RAMOS CEPEDA, ADRIANA","RIOS MORALES, JHOSELIN","TAPIA OLIVERA, ALEJANDRO","TICONA SURUMI, RUBEN","TOLA SOLANO, LUIS","TORIBIO TERAN, ADRIANA","VALLEJOS ROSALES, NARETH","VARGAS AGUILAR, HERLAN"],"6B":["ARGANDOÑA MOYE, KATHERINE","BENITES OJEDA, NICOLAS","CACERES SANDY, MAIZA","CASTRO SANCHEZ, JOHN","CESPEDES OLIVERA, BRENDA","CHALLA MENDOZA, MICHEL","CLAROS TORRES, GUILLERMO","COLQUE BRAVO, ANTONY","COLQUE RODRIGUEZ, JHONATAN","CONDORI CHINCHILLA, FELIX","CUAQUIRA PINTO, JEFFERSON","DIAZ CAMACHO, GIORGIA","DURAN QUILLCA, DARLA","GUARACHI POMA, JOSE","GUTIERREZ GONZALO, MARISOL","JULIO ENRIQUEZ, LUIS","MAMANI SOLIZ, CRISTHIAN","MARCE QUIMPE, FERNANDO","MIRANDA PATZI, BRYANNA","MITA LIMA, CATRIN","PACHECO VELASCO, NEREIDA","QUIROGA SAAVEDRA, CAMILA","RAMIREZ CLAURE, DARLETH","SANCHEZ VELA, NOEMI","SANDAGORDA MONTAÑO, GUADALUPE","TAPIA ALANEZ, BRANDON","USIEDA ORIHUELA, SERGIO","VILLARROEL AÑEZ, DULCE"],"6C":["AGUILAR AGUILAR, ALEXANDER","ANGULO MAMANI, LUIS","CACERES SANDY, SARA","CATARI LIZARAZU, JOSUE","CHAMBI PACHECO, SANTIAGO","CHAMBI PARISACA, ANTHONY","CHAVARRIA ARISPE, JHASMIN","CHUNGARA BALDIVIEZO, RAFAEL","COLQUE CHOQUE, DIANELIS","CONDORI ESPEJO, NAHY","DURAN QUILLCA, DARELA","FERNANDEZ QUINTEROS, EMILY","LUNA CHAMBI, JENNIFER","MAMANI HUAYGUA, ABIGAIL","MAMANI TICONA, RUTH","MARCA CORANI, CRISTIAN","ORTEGA MONTAÑO, JOHAN","PARRA CONDORI, NURIA","QUISPE HINOJOSA, JHON","REYNOSO HERBAS, NICOL","SAJAMA VEIZAGA, ANGEL","TERAN IRAIPI, JOSE","TOTOLA PUQUI, LEIDY","ULURI CORI, GENESIS","VALDIVIEZO MAMANI, SEBASTIAN","VELA MARAZA, NOELIA","ZUNA ZEBALLOS, ELEXANDER"]};
-
-function cargarEstudiantes() {
-    var curso = document.getElementById('selCurso').value;
-    var sel = document.getElementById('inpAlumno');
-    sel.innerHTML = '<option value="">— Estudiante —</option>';
-    if(!curso || !ED_NSP[curso]) return;
-    ED_NSP[curso].forEach(function(n){
-        var op = document.createElement('option');
-        op.value = n; op.textContent = n; sel.appendChild(op);
-    });
+// ═══ GUARDAR ═══
+function gFB(){
+  var cu=document.getElementById('mC').value,al=document.getElementById('mAl').value;
+  if(!cu||!al){toast('⚠ Selecciona curso y estudiante');return}
+  var s=EJ._st;
+  var d={fecha:new Date().toISOString(),curso:cu,alumno:al,aciertos:s.ac,errores:s.er,total:s.ns.length,tiempo:document.getElementById('sT').textContent,compas:CF.co,pct:s.ns.length?Math.round(s.ac/s.ns.length*100):0};
+  var btn=document.getElementById('mSd');btn.textContent='📤 Enviando...';btn.disabled=true;
+  fbPush(d,function(ok){btn.textContent='📤 Enviar al Profesor';btn.disabled=false;
+    if(ok){toast('✅ ¡Enviado! Tu profesor lo verá');cMo()}
+    else{var l=JSON.parse(localStorage.getItem('solfeo_pend')||'[]');l.push(d);localStorage.setItem('solfeo_pend',JSON.stringify(l));toast('⚠ Sin conexión — guardado local');cMo()}
+  });
 }
+function cMo(){document.getElementById('moG').classList.remove('sh')}
 
-// ── PIANO VISUAL ──
-var PIANO_KEYS = [
-    {t:'Do4',f:261.63},{t:'Re4',f:293.66},{t:'Mi4',f:329.63},{t:'Fa4',f:349.23},
-    {t:'Sol4',f:392.00},{t:'La4',f:440.00},{t:'Si4',f:493.88},{t:'Do5',f:523.25},
-    {t:'Re5',f:587.33},{t:'Mi5',f:659.25},{t:'Fa5',f:698.46},{t:'Sol5',f:783.99}
-];
-
-function buildPiano() {
-    var c = document.getElementById('pianoContainer');
-    if(!c) return;
-    c.innerHTML = '';
-    PIANO_KEYS.forEach(function(n){
-        var k = document.createElement('div');
-        k.style.cssText = 'width:50px;height:88px;background:#f5ead0;border:2px solid #4a3520;border-radius:0 0 6px 6px;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;font-size:.6rem;font-weight:800;color:#4a3520;user-select:none;box-shadow:2px 3px 6px rgba(0,0,0,.3);transition:background .08s,transform .08s;flex-shrink:0;';
-        k.textContent = n.t;
-        var fn = function(e){ e.preventDefault(); playNote(n.f,1.0); k.style.background='#c8a96e'; k.style.transform='scaleY(.95)'; setTimeout(function(){k.style.background='#f5ead0';k.style.transform='';},200); };
-        k.addEventListener('mousedown', fn);
-        k.addEventListener('touchstart', fn, {passive:false});
-        c.appendChild(k);
-    });
-}
-
-// ── MICRÓFONO + AUTO-EVALUACIÓN ──
-var _mic = {stream:null, analyser:null, ctx:null, running:false};
-var _auto = {on:false, idx:0, frames:0, nota:'', enfriando:0};
-
-var NOTAS_PITCH = [
-    {t:'Do3',f:130.81},{t:'Re3',f:146.83},{t:'Mi3',f:164.81},{t:'Fa3',f:174.61},
-    {t:'Sol3',f:196.00},{t:'La3',f:220.00},{t:'Si3',f:246.94},
-    {t:'Do4',f:261.63},{t:'Re4',f:293.66},{t:'Mi4',f:329.63},{t:'Fa4',f:349.23},
-    {t:'Sol4',f:392.00},{t:'La4',f:440.00},{t:'Si4',f:493.88},
-    {t:'Do5',f:523.25},{t:'Re5',f:587.33},{t:'Mi5',f:659.25},
-    {t:'Fa5',f:698.46},{t:'Sol5',f:783.99},{t:'La5',f:880.00}
-];
-
-function detectarNota(freq) {
-    var mejor = null, diff = 999;
-    NOTAS_PITCH.forEach(function(n){
-        var d = Math.abs(freq - n.f);
-        if(d < diff){ diff = d; mejor = n; }
-    });
-    return diff < 45 ? mejor : null;
-}
-
-function autoCorrelate2(buf, sr) {
-    var SIZE = buf.length, rms = 0;
-    for(var i=0;i<SIZE;i++) rms += buf[i]*buf[i];
-    rms = Math.sqrt(rms/SIZE);
-    if(rms < 0.015) return -1;
-    var r1=0, r2=SIZE-1, th=0.2;
-    for(var i=0;i<SIZE/2;i++) if(Math.abs(buf[i])<th){r1=i;break;}
-    for(var i=1;i<SIZE/2;i++) if(Math.abs(buf[SIZE-i])<th){r2=SIZE-i;break;}
-    buf = buf.slice(r1,r2); SIZE = buf.length;
-    var c = new Array(SIZE).fill(0);
-    for(var i=0;i<SIZE;i++) for(var j=0;j<SIZE-i;j++) c[i]+=buf[j]*buf[j+i];
-    var d=0; while(c[d]>c[d+1]) d++;
-    var max=-1, pos=-1;
-    for(var i=d;i<SIZE;i++) if(c[i]>max){max=c[i];pos=i;}
-    if(pos<0) return -1;
-    var x1=c[pos-1]||0, x2=c[pos], x3=c[pos+1]||0;
-    var a=(x1+x3-2*x2)/2, b=(x3-x1)/2;
-    if(a) pos = pos - b/(2*a);
-    return sr/pos;
-}
-
-async function togglePitch() {
-    if(_mic.running) {
-        _mic.running = false;
-        if(_mic.stream) _mic.stream.getTracks().forEach(function(t){t.stop();});
-        if(_mic.ctx) _mic.ctx.close();
-        _mic = {stream:null, analyser:null, ctx:null, running:false};
-        document.getElementById('btnPitch').textContent = '🎤 Activar Mic';
-        document.getElementById('btnPitch').style.background = '';
-        document.getElementById('pitchDisplay').textContent = '—';
-        return;
-    }
-    try {
-        _mic.stream = await navigator.mediaDevices.getUserMedia({audio:true, video:false});
-        _mic.ctx = new (window.AudioContext || window.webkitAudioContext)();
-        var src = _mic.ctx.createMediaStreamSource(_mic.stream);
-        _mic.analyser = _mic.ctx.createAnalyser();
-        _mic.analyser.fftSize = 2048;
-        src.connect(_mic.analyser);
-        _mic.running = true;
-        document.getElementById('btnPitch').textContent = '🎤 Detener Mic';
-        document.getElementById('btnPitch').style.background = '#e74c3c';
-        document.getElementById('btnPitch').style.color = '#fff';
-        var fb2 = document.getElementById('fsBtnMic');
-        if(fb2){ fb2.textContent='🎤✓'; fb2.style.background='#e74c3c'; }
-        _loopPitch();
-        showNotification('🎤 Micrófono activo', 'success');
-    } catch(e) {
-        showNotification('⚠️ No se pudo acceder al micrófono', 'error');
-    }
-}
-
-// MODO: 'uno' = nota por nota | 'libre' = canta todo seguido | 'secuencia' = en orden sin pausas
-var _modo = 'uno'; // por defecto nota por nota
-var _libreNotas = []; // notas detectadas en modo libre
-var _libreTimer = null;
-
-function toggleModo() {
-    var modos = ['uno','secuencia','libre'];
-    var labels = ['🎵UNO','🎶SEQ','🎤LIBRE'];
-    var descs = ['Nota por nota — espera que aciertes para avanzar','Secuencia — detecta en orden sin esperar acierto','Libre — canta todo seguido, puntaje al final'];
-    var idx = modos.indexOf(_modo);
-    _modo = modos[(idx+1) % modos.length];
-    var btn = document.getElementById('fsBtnModo');
-    if(btn) btn.textContent = labels[modos.indexOf(_modo)];
-    _auto.idx = 0; _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 0;
-    _libreNotas = [];
-    showNotification('Modo: ' + descs[modos.indexOf(_modo)], 'success');
-}
-
-function _evaluarLibre(nota, esp) {
-    var notaN = nota.t.replace(/\d/g,'');
-    var espN = esp.t.replace(/\d/g,'');
-    return nota.t === esp.t || notaN === espN;
-}
-
-function _mostrarResumenLibre() {
-    if(!APP._estado) return;
-    var total = APP._estado.notas.length;
-    var ac = 0;
-    _libreNotas.forEach(function(n,i){
-        if(i < total) {
-            var notaN = (n||'').replace(/\d/g,'');
-            var espN = APP._estado.notas[i].t.replace(/\d/g,'');
-            if(notaN === espN) ac++;
-        }
-    });
-    var er = total - ac;
-    APP._estado.aciertos = ac;
-    APP._estado.errores = er;
-    APP._updateStats();
-    fsMostrarFeedback(ac+'/'+total+' ✅', ac >= total*0.7 ? '#2ecc71' : '#e74c3c');
-    showNotification('Resultado libre: '+ac+' aciertos de '+total, 'success');
-    APP.parar();
-}
-
-function toggleAuto() {
-    _auto.on = !_auto.on;
-    _auto.idx = 0; _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 0;
-    _libreNotas = [];
-    var btn = document.getElementById('btnAuto');
-    var btnFs = document.getElementById('fsBtnAuto');
-    var label = _auto.on ? '🤖 Auto: ON' : '🤖 Auto: OFF';
-    var labelFs = _auto.on ? '🤖ON' : '🤖OFF';
-    if(btn){ btn.textContent=label; btn.style.background=_auto.on?'#2ecc71':''; btn.style.color=_auto.on?'#000':'#2ecc71'; }
-    if(btnFs){ btnFs.textContent=labelFs; btnFs.style.background=_auto.on?'#2ecc71':'#333'; btnFs.style.color=_auto.on?'#000':'#fff'; }
-    showNotification(_auto.on?'🤖 Auto ON — modo: '+_modo:'✋ Auto OFF', 'success');
-}
-
-function _loopPitch() {
-    if(!_mic.running) return;
-    var buf = new Float32Array(_mic.analyser.fftSize);
-    _mic.analyser.getFloatTimeDomainData(buf);
-    var freq = autoCorrelate2(buf, _mic.ctx.sampleRate);
-    var disp = document.getElementById('pitchDisplay');
-    var fb = document.getElementById('pitchFeedback');
-
-    if(_auto.enfriando > 0) { _auto.enfriando--; setTimeout(_loopPitch, 80); return; }
-
-    if(freq > 80 && freq < 1100) {
-        var nota = detectarNota(freq);
-        if(nota) {
-            if(disp) disp.textContent = nota.t + ' (' + Math.round(freq) + 'Hz)';
-            var fsP = document.getElementById('fsPitchVal');
-            if(fsP) fsP.textContent = nota.t;
-
-            if(_auto.on && APP._estado && APP._estado.notas.length > 0) {
-                var notaNombre = nota.t.replace(/\d/g,'');
-
-                // ── MODO LIBRE: detecta todas las notas sin orden ──
-                if(_modo === 'libre') {
-                    if(disp) disp.style.color = '#f39c12';
-                    if(fsP) fsP.style.color = '#f39c12';
-                    if(_auto.nota === nota.t) _auto.frames++;
-                    else { _auto.nota = nota.t; _auto.frames = 1; }
-                    if(_auto.frames >= 5) {
-                        _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 8;
-                        _libreNotas.push(nota.t);
-                        var progreso = _libreNotas.length;
-                        var total = APP._estado.notas.length;
-                        fsMostrarFeedback(nota.t + ' (' + progreso + '/' + total + ')', '#f39c12');
-                        if(progreso >= total) {
-                            setTimeout(_mostrarResumenLibre, 300);
-                        }
-                    }
-
-                // ── MODO SECUENCIA: avanza en orden sin esperar acierto ──
-                } else if(_modo === 'secuencia' && _auto.idx < APP._estado.notas.length) {
-                    var esp = APP._estado.notas[_auto.idx];
-                    var espN = esp.t.replace(/\d/g,'');
-                    var acierta = notaNombre === espN;
-                    if(disp) disp.style.color = acierta ? '#2ecc71' : '#e74c3c';
-                    if(fsP) fsP.style.color = acierta ? '#2ecc71' : '#e74c3c';
-                    if(_auto.nota === nota.t) _auto.frames++;
-                    else { _auto.nota = nota.t; _auto.frames = 1; }
-                    if(_auto.frames >= 5) {
-                        _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 6;
-                        if(acierta) {
-                            APP._estado.aciertos++; fsMostrarFeedback('✅ '+esp.t, '#2ecc71');
-                        } else {
-                            APP._estado.errores++; fsMostrarFeedback('❌ '+nota.t+' ≠ '+esp.t, '#e74c3c');
-                        }
-                        APP._updateStats();
-                        _auto.idx++;
-                        APP._estado.notaResaltada = _auto.idx;
-                        APP._dibujar();
-                        if(_auto.idx >= APP._estado.notas.length) {
-                            setTimeout(function(){ fsMostrarFeedback('🎉 FIN','#f39c12'); APP.parar(); }, 300);
-                        }
-                    }
-
-                // ── MODO UNO: nota por nota, espera acierto ──
-                } else if(_modo === 'uno' && _auto.idx < APP._estado.notas.length) {
-                    var esp = APP._estado.notas[_auto.idx];
-                    var espN2 = esp.t.replace(/\d/g,'');
-                    var acierta2 = notaNombre === espN2;
-                    if(disp) disp.style.color = acierta2 ? '#2ecc71' : '#e74c3c';
-                    if(fsP) fsP.style.color = acierta2 ? '#2ecc71' : '#e74c3c';
-                    if(acierta2) {
-                        if(_auto.nota === nota.t) _auto.frames++;
-                        else { _auto.nota = nota.t; _auto.frames = 1; }
-                        if(_auto.frames >= 6) {
-                            _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 15;
-                            APP._estado.aciertos++; APP._updateStats();
-                            fsMostrarFeedback('✅ ' + esp.t, '#2ecc71');
-                            _auto.idx++;
-                            APP._estado.notaResaltada = _auto.idx;
-                            APP._dibujar();
-                            if(_auto.idx >= APP._estado.notas.length) {
-                                setTimeout(function(){ fsMostrarFeedback('🎉 ¡COMPLETADO!','#f39c12'); APP.parar(); }, 300);
-                            }
-                        }
-                    } else {
-                        if(_auto.nota === nota.t) _auto.frames++;
-                        else { _auto.nota = nota.t; _auto.frames = 1; }
-                        if(_auto.frames >= 8) {
-                            _auto.frames = 0; _auto.nota = ''; _auto.enfriando = 10;
-                            APP._estado.errores++; APP._updateStats();
-                            fsMostrarFeedback('❌ Era: ' + esp.t, '#e74c3c');
-                        }
-                    }
-                }
-            } else {
-                if(disp) disp.style.color = '#2ecc71';
-                if(fsP) fsP.style.color = '#2ecc71';
-            }
-        } else {
-            if(disp){ disp.textContent=Math.round(freq)+'Hz'; disp.style.color='#999'; }
-            _auto.frames=0;
-        }
-    } else {
-        if(disp){ disp.textContent='—'; disp.style.color='#999'; }
-        var fsP2=document.getElementById('fsPitchVal'); if(fsP2) fsP2.textContent='—';
-        _auto.frames=0; _auto.nota='';
-    }
-    setTimeout(_loopPitch, 80);
-}
-
-function fsCambiarCurso() {
-    var curso = document.getElementById('fsSelCurso').value;
-    var sel = document.getElementById('fsSelAlumno');
-    sel.innerHTML = '<option value="">— Estudiante —</option>';
-    if(!curso || !ED_NSP[curso]) return;
-    ED_NSP[curso].forEach(function(n){
-        var op = document.createElement('option');
-        op.value = n; op.textContent = n; sel.appendChild(op);
-    });
-    // Sincronizar con selectores normales
-    var sc = document.getElementById('selCurso');
-    if(sc) sc.value = curso;
-    cargarEstudiantes();
-}
-
-function fsMostrarFeedback(msg, color) {
-    var fb = document.getElementById('fsFeedbackGrande');
-    if(!fb) return;
-    fb.textContent = msg;
-    fb.style.color = color;
-    fb.style.opacity = '1';
-    // Flash de fondo
-    var fc = document.getElementById('fullscreenContainer');
-    if(fc){ fc.style.transition='background .1s'; fc.style.background=color+'18'; setTimeout(function(){fc.style.background='';},350); }
-    setTimeout(function(){ fb.style.opacity='0'; }, 1000);
-}
-
-function fsGuardar() {
-    var curso = document.getElementById('fsSelCurso').value;
-    var alumno = document.getElementById('fsSelAlumno').value;
-    if(!curso || !alumno) { showNotification('⚠️ Selecciona curso y estudiante', 'error'); return; }
-    var est = APP._estado;
-    var data = {
-        f: new Date().toLocaleDateString('es-BO'),
-        h: new Date().toLocaleTimeString('es-BO',{hour:'2-digit',minute:'2-digit'}),
-        n: alumno,
-        curso: curso,
-        t: document.getElementById('fsCronometro').innerText,
-        nv: document.getElementById('selNivel').options[document.getElementById('selNivel').selectedIndex].text,
-        ac: est ? est.aciertos : 0,
-        er: est ? est.errores : 0,
-        nt: '-',
-        ob: 'Pantalla completa'
-    };
-    var hist = JSON.parse(localStorage.getItem('solfeo_pro_bolivia')||'[]');
-    hist.unshift(data);
-    localStorage.setItem('solfeo_pro_bolivia', JSON.stringify(hist));
-    showNotification('💾 Guardado: '+alumno.split(',')[0]+' — '+data.ac+' aciertos', 'success');
-}
-
-APP.autoStart();
+// ═══ INIT ═══
+pCursos('sC');pCursos('mC');bUI();EJ.gn();
 </script>
 </body>
 </html>
