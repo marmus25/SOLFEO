@@ -519,7 +519,7 @@ function gFB(){
   var d={fecha:new Date().toISOString(),curso:cu,alumno:al,aciertos:s.ac,errores:s.er,total:s.ns.length,tiempo:document.getElementById('sT').textContent,compas:CF.co,pct:s.ns.length?Math.round(s.ac/s.ns.length*100):0};
   var btn=document.getElementById('mSd');btn.textContent='📤 Enviando...';btn.disabled=true;
   fbPush(d,function(ok){btn.textContent='📤 Enviar al Profesor';btn.disabled=false;
-    if(ok){toast('✅ ¡Enviado! Tu profesor lo verá');var msg=encodeURIComponent('🎵 Solfeo: '+d.alumno+' ('+d.curso+') — '+d.aciertos+'/'+d.total+' ('+d.pct+'%)');var n=new XMLHttpRequest();n.open('GET','https://api.callmebot.com/text.php?user=@marmus25&text='+msg);n.send();cMo()}
+    if(ok){toast('✅ ¡Enviado! Tu profesor lo verá');var msg=encodeURIComponent('🎵 Solfeo: '+d.alumno+' ('+d.curso+') — '+d.aciertos+'/'+d.total+' ('+d.pct+'%)');var n=new XMLHttpRequest();n.open('GET','https://api.callmebot.com/text.php?user=7700836433&text='+msg);n.send();cMo()}
     else{var l=JSON.parse(localStorage.getItem('solfeo_pend')||'[]');l.push(d);localStorage.setItem('solfeo_pend',JSON.stringify(l));toast('⚠ Sin conexión — guardado local');cMo()}
   });
 }
