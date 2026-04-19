@@ -316,11 +316,11 @@ function pCursos(id){var s=document.getElementById(id);Object.keys(ED).sort().fo
 function cAl(ci,ai){var c=document.getElementById(ci).value,s=document.getElementById(ai);s.innerHTML='<option value="">— Estudiante —</option>';if(!c||!ED[c])return;ED[c].forEach(function(n){var o=document.createElement('option');o.value=n;o.textContent=n;s.appendChild(o)})}
 
 // ═══ CONFIG ═══
-var CF={co:'4/4',ri:['negra','2corcheas'],on:{},rg:'centro'};
+var CF={co:'4/4',ri:['negra'],on:{},rg:''};
 var CMP=['2/4','3/4','4/4'];
 var RI=[{id:'negra',n:'Negra',s:'Ta',p:1},{id:'blanca',n:'Blanca',s:'Ta-a',p:2},{id:'redonda',n:'Redonda',s:'Ta-a-a-a',p:4},{id:'2corcheas',n:'2 Corcheas',s:'Ti-Ti',p:1},{id:'4semi',n:'Semicorcheas',s:'Tiki-Tiki',p:1},{id:'co2semi',n:'Corchea+2Semi',s:'Ti-Tiki',p:1},{id:'2semico',n:'2Semi+Corchea',s:'Tiki-Ti',p:1}];
 var RN=[{id:'grave',l:'Graves'},{id:'centro',l:'Centro'},{id:'agudo',l:'Agudas'},{id:'todo',l:'Todas'}];
-NDB.forEach(function(n){CF.on[n.id]=(n.g==='centro')});
+NDB.forEach(function(n){CF.on[n.id]=(n.id==='do4'||n.id==='re4'||n.id==='mi4')});
 
 function bUI(){
   var cc=document.getElementById('ccC');cc.innerHTML='';
@@ -519,7 +519,7 @@ function gFB(){
   var d={fecha:new Date().toISOString(),curso:cu,alumno:al,aciertos:s.ac,errores:s.er,total:s.ns.length,tiempo:document.getElementById('sT').textContent,compas:CF.co,pct:s.ns.length?Math.round(s.ac/s.ns.length*100):0};
   var btn=document.getElementById('mSd');btn.textContent='📤 Enviando...';btn.disabled=true;
   fbPush(d,function(ok){btn.textContent='📤 Enviar al Profesor';btn.disabled=false;
-    if(ok){toast('✅ ¡Enviado! Tu profesor lo verá');var msg=encodeURIComponent('🎵 Solfeo: '+d.alumno+' ('+d.curso+') — '+d.aciertos+'/'+d.total+' ('+d.pct+'%)');fetch('https://script.google.com/macros/s/AKfycbxnAVz-6yh8nwC2uGsAIy-suGLH-p77M5Ivpn-go7n9w6jz1pYtUQ9RbAMFiTfrPT44kA/exec',{method:'POST',mode:'no-cors',body:JSON.stringify(d),headers:{'Content-Type':'text/plain'}});cMo()}
+    if(ok){toast('✅ ¡Enviado! Tu profesor lo verá');var msg=encodeURIComponent('🎵 Solfeo: '+d.alumno+' ('+d.curso+') — '+d.aciertos+'/'+d.total+' ('+d.pct+'%)');fetch('https://script.google.com/macros/s/AKfycbwjsEcwQEm3Cs5ut1QilcjKdLq9UfqtP6FrF2gytjxcBv2qJSCLAQWIr4NvSvzVTUugwA/exec',{method:'POST',mode:'no-cors',body:JSON.stringify(d),headers:{'Content-Type':'text/plain'}});cMo()}
     else{var l=JSON.parse(localStorage.getItem('solfeo_pend')||'[]');l.push(d);localStorage.setItem('solfeo_pend',JSON.stringify(l));toast('⚠ Sin conexión — guardado local');cMo()}
   });
 }
